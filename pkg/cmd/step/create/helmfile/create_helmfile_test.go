@@ -10,6 +10,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/jenkins-x/jx/pkg/cmd/testhelpers"
+	"github.com/jenkins-x/jx/pkg/gits"
+	"github.com/jenkins-x/jx/pkg/helm"
 	v1 "k8s.io/api/core/v1"
 
 	mocks "github.com/jenkins-x/jx/v2/pkg/cmd/clients/mocks"
@@ -53,7 +56,7 @@ func TestDedupeRepositories(t *testing.T) {
 	assert.NoError(t, err)
 
 	// assert there are 3 repos and not 4 as one of them in the jx-applications.yaml is a duplicate
-	assert.Equal(t, 5, len(h.Repositories))
+	assert.Equal(t, 3, len(h.Repositories))
 
 	if diff := cmp.Diff(got, want); diff != "" {
 		t.Errorf("Unexpected helmfile generated")
@@ -77,11 +80,11 @@ func TestExtraAppValues(t *testing.T) {
 	err = o.Run()
 	assert.NoError(t, err)
 
-	h, _, err := loadHelmfile(path.Join(tempDir, "apps"))
+	h, _, err := loadHelmfile(path.Join(tempDir, "system"))
 	assert.NoError(t, err)
 
 	// assert we added the local values.yaml for the velero app
-	assert.Equal(t, "velero/values.yaml", h.Releases[0].Values[0])
+	assert.Equal(t, "velero/values.yaml", h.Releases[0].Values[1])
 
 }
 
@@ -96,6 +99,7 @@ func TestExtraFlagValues(t *testing.T) {
 		CreateOptions: *getCreateOptions(),
 	}
 	o.SetEnvironmentContext(createTestEnvironmentContext(t))
+	configureTestCommonOptions(t, o)
 	err = o.Run()
 	assert.NoError(t, err)
 
@@ -112,11 +116,11 @@ func TestCreateNamespaceChart(t *testing.T) {
 	assert.NoError(t, err, "should create a temporary config dir")
 
 	o := &CreateHelmfileOptions{
-		outputDir:     tempDir,
-		dir:           path.Join("test_data", "create-namespace-chart"),
-		valueFiles:    []string{"foo/bar.yaml"},
-		CreateOptions: *getCreateOptions(),
+		outputDir:  tempDir,
+		dir:        path.Join("test_data", "create-namespace-chart"),
+		valueFiles: []string{"foo/bar.yaml"},
 	}
+	configureTestCommonOptions(t, o)
 	err = o.Run()
 	assert.NoError(t, err)
 
@@ -145,10 +149,11 @@ func TestSystem(t *testing.T) {
 	assert.NoError(t, err, "should create a temporary config dir")
 
 	o := &CreateHelmfileOptions{
-		outputDir:     tempDir,
-		dir:           path.Join("test_data", "system"),
-		CreateOptions: *getCreateOptions(),
+		outputDir: tempDir,
+		dir:       path.Join("test_data", "system"),
 	}
+	configureTestCommonOptions(t, o)
+
 	err = o.Run()
 	assert.NoError(t, err)
 
@@ -223,6 +228,12 @@ func getCreateOptions() *options.CreateOptions {
 	return &options.CreateOptions{
 		CommonOptions: &commonOpts,
 	}
+}
+
+func configureTestCommonOptions(t *testing.T, o *CreateHelmfileOptions) {
+	co := &opts.CommonOptions{}
+	testhelpers.ConfigureTestOptions(co, gits.NewGitCLI(), helm.NewHelmCLI("helm", helm.V3, "", true))
+	o.CommonOptions = co
 }
 
 func createTestEnvironmentContext(t *testing.T) *envctx.EnvironmentContext {
