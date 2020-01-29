@@ -7,10 +7,36 @@ import (
 
 	"github.com/jenkins-x/jx/v2/pkg/versionstream"
 
+	"github.com/jenkins-x/jx/v2/pkg/config"
+	"github.com/jenkins-x/jx/v2/pkg/envctx"
 	"github.com/jenkins-x/jx/v2/pkg/log"
 	"github.com/jenkins-x/jx/v2/pkg/table"
 	"github.com/jenkins-x/jx/v2/pkg/util"
+	"github.com/jenkins-x/jx/v2/pkg/versionstream"
+	"github.com/jenkins-x/jx/v2/pkg/versionstream/versionstreamrepo"
 )
+
+// EnvironmentContext gets or creates a team context with the common values for working with requirements, team settings
+// and version resolvers
+func (o *CommonOptions) EnvironmentContext() (*envctx.EnvironmentContext, error) {
+	var err error
+	tc := &envctx.EnvironmentContext{}
+	tc.GitOps, tc.DevEnv = o.GetDevEnv()
+	teamSettings := tc.TeamSettings()
+	tc.Requirements, err = config.GetRequirementsConfigFromTeamSettings(teamSettings)
+	if err != nil {
+		return tc, err
+	}
+	err = o.ConfigureCommonOptions(tc.Requirements)
+	if err != nil {
+		return tc, err
+	}
+	tc.VersionResolver, err = o.CreateVersionResolver(teamSettings.VersionStreamURL, teamSettings.VersionStreamRef)
+	if err != nil {
+		return tc, err
+	}
+	return tc, nil
+}
 
 // CreateVersionResolver creates a new VersionResolver service
 func (o *CommonOptions) CreateVersionResolver(repo string, gitRef string) (*versionstream.VersionResolver, error) {

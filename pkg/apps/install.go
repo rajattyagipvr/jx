@@ -16,6 +16,8 @@ import (
 	corev1 "k8s.io/api/core/v1"
 
 	"github.com/jenkins-x/jx/v2/pkg/kube"
+	corev1 "k8s.io/api/core/v1"
+	rbacv1 "k8s.io/api/rbac/v1"
 
 	"github.com/pborman/uuid"
 
@@ -28,10 +30,22 @@ import (
 	"github.com/jenkins-x/jx/v2/pkg/vault"
 	"k8s.io/client-go/kubernetes"
 
+	jenkinsv1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx/v2/pkg/client/clientset/versioned"
+	"github.com/jenkins-x/jx/v2/pkg/envctx"
+	"github.com/jenkins-x/jx/v2/pkg/environments"
+	"github.com/jenkins-x/jx/v2/pkg/gits"
 	"github.com/jenkins-x/jx/v2/pkg/helm"
+	"github.com/jenkins-x/jx/v2/pkg/kube"
+	"github.com/jenkins-x/jx/v2/pkg/kube/naming"
 	"github.com/jenkins-x/jx/v2/pkg/log"
 	"github.com/jenkins-x/jx/v2/pkg/util"
+	"github.com/jenkins-x/jx/v2/pkg/vault"
+	"github.com/jenkins-x/jx/v2/pkg/versionstream"
+
 	"github.com/pkg/errors"
+
+	"k8s.io/client-go/kubernetes"
 )
 
 // InstallOptions are shared options for installing, removing or upgrading apps for either GitOps or HelmOps
@@ -54,6 +68,7 @@ type InstallOptions struct {
 	VaultClient         vault.Client
 	AutoMerge           bool
 	SecretsScheme       string
+	VersionResolver     *versionstream.VersionResolver
 
 	valuesFiles *environments.ValuesFiles // internal variable used to track, most be passed in
 }
@@ -62,9 +77,11 @@ type InstallOptions struct {
 // or latest if not specified) from the repository with username and password. A releaseName can be specified.
 // Values can be passed with in files or as a slice of name=value pairs. An alias can be specified.
 // GitOps or HelmOps will be automatically chosen based on the o.GitOps flag
-func (o *InstallOptions) AddApp(app string, version string, repository string, username string, password string,
+func (o *InstallOptions) AddApp(details *envctx.ChartDetails, version string, username string, password string,
 	releaseName string, valuesFiles []string, setValues []string, alias string, helmUpdate bool) error {
 
+	repository := details.Repository
+	app := details.LocalName
 	o.valuesFiles = &environments.ValuesFiles{
 		Items: valuesFiles,
 	}
@@ -104,7 +121,7 @@ func (o *InstallOptions) AddApp(app string, version string, repository string, u
 			opts := GitOpsOptions{
 				InstallOptions: o,
 			}
-			err = opts.AddApp(chartDetails.Name, dir, chartDetails.Version, repository, alias, o.AutoMerge)
+			err = opts.AddApp(details.Name, dir, chartDetails.Version, repository, alias, o.AutoMerge)
 			if err != nil {
 				return errors.Wrapf(err, "adding app %s version %s with alias %s using gitops", chartName, version, alias)
 			}
@@ -122,7 +139,7 @@ func (o *InstallOptions) AddApp(app string, version string, repository string, u
 					return errors.Wrapf(err, "building dependencies for %s", chartName)
 				}
 			}
-			err = opts.AddApp(chartName, dir, chartDetails.Name, chartDetails.Version, chartDetails.Values, repository,
+			err = opts.AddApp(details.Name, dir, chartDetails.Name, chartDetails.Version, chartDetails.Values, repository,
 				username, password,
 				releaseName,
 				setValues,
