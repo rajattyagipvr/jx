@@ -8,7 +8,6 @@ import (
 	"github.com/jenkins-x/jx/v2/pkg/cmd/helper"
 	"github.com/jenkins-x/jx/v2/pkg/cmd/opts"
 	"github.com/jenkins-x/jx/v2/pkg/cmd/templates"
-	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/helm"
 	"github.com/jenkins-x/jx/v2/pkg/io/secrets"
 	"github.com/jenkins-x/jx/v2/pkg/log"
@@ -104,17 +103,13 @@ func NewCmdGetApps(commonOpts *opts.CommonOptions) *cobra.Command {
 
 // Run implements this command
 func (o *GetAppsOptions) Run() error {
-	o.GitOps, o.DevEnv = o.GetDevEnv()
-	teamSettings := &o.DevEnv.Spec.TeamSettings
-	requirements, err := config.GetRequirementsConfigFromTeamSettings(teamSettings)
+	ec, err := o.EnvironmentContext(".")
 	if err != nil {
 		return err
 	}
-	err = o.ConfigureCommonOptions(requirements)
-	if err != nil {
-		return err
-	}
-	versionResolver, err := o.CreateVersionResolver(teamSettings.VersionStreamURL, teamSettings.VersionStreamRef)
+	o.GitOps = ec.GitOps
+	o.DevEnv = ec.DevEnv
+
 	if err != nil {
 		return err
 	}
@@ -139,7 +134,7 @@ func (o *GetAppsOptions) Run() error {
 		Helmer:              o.Helm(),
 		JxClient:            jxClient,
 		EnvironmentCloneDir: envsDir,
-		VersionResolver:     versionResolver,
+		VersionResolver:     ec.VersionResolver,
 	}
 
 	if o.GetSecretsLocation() == secrets.VaultLocationKind {
