@@ -10,23 +10,17 @@ import (
 	"sort"
 	"strings"
 
-<<<<<<< HEAD
-	"github.com/jenkins-x/jx/v2/pkg/config"
-	helmfile2 "github.com/jenkins-x/jx/v2/pkg/helmfile"
 	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/envctx"
 	helmfile2 "github.com/jenkins-x/jx/v2/pkg/helmfile"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-=======
-	"github.com/jenkins-x/jx/pkg/config"
-	"github.com/jenkins-x/jx/pkg/envctx"
-	helmfile2 "github.com/jenkins-x/jx/pkg/helmfile"
-<<<<<<< HEAD
->>>>>>> fix: add version defaulting from the version stream
-=======
-	"github.com/jenkins-x/jx/pkg/versionstream"
+
+	"github.com/jenkins-x/jx/v2/pkg/config"
+	"github.com/jenkins-x/jx/v2/pkg/envctx"
+	helmfile2 "github.com/jenkins-x/jx/v2/pkg/helmfile"
+	"github.com/jenkins-x/jx/v2/pkg/kube"
+	"github.com/jenkins-x/jx/v2/pkg/versionstream"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
->>>>>>> fix: rebased with latest jx
 
 	"github.com/google/uuid"
 	"github.com/jenkins-x/jx/v2/pkg/util"
@@ -237,7 +231,6 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 				repositories = append(repositories, repository)
 			}
 		}
-
 	}
 
 	for _, ar := range apps.Repositories {
@@ -308,6 +301,21 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 			Namespace: defaultNamespace,
 		}
 		releases = append(releases, release)
+
+		found := false
+		for _, repo := range repositories {
+			if repo.Name == "jenkins-x" {
+				found = true
+				break
+			}
+		}
+		if !found {
+			repository := helmfile2.RepositorySpec{
+				Name: "jenkins-x",
+				URL:  kube.DefaultChartMuseumURL,
+			}
+			repositories = append(repositories, repository)
+		}
 	}
 
 	// ensure any namespaces referenced are created first, do this via an extra chart that creates namespaces
