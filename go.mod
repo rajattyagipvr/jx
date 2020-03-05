@@ -3,6 +3,8 @@ module github.com/jenkins-x/jx/v2
 require (
 	code.gitea.io/sdk/gitea v0.12.0
 	contrib.go.opencensus.io/exporter/stackdriver v0.12.9-0.20191108183826-59d068f8d8ff // indirect
+	cloud.google.com/go v0.34.0
+	contrib.go.opencensus.io/exporter/prometheus v0.1.0 // indirect
 	github.com/Azure/draft v0.15.0
 	github.com/Comcast/kuberhealthy v1.0.2
 	github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
@@ -76,11 +78,8 @@ require (
 	github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5 // indirect
 	github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6 // indirect
 	github.com/magiconair/properties v1.8.0
-<<<<<<< HEAD
 	github.com/mailru/easyjson v0.7.1 // indirect
-=======
 	github.com/markbates/inflect v1.0.4 // indirect
->>>>>>> chore: revert go mod tidy
 	github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mitchellh/mapstructure v1.2.2
@@ -125,6 +124,8 @@ require (
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
 	golang.org/x/tools v0.0.0-20200415034506-5d8e1897c761
+	golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7 // indirect
+	google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
 	gopkg.in/AlecAivazis/survey.v1 v1.8.3
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v2 v2.2.8
@@ -163,7 +164,6 @@ replace github.com/Azure/azure-sdk-for-go => github.com/Azure/azure-sdk-for-go v
 
 replace github.com/Azure/go-autorest => github.com/Azure/go-autorest v13.3.1+incompatible
 
-<<<<<<< HEAD
 replace github.com/banzaicloud/bank-vaults => github.com/banzaicloud/bank-vaults v0.0.0-20191212164220-b327d7f2b681
 
 replace github.com/banzaicloud/bank-vaults/pkg/sdk => github.com/banzaicloud/bank-vaults/pkg/sdk v0.0.0-20191212164220-b327d7f2b681
@@ -171,8 +171,6 @@ replace github.com/banzaicloud/bank-vaults/pkg/sdk => github.com/banzaicloud/ban
 replace k8s.io/test-infra => github.com/jenkins-x/test-infra v0.0.0-20200611142252-211a92405c22
 
 replace gomodules.xyz/jsonpatch/v2 => gomodules.xyz/jsonpatch/v2 v2.0.1
-=======
 replace github.com/banzaicloud/bank-vaults => github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
->>>>>>> chore: lets sort the list of k8s providers
 
 go 1.13
