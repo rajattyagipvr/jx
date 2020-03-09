@@ -171,6 +171,7 @@ replace github.com/banzaicloud/bank-vaults/pkg/sdk => github.com/banzaicloud/ban
 replace k8s.io/test-infra => github.com/jenkins-x/test-infra v0.0.0-20200611142252-211a92405c22
 
 replace gomodules.xyz/jsonpatch/v2 => gomodules.xyz/jsonpatch/v2 v2.0.1
+
 replace github.com/banzaicloud/bank-vaults => github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
 
 go 1.13

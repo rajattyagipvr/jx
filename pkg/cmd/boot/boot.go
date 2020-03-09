@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/google/uuid"
-	"github.com/jenkins-x/jx/pkg/cloud"
+	"github.com/jenkins-x/jx/v2/pkg/cloud"
 
 	"github.com/jenkins-x/jx/v2/pkg/versionstream"
 
@@ -599,7 +599,13 @@ func (o *BootOptions) verifyClusterConnection() error {
 
 	_, err = client.CoreV1().Pods(ns).List(metav1.ListOptions{})
 	if err != nil {
+<<<<<<< HEAD
 		return errors.Wrapf(err, "Unable to list pods. You are not currently connected to a cluster, please connect to the cluster that you intend to %s\n"+
+=======
+		log.Logger().Warnf("failed to list namespaces to check kubernetes cluster connectivity: %s", err.Error())
+
+		return fmt.Errorf("You are not currently connected to a cluster, please connect to the cluster that you intend to %s\n"+
+>>>>>>> fix: improve logging for k8s connectivity
 			"Alternatively create a new cluster using %s", util.ColorInfo("jx boot"), util.ColorInfo("jx create cluster"))
 	}
 
