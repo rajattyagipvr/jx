@@ -15,6 +15,7 @@ import (
 	helmfile2 "github.com/jenkins-x/jx/v2/pkg/helmfile"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	"github.com/jenkins-x/jx/v2/pkg/cloud"
 	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/envctx"
 	helmfile2 "github.com/jenkins-x/jx/v2/pkg/helmfile"
@@ -342,6 +343,10 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 		Releases:     releases,
 	}
 
+	// if using kind lets add a big timeout as things can be very slow to download
+	if ec.Requirements != nil && ec.Requirements.Cluster.Provider == cloud.KIND {
+		h.HelmDefaults.Timeout = 2 * 60 * 60
+	}
 	data, err := yaml.Marshal(h)
 	if err != nil {
 		return errors.Wrapf(err, "failed to marshal helmfile data")
