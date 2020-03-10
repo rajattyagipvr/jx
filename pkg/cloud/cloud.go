@@ -6,22 +6,22 @@ import (
 )
 
 const (
-	GKE        = "gke"
-	OKE        = "oke"
-	EKS        = "eks"
 	AKS        = "aks"
+	ALIBABA    = "alibaba"
 	AWS        = "aws"
-	PKS        = "pks"
+	EKS        = "eks"
+	GKE        = "gke"
+	ICP        = "icp"
 	IKS        = "iks"
 	KUBERNETES = "kubernetes"
+	KIND       = "kind"
+	OKE        = "oke"
 	OPENSHIFT  = "openshift"
-	ICP        = "icp"
-	JX_INFRA   = "jx-infra"
-	ALIBABA    = "alibaba"
+	PKS        = "pks"
 )
 
 // KubernetesProviders list of all available Kubernetes providers
-var KubernetesProviders = []string{GKE, OKE, AKS, AWS, EKS, KUBERNETES, IKS, OPENSHIFT, JX_INFRA, PKS, ICP, ALIBABA}
+var KubernetesProviders = []string{GKE, OKE, AKS, AWS, EKS, KIND, KUBERNETES, IKS, OPENSHIFT, JX_INFRA, PKS, ICP, ALIBABA}
 
 // KubernetesProviderOptions returns all the Kubernetes providers as a string
 func KubernetesProviderOptions() string {
