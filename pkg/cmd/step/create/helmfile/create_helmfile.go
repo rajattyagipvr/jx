@@ -178,10 +178,6 @@ func (o *CreateHelmfileOptions) Run() error {
 		return errors.Wrap(err, "failed to generate system helmfile")
 	}
 
-	err = o.generateKubectlApplyScript(o.outputDir)
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -447,6 +443,9 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 	}
 
 	// loop over each application and check if the namespace it references exists, if not add the namespace creator chart to the helmfile
+
+	createNamespaces := []helmfile2.ReleaseSpec{}
+
 	for k, release := range helmfileReleases {
 		namespaceMatched := false
 		for _, ns := range namespaces.Items {
@@ -456,11 +455,15 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 		}
 		if release.Namespace != "" && release.Namespace != currentNamespace && !namespaceMatched {
 			existingCreateNamespaceChartFound := false
-			for _, r := range helmfileReleases {
+			for _, r := range append(createNamespaces, helmfileReleases...) {
 				if r.Name == "namespace-"+release.Namespace {
 					existingCreateNamespaceChartFound = true
 				}
 			}
+
+			// add a dependency so that the create namespace chart is installed before the app chart
+			helmfileReleases[k].Needs = []string{fmt.Sprintf("%s/namespace-%s", currentNamespace, release.Namespace)}
+
 			if !existingCreateNamespaceChartFound {
 
 				err := o.writeGeneratedNamespaceValues(release.Namespace, phase)
@@ -482,13 +485,13 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 					Values: []string{path.Join("generated", release.Namespace, "values.yaml")},
 				}
 
-				// add a dependency so that the create namespace chart is installed before the app chart
-				helmfileReleases[k].Needs = []string{fmt.Sprintf("%s/namespace-%s", currentNamespace, release.Namespace)}
-
-				helmfileReleases = append(helmfileReleases, createNamespaceChart)
+				createNamespaces = append(createNamespaces, createNamespaceChart)
 			}
 		}
 	}
+
+	// lets add all the namespace charts first just in case we miss a 'needs' dependency
+	helmfileReleases = append(createNamespaces, helmfileReleases...)
 
 	return helmfileRepos, helmfileReleases, nil
 }
@@ -535,23 +538,5 @@ func (o *CreateHelmfileOptions) ensureJxRequirementsYamlExists(requirements *con
 	if err != nil {
 		return errors.Wrap(err, "failed to save requirements yaml file")
 	}
-	return nil
-}
-
-func (o *CreateHelmfileOptions) generateKubectlApplyScript(dir string) error {
-	name := filepath.Join(dir, "kubectl-apply.sh")
-	exists, err := util.FileExists(name)
-	if err != nil {
-		return errors.Wrapf(err, "failed to check if file exists %s", name)
-	}
-	if exists {
-		return nil
-	}
-
-	err = ioutil.WriteFile(name, []byte(defaultKubectlApplyScript), 0755)
-	if err != nil {
-		return errors.Wrapf(err, "failed to save file %s", name)
-	}
-
 	return nil
 }
