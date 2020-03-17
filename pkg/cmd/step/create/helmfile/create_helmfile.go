@@ -151,6 +151,7 @@ func (o *CreateHelmfileOptions) Run() error {
 		if err != nil {
 			return err
 		}
+		app.Hooks = append(app.Hooks, defaults.Hooks...)
 		app.Values = append(app.Values, valuesFiles...)
 		if app.Namespace == "" {
 			app.Namespace = defaults.Namespace
@@ -296,10 +297,11 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 		}
 		release := helmfile2.ReleaseSpec{
 			Name:      alias,
-			Namespace: applications[i].Namespace,
+			Namespace: app.Namespace,
 			Version:   version,
 			Chart:     chartName,
 			Values:    extraValuesFiles,
+			Hooks:     app.Hooks,
 		}
 		releases = append(releases, release)
 	}
