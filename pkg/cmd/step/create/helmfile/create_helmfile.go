@@ -444,9 +444,9 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 		return nil, nil, errors.Wrapf(err, "failed to list namespaces")
 	}
 
-	namespaceMatched := false
 	// loop over each application and check if the namespace it references exists, if not add the namespace creator chart to the helmfile
 	for k, release := range helmfileReleases {
+		namespaceMatched := false
 		for _, ns := range namespaces.Items {
 			if ns.Name == release.Namespace {
 				namespaceMatched = true
@@ -454,8 +454,8 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 		}
 		if release.Namespace != "" && release.Namespace != currentNamespace && !namespaceMatched {
 			existingCreateNamespaceChartFound := false
-			for _, release := range helmfileReleases {
-				if release.Name == "namespace-"+release.Namespace {
+			for _, r := range helmfileReleases {
+				if r.Name == "namespace-"+release.Namespace {
 					existingCreateNamespaceChartFound = true
 				}
 			}
@@ -470,7 +470,7 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 					Name: "zloeber",
 					URL:  "git+https://github.com/rawlingsj/helm-namespace@chart",
 				}
-				helmfileRepos = append(helmfileRepos, repository)
+				helmfileRepos = AddRepositoryIfNeeded(helmfileRepos, repository)
 
 				createNamespaceChart := helmfile2.ReleaseSpec{
 					Name:      "namespace-" + release.Namespace,
@@ -489,6 +489,16 @@ func (o *CreateHelmfileOptions) ensureNamespaceExist(helmfileRepos []helmfile2.R
 	}
 
 	return helmfileRepos, helmfileReleases, nil
+}
+
+// AddRepositoryIfNeeded adds the repository if needed
+func AddRepositoryIfNeeded(repos []helmfile2.RepositorySpec, repository helmfile2.RepositorySpec) []helmfile2.RepositorySpec {
+	for _, r := range repos {
+		if r.Name == repository.Name {
+			return repos
+		}
+	}
+	return append(repos, repository)
 }
 
 func (o *CreateHelmfileOptions) writeGeneratedNamespaceValues(namespace, phase string) error {
