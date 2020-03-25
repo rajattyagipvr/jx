@@ -110,7 +110,7 @@ require (
 	github.com/tektoncd/pipeline v0.11.3
 =======
 	github.com/stretchr/testify v1.4.0
-	github.com/subchen/go-xmldom v1.1.2
+	github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
 	github.com/tektoncd/pipeline v0.8.0
 >>>>>>> fix: support modifying the pom.xml on next version
 	github.com/trivago/tgo v1.0.1 // indirect
