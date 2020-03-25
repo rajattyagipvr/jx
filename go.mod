@@ -105,8 +105,14 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.4.0
 	github.com/stoewer/go-strcase v1.0.1
+<<<<<<< HEAD
 	github.com/stretchr/testify v1.6.0
 	github.com/tektoncd/pipeline v0.11.3
+=======
+	github.com/stretchr/testify v1.4.0
+	github.com/subchen/go-xmldom v1.1.2
+	github.com/tektoncd/pipeline v0.8.0
+>>>>>>> fix: support modifying the pom.xml on next version
 	github.com/trivago/tgo v1.0.1 // indirect
 	github.com/ulikunitz/xz v0.5.6 // indirect
 	github.com/viniciuschiele/tarx v0.0.0-20151205142357-6e3da540444d // indirect
