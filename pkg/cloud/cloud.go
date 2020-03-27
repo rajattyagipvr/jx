@@ -17,6 +17,7 @@ const (
 	KIND       = "kind"
 	OKE        = "oke"
 	OPENSHIFT  = "openshift"
+	JX_INFRA   = "jx-infra"
 	PKS        = "pks"
 )
 
