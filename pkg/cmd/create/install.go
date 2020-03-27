@@ -911,7 +911,8 @@ func (options *InstallOptions) init() error {
 			options.Flags.Provider,
 			ingNamespace,
 			ingService,
-			extIP)
+			extIP,
+			false)
 		if err != nil {
 			return errors.Wrapf(err, "getting a domain for ingress service %s/%s", ingNamespace, ingService)
 		}

@@ -13,14 +13,17 @@ import (
 	"github.com/jenkins-x/jx/pkg/log"
 	"github.com/jenkins-x/jx/pkg/surveyutils"
 	"github.com/jenkins-x/jx/pkg/util"
+	"github.com/pkg/errors"
 	"gopkg.in/AlecAivazis/survey.v1"
+	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 // GetDomain returns the domain name, trying to infer it either from various Kubernetes resources or cloud provider. If no domain
 // can be determined, it will prompt to the user for a value.
-func (o *CommonOptions) GetDomain(client kubernetes.Interface, domain string, provider string, ingressNamespace string, ingressService string, externalIP string) (string, error) {
+func (o *CommonOptions) GetDomain(client kubernetes.Interface, domain string, provider string, ingressNamespace string, ingressService string, externalIP string, nodePort bool) (string, error) {
 	surveyOpts := survey.WithStdio(o.In, o.Out, o.Err)
 	address := externalIP
 	if address == "" {
@@ -44,7 +47,26 @@ func (o *CommonOptions) GetDomain(client kubernetes.Interface, domain string, pr
 				}
 			}
 		}
+		if svc.Spec.Type == corev1.ServiceTypeNodePort {
+			// lets find the first node external address
+			if externalIP == "" {
+				externalIP, err = findFirstExternalNodeIP(client)
+				if err != nil {
+					return "", errors.Wrap(err, "no externalIP specified and failed to find a Node externalIP probably due to RBAC")
+				}
+			}
+
+			// lets find the node port
+			if externalIP != "" {
+				for _, p := range svc.Spec.Ports {
+					if p.NodePort != 0 {
+						address = fmt.Sprintf("%s:%d", externalIP, p.NodePort)
+					}
+				}
+			}
+		}
 	}
+
 	defaultDomain := address
 
 	if provider == cloud.AWS || provider == cloud.EKS {
@@ -105,7 +127,7 @@ func (o *CommonOptions) GetDomain(client kubernetes.Interface, domain string, pr
 		log.Logger().Infof(err.Error())
 	}
 
-	if address != "" {
+	if address != "" && !nodePort {
 		addNip := true
 		aip := net.ParseIP(address)
 		if aip == nil {
@@ -182,4 +204,21 @@ func (o *CommonOptions) GetDomain(client kubernetes.Interface, domain string, pr
 	}
 
 	return domain, nil
+}
+
+func findFirstExternalNodeIP(client kubernetes.Interface) (string, error) {
+	nodeList, err := client.CoreV1().Nodes().List(metav1.ListOptions{})
+	if err != nil && !apierrors.IsNotFound(err) {
+		return "", errors.Wrap(err, "cannot list Nodes to find externalIP")
+	}
+	for _, node := range nodeList.Items {
+		for _, add := range node.Status.Addresses {
+			if add.Type == corev1.NodeExternalIP {
+				if add.Address != "" {
+					return add.Address, nil
+				}
+			}
+		}
+	}
+	return "", nil
 }

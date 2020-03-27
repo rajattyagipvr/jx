@@ -1026,7 +1026,7 @@ func (o *StepVerifyPreInstallOptions) verifyIngress(requirements *config.Require
 	}
 
 	switch requirements.Cluster.Provider {
-	case cloud.KIND, cloud.MINIKUBE, cloud.MINISHIFT:
+	case cloud.KIND:
 		if requirements.Ingress.ServiceType == "" {
 			requirements.Ingress.ServiceType = "NodePort"
 		}

@@ -21,6 +21,7 @@ require (
 	github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
 	github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
 	github.com/andygrunwald/go-jira v1.5.0
+	github.com/antchfx/xpath v1.1.5 // indirect
 	github.com/antham/chyle v1.6.0
 	github.com/aws/aws-sdk-go v1.24.0
 	github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
