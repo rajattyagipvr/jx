@@ -38,14 +38,14 @@ import (
 
 func TestGeneratedHelmfiles(t *testing.T) {
 	rootTempDir, err := ioutil.TempDir("", "test-applications-config")
-	assert.NoError(t, err, "should create a temporary config dir")
+	assert.NoError(t, err, "should create a temporary config Dir")
 
 	for _, name := range []string{"istio", "dedupe_repositories", "empty-system", "empty", "alias", "namespace-chart", "override-values"} {
 		tempDir := filepath.Join(rootTempDir, name)
 		sourceDir := filepath.Join("test_data", name)
 		o := &CreateHelmfileOptions{
 			outputDir:     tempDir,
-			dir:           sourceDir,
+			Dir:           sourceDir,
 			CreateOptions: *getCreateOptions(),
 		}
 		o.SetEnvironmentContext(createTestEnvironmentContext(t))
@@ -72,11 +72,11 @@ func TestGeneratedHelmfiles(t *testing.T) {
 
 func TestExtraAppValues(t *testing.T) {
 	tempDir, err := ioutil.TempDir("", "test-applications-config")
-	assert.NoError(t, err, "should create a temporary config dir")
+	assert.NoError(t, err, "should create a temporary config Dir")
 
 	o := &CreateHelmfileOptions{
 		outputDir:     tempDir,
-		dir:           path.Join("test_data", "extra-values"),
+		Dir:           path.Join("test_data", "extra-values"),
 		CreateOptions: *getCreateOptions(),
 	}
 	o.SetEnvironmentContext(createTestEnvironmentContext(t))
@@ -93,11 +93,11 @@ func TestExtraAppValues(t *testing.T) {
 
 func TestExtraFlagValues(t *testing.T) {
 	tempDir, err := ioutil.TempDir("", "test-applications-config")
-	assert.NoError(t, err, "should create a temporary config dir")
+	assert.NoError(t, err, "should create a temporary config Dir")
 
 	o := &CreateHelmfileOptions{
 		outputDir:     tempDir,
-		dir:           path.Join("test_data"),
+		Dir:           path.Join("test_data"),
 		valueFiles:    []string{"foo/bar.yaml"},
 		CreateOptions: *getCreateOptions(),
 	}
@@ -116,11 +116,11 @@ func TestExtraFlagValues(t *testing.T) {
 
 func TestCreateNamespaceChart(t *testing.T) {
 	tempDir, err := ioutil.TempDir("", "test-applications-config")
-	assert.NoError(t, err, "should create a temporary config dir")
+	assert.NoError(t, err, "should create a temporary config Dir")
 
 	o := &CreateHelmfileOptions{
 		outputDir:  tempDir,
-		dir:        path.Join("test_data", "create-namespace-chart"),
+		Dir:        path.Join("test_data", "create-namespace-chart"),
 		valueFiles: []string{"foo/bar.yaml"},
 	}
 	configureTestCommonOptions(t, o)
@@ -150,11 +150,11 @@ func TestCreateNamespaceChart(t *testing.T) {
 
 func TestSystem(t *testing.T) {
 	tempDir, err := ioutil.TempDir("", "test-applications-config")
-	assert.NoError(t, err, "should create a temporary config dir")
+	assert.NoError(t, err, "should create a temporary config Dir")
 
 	o := &CreateHelmfileOptions{
 		outputDir: tempDir,
-		dir:       path.Join("test_data", "system"),
+		Dir:       path.Join("test_data", "system"),
 	}
 	configureTestCommonOptions(t, o)
 	o.SetEnvironmentContext(createTestEnvironmentContext(t))
