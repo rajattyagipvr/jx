@@ -1221,7 +1221,7 @@ func (s *Step) modifyStep(params StepPlaceholderReplacementArgs) {
 				args = append(args, "--skip-tls-verify-registry="+localRepo)
 			}
 
-			if ipAddressRegistryRegex.MatchString(localRepo) {
+			if ipAddressRegistryRegex.MatchString(localRepo) || strings.HasSuffix(localRepo, ".local") {
 				args = append(args, "--insecure")
 			}
 
