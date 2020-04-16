@@ -205,12 +205,12 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 				}
 			}
 			// if matched make sure the prefix appears in the chartname
-			if matched {
-				prefix := helmPrefixes.PrefixForURL(details.Repository)
-				if prefix == "" {
-					details.Name = repos[details.Repository] + "/" + details.Name
-				}
-			}
+			//if matched {
+			//	prefix := helmPrefixes.PrefixForURL(details.Repository)
+			//	if prefix == "" {
+			//		details.Name = repos[details.Repository] + "/" + details.Name
+			//	}
+			//}
 			if !matched {
 				prefix := helmPrefixes.PrefixForURL(details.Repository)
 				if prefix == "" {
@@ -219,8 +219,11 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 				if prefix == "" {
 					prefix = uuid.New().String()
 				}
-				details.Name = prefix + "/" + details.Name
+				//details.Name = prefix + "/" + details.Name
 				repos[details.Repository] = prefix
+			}
+			if strings.Index(details.Name, "/") == -1 {
+				details.Name = repos[details.Repository] + "/" + details.Name
 			}
 		}
 	}
