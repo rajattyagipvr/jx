@@ -9,6 +9,8 @@ import (
 	"strings"
 
 	"github.com/blang/semver"
+	v1 "github.com/jenkins-x/jx/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx/pkg/versionstream"
 
 	"github.com/jenkins-x/jx/pkg/cloud/amazon/session"
 	"github.com/jenkins-x/jx/pkg/prow"
@@ -716,13 +718,33 @@ func (o *StepVerifyPreInstallOptions) gatherRequirements(requirements *config.Re
 	}
 
 	// attempt to resolve the version stream ref to a tag
-	_, ref, err := o.CloneJXVersionsRepo(requirements.VersionStream.URL, requirements.VersionStream.Ref)
+	versionStreamDir, ref, err := o.CloneJXVersionsRepo(requirements.VersionStream.URL, requirements.VersionStream.Ref)
 	if err != nil {
 		return nil, errors.Wrapf(err, "resolving version stream ref")
 	}
 	if ref != "" && ref != requirements.VersionStream.Ref {
 		log.Logger().Infof("Locking version stream %s to release %s. Jenkins X will use this release rather than %s to resolve all versions from now on.", util.ColorInfo(requirements.VersionStream.URL), util.ColorInfo(ref), requirements.VersionStream.Ref)
 		requirements.VersionStream.Ref = ref
+	}
+
+	if requirements.BuildPackURL == "" {
+		requirements.BuildPackURL = v1.KubernetesWorkloadBuildPackURL
+	}
+	if requirements.BuildPackRef == "" || requirements.BuildPackRef == "master" {
+		// lets resolve the version from the version stream
+		resolver := &versionstream.VersionResolver{
+			VersionsDir: versionStreamDir,
+		}
+		gitVersion, err := resolver.StableVersionNumber(versionstream.KindGit, requirements.BuildPackURL)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to resolve git version of %s in the version stream at dir %s", requirements.BuildPackURL, versionStreamDir)
+		}
+		if gitVersion != "" {
+			requirements.BuildPackRef = gitVersion
+			log.Logger().Infof("setting the build pack %s to version %s", requirements.BuildPackURL, gitVersion)
+		} else {
+			log.Logger().Warnf("the version stream at %s does not have a stable git version for %s", versionStreamDir, requirements.BuildPackURL)
+		}
 	}
 
 	err = o.SaveConfig(requirements, requirementsFileName)

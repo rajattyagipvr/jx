@@ -12,11 +12,11 @@ import (
 
 const (
 	// ClassicWorkloadBuildPackURL the git URL for classic workload build packs
-	ClassicWorkloadBuildPackURL = "https://github.com/jenkins-x-buildpacks/jenkins-x-classic.git"
+	ClassicWorkloadBuildPackURL = "https://github.com/jenkins-x/jenkins-x-classic.git"
 	// ClassicWorkloadBuildPackRef the git reference/version for the classic workloads build packs
 	ClassicWorkloadBuildPackRef = "master"
 	// KubernetesWorkloadBuildPackURL the git URL for kubernetes workloads build packs
-	KubernetesWorkloadBuildPackURL = "https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes.git"
+	KubernetesWorkloadBuildPackURL = "https://github.com/jenkins-x/jxr-packs-kubernetes.git"
 	// KubernetesWorkloadBuildPackRef the git reference/version for the kubernetes workloads build packs
 	KubernetesWorkloadBuildPackRef = "master"
 )
