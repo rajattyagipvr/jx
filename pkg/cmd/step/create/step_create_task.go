@@ -496,7 +496,7 @@ func (o *StepCreateTaskOptions) createEffectiveProjectConfigFromOptions(tektonCl
 		o.KanikoSecretMount = kanikoSecretMount
 	}
 
-	if o.DockerRegistry == "" && !o.InterpretMode {
+	if o.DockerRegistry == "" {
 		data, err := kube.GetConfigMapData(kubeClient, kube.ConfigMapJenkinsDockerRegistry, ns)
 		if err != nil {
 			return nil, fmt.Errorf("could not find ConfigMap %s in namespace %s: %s", kube.ConfigMapJenkinsDockerRegistry, ns, err)
