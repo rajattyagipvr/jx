@@ -227,29 +227,6 @@ func (o *StepVerifyPreInstallOptions) Run() error {
 			return err
 		}
 	}
-	if requirements.Kaniko {
-		if requirements.Cluster.Provider == cloud.GKE {
-			log.Logger().Infof("Validating Kaniko secret in namespace %s", info(ns))
-
-			err = o.validateKaniko(ns)
-			if err != nil {
-				if o.LazyCreate {
-					log.Logger().Infof("attempting to lazily create the deploy namespace %s", info(ns))
-
-					err = o.lazyCreateKanikoSecret(requirements, ns)
-					if err != nil {
-						return errors.Wrapf(err, "failed to lazily create the kaniko secret in: %s", ns)
-					}
-					// lets rerun the verify step to ensure its all sorted now
-					err = o.validateKaniko(ns)
-				}
-			}
-			if err != nil {
-				return err
-			}
-			log.Logger().Info("\n")
-		}
-	}
 
 	if vns := requirements.Velero.Namespace; vns != "" {
 		if requirements.Cluster.Provider == cloud.GKE {

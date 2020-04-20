@@ -5,7 +5,6 @@ import (
 
 	"github.com/jenkins-x/jx/pkg/cmd/opts/step"
 
-	"github.com/jenkins-x/jx/pkg/cloud"
 	"github.com/jenkins-x/jx/pkg/cmd/helper"
 	"github.com/jenkins-x/jx/pkg/cmd/opts"
 	"github.com/jenkins-x/jx/pkg/config"
@@ -100,14 +99,6 @@ func (o *StepVerifyInstallOptions) Run() error {
 		provider = requirements.Cluster.Provider
 	}
 
-	if requirements.Kaniko {
-		if provider == cloud.GKE {
-			err = o.validateKaniko(ns)
-			if err != nil {
-				return err
-			}
-		}
-	}
 	log.Logger().Infof("Installation is currently looking: %s\n", util.ColorInfo("GOOD"))
 	return nil
 }
