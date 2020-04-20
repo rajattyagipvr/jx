@@ -489,7 +489,7 @@ func (o *UpgradeBootOptions) raisePR() error {
 		return errors.Wrapf(err, "failed to get PR details and filter")
 	}
 
-	_, err = gits.PushRepoAndCreatePullRequest(o.Dir, upstreamInfo, nil, "master", &details, &filter, false, details.Title, true, false, o.Git(), provider)
+	_, err = gits.PushRepoAndCreatePullRequest(o.Dir, upstreamInfo, nil, "master", &details, &filter, false, details.Title, true, false, false, o.Git(), provider)
 	if err != nil {
 		return errors.Wrapf(err, "failed to create PR for base %s and head branch %s", "master", details.BranchName)
 	}

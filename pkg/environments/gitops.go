@@ -96,7 +96,7 @@ func (o *EnvironmentPullRequestOptions) Create(env *jenkinsv1.Environment, prDir
 		labels = append(labels, gits.LabelUpdatebot)
 	}
 	pullRequestDetails.Labels = labels
-	prInfo, err := gits.PushRepoAndCreatePullRequest(dir, upstreamRepo, forkURL, base, pullRequestDetails, filter, true, pullRequestDetails.Message, true, false, o.Gitter, o.GitProvider)
+	prInfo, err := gits.PushRepoAndCreatePullRequest(dir, upstreamRepo, forkURL, base, pullRequestDetails, filter, true, pullRequestDetails.Message, true, false, false, o.Gitter, o.GitProvider)
 	if err != nil {
 		return nil, err
 	}

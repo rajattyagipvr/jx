@@ -1928,7 +1928,7 @@ func TestPushRepoAndCreatePullRequest(t *testing.T) {
 						Message:    fmt.Sprintf("Initial Commit!"),
 						Labels:     []string{"updatebot"},
 					}
-					_, err = gits.PushRepoAndCreatePullRequest(tmpDir, acmeRepo.GitRepo, personalRepo, "master", &prDetails, nil, true, "Initial Commit", true, false, args.gitter, args.provider)
+					_, err = gits.PushRepoAndCreatePullRequest(tmpDir, acmeRepo.GitRepo, personalRepo, "master", &prDetails, nil, true, "Initial Commit", true, false, false, args.gitter, args.provider)
 					assert.NoError(t, err)
 					// Let's clone the repo to dir and write a file
 					args.dir, err = ioutil.TempDir("", "")
@@ -2012,7 +2012,7 @@ func TestPushRepoAndCreatePullRequest(t *testing.T) {
 				commitMsg = tt.args.commitMsg
 			}
 
-			prInfo, err := gits.PushRepoAndCreatePullRequest(tt.args.dir, upstreamRepo, forkRepo, "master", &prDetails, tt.args.filter, tt.args.commit, commitMsg, tt.args.push, tt.args.dryRun, tt.args.gitter, tt.args.provider)
+			prInfo, err := gits.PushRepoAndCreatePullRequest(tt.args.dir, upstreamRepo, forkRepo, "master", &prDetails, tt.args.filter, tt.args.commit, commitMsg, tt.args.push, false, tt.args.dryRun, tt.args.gitter, tt.args.provider)
 			err2 := tt.postFn(&tt.args, &tt)
 			assert.NoError(t, err2)
 

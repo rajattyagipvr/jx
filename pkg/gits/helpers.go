@@ -196,7 +196,7 @@ func GitProviderURL(text string) string {
 // It creates a branch called branchName from a base.
 // It uses the pullRequestDetails for the message and title for the commit and PR.
 // It uses and updates pullRequestInfo to identify whether to rebase an existing PR.
-func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkRepo *GitRepository, base string, prDetails *PullRequestDetails, filter *PullRequestFilter, commit bool, commitMessage string, push bool, dryRun bool, gitter Gitter, provider GitProvider) (*PullRequestInfo, error) {
+func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkRepo *GitRepository, base string, prDetails *PullRequestDetails, filter *PullRequestFilter, commit bool, commitMessage string, push bool, noPR bool, dryRun bool, gitter Gitter, provider GitProvider) (*PullRequestInfo, error) {
 	userAuth := provider.UserAuth()
 	if commit {
 		err := gitter.Add(dir, "-A")
@@ -364,6 +364,11 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 		if err != nil {
 			return nil, errors.Wrapf(err, "pushing merged branch %s", remoteBranch)
 		}
+		log.Logger().Infof("pushed merged branch %s", util.ColorInfo(remoteBranch))
+	}
+	if noPR {
+		log.Logger().Infof("disabled creating Pull Requests in dir %s", util.ColorInfo(dir))
+		return nil, nil
 	}
 	if existingPr == nil {
 		gha.Head = headPrefix + prDetails.BranchName
