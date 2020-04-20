@@ -22,6 +22,7 @@ type StepCreatePrOptions struct {
 	step.StepCreateOptions
 	Results       *gits.PullRequestInfo
 	BranchName    string
+	PRBranchName  string
 	GitURLs       []string
 	Base          string
 	Fork          bool
@@ -31,6 +32,7 @@ type StepCreatePrOptions struct {
 	DryRun        bool
 	SkipCommit    bool
 	SkipAutoMerge bool
+	NoPR          bool
 	Labels        []string
 }
 
@@ -75,13 +77,15 @@ func (o *StepCreatePrOptions) Run() error {
 //AddStepCreatePrFlags adds the common flags for all PR creation steps to the cmd and stores them in o
 func AddStepCreatePrFlags(cmd *cobra.Command, o *StepCreatePrOptions) {
 	cmd.Flags().StringArrayVarP(&o.GitURLs, "repo", "r", []string{}, "Git repo to update")
-	cmd.Flags().StringVarP(&o.BranchName, "branch", "", "master", "Branch to clone and generate a pull request from")
+	cmd.Flags().StringVarP(&o.BranchName, "branch", "", "master", "Branch to clone and generate a pull request from. Otherwise a UUID is used")
+	cmd.Flags().StringVarP(&o.PRBranchName, "pr-branch", "", "", "The name of the PR branch to create. Defaults to $PR_BRANCH_NAME otherwise a UUID is used")
 	cmd.Flags().StringVarP(&o.Base, "base", "", "master", "The branch to create the pull request into")
 	cmd.Flags().StringVarP(&o.SrcGitURL, "src-repo", "", "", "The git repo which caused this change; if this is a dependency update this will cause commit messages to be generated which can be parsed by jx step changelog. By default this will be read from the environment variable REPO_URL")
 	cmd.Flags().StringVarP(&o.Component, "component", "", "", "The component of the git repo which caused this change; useful if you have a complex or monorepo setup and want to differentiate between different components from the same repo")
 	cmd.Flags().StringVarP(&o.Version, "version", "v", "", "The version to change. If no version is supplied the latest version is found")
 	cmd.Flags().BoolVarP(&o.DryRun, "dry-run", "", false, "Perform a dry run, the change will be generated and committed, but not pushed or have a PR created")
 	cmd.Flags().BoolVarP(&o.SkipAutoMerge, "skip-auto-merge", "", false, "Disable auto merge of the PR if status checks pass")
+	cmd.Flags().BoolVarP(&o.NoPR, "no-pr", "", false, "Disable the creation of a Pull Request so that you can combine multiple commands into a single pull request")
 	cmd.Flags().StringArrayVarP(&o.Labels, "labels", "", []string{}, "Labels to add to the created PR")
 }
 
@@ -116,6 +120,9 @@ func (o *StepCreatePrOptions) ValidateOptions(allowEmptyVersion bool) error {
 	if len(o.GitURLs) == 0 {
 		return util.MissingOption("repo")
 	}
+	if o.PRBranchName == "" {
+		o.PRBranchName = os.Getenv("PR_BRANCH_NAME")
+	}
 	return nil
 }
 
@@ -139,11 +146,13 @@ func (o *StepCreatePrOptions) createPullRequestOperation() operations.PullReques
 		CommonOptions: o.CommonOptions,
 		GitURLs:       o.GitURLs,
 		BranchName:    o.BranchName,
+		PRBranchName:  o.PRBranchName,
 		SrcGitURL:     o.SrcGitURL,
 		Base:          o.Base,
 		Version:       o.Version,
 		Component:     o.Component,
 		DryRun:        o.DryRun,
+		NoPR:          o.NoPR,
 		SkipCommit:    o.SkipCommit,
 		SkipAutoMerge: o.SkipAutoMerge,
 		Labels:        o.Labels,
