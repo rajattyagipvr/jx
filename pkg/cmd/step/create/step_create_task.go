@@ -499,11 +499,12 @@ func (o *StepCreateTaskOptions) createEffectiveProjectConfigFromOptions(tektonCl
 	if o.DockerRegistry == "" {
 		data, err := kube.GetConfigMapData(kubeClient, kube.ConfigMapJenkinsDockerRegistry, ns)
 		if err != nil {
-			return nil, fmt.Errorf("could not find ConfigMap %s in namespace %s: %s", kube.ConfigMapJenkinsDockerRegistry, ns, err)
-		}
-		o.DockerRegistry = data["docker.registry"]
-		if o.DockerRegistry == "" {
-			return nil, util.MissingOption("docker-registry")
+			log.Logger().Warnf("could not find ConfigMap %s in namespace %s: %s", kube.ConfigMapJenkinsDockerRegistry, ns, err.Error())
+		} else if data != nil {
+			o.DockerRegistry = data["docker.registry"]
+			if o.DockerRegistry == "" {
+				log.Logger().Warnf("ConfigMap %s in namespace %s has no entry 'docker.registry'", kube.ConfigMapJenkinsDockerRegistry, ns)
+			}
 		}
 	}
 
@@ -863,7 +864,7 @@ func (o *StepCreateTaskOptions) modifyEnvVars(container *corev1.Container, globa
 			envVars = append(envVars, e)
 		}
 	}
-	if kube.GetSliceEnvVar(envVars, "DOCKER_REGISTRY") == nil {
+	if kube.GetSliceEnvVar(envVars, "DOCKER_REGISTRY") == nil && o.DockerRegistry != "" {
 		envVars = append(envVars, corev1.EnvVar{
 			Name:  "DOCKER_REGISTRY",
 			Value: o.DockerRegistry,
