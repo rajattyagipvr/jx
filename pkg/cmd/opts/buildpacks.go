@@ -257,8 +257,23 @@ func (o *CommonOptions) InvokeDraftPack(i *InvokeDraftPack) (string, error) {
 		if err != nil {
 			return draftPack, err
 		}
-		if pipelineConfig.BuildPack != draftPack {
+		if pipelineConfig.BuildPack != draftPack || settings.BuildPackURL != "" {
 			pipelineConfig.BuildPack = draftPack
+			if pipelineConfig.BuildPackGitURL == "" {
+				pipelineConfig.BuildPackGitURL = settings.BuildPackURL
+			}
+			err = pipelineConfig.SaveConfig(jenkinsxYaml)
+			if err != nil {
+				return draftPack, err
+			}
+		}
+	} else if settings.BuildPackURL != "" {
+		pipelineConfig, err := config.LoadProjectConfigFile(jenkinsxYaml)
+		if err != nil {
+			return draftPack, err
+		}
+		if pipelineConfig.BuildPackGitURL == "" {
+			pipelineConfig.BuildPackGitURL = settings.BuildPackURL
 			err = pipelineConfig.SaveConfig(jenkinsxYaml)
 			if err != nil {
 				return draftPack, err
