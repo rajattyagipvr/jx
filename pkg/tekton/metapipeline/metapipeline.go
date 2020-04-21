@@ -43,7 +43,7 @@ const (
 
 var (
 	// DefaultJXImage the default image for jx steps
-	DefaultJXImage = "gcr.io/jenkinsxio-labs/jxl"
+	DefaultJXImage = "gcr.io/jenkinsxio-labs-private/jxl"
 )
 
 func init() {
