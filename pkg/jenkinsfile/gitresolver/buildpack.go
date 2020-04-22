@@ -30,10 +30,9 @@ func InitBuildPack(gitter gits.Gitter, packURL string, packRef string) (string, 
 		return "", fmt.Errorf("Could not create %s: %s", dir, err)
 	}
 
-	// lets start in master as we are not sure whether we were in a branch or tag
-	err = gitter.Checkout(dir, "master")
+	err = ensureBranchTracksOrigin(dir, "master", gitter)
 	if err != nil {
-		return "", errors.Wrapf(err, "checking out branch master")
+		return "", errors.Wrapf(err, "there was a problem ensuring the branch %s has tracking info", packRef)
 	}
 
 	err = gitter.CloneOrPull(packURL, dir)
@@ -80,12 +79,12 @@ func InitBuildPack(gitter gits.Gitter, packURL string, packRef string) (string, 
 			if err != nil {
 				return "", errors.Wrapf(err, "checking out tracking branch %s", packRef)
 			}
-
-			err = ensureBranchTracksOrigin(dir, packRef, gitter)
+			err = gitter.CloneOrPull(packURL, dir)
 			if err != nil {
-				return "", errors.Wrapf(err, "there was a problem ensuring the branch %s has tracking info", packRef)
+				return "", err
 			}
 		}
+
 	}
 	return filepath.Join(dir, "packs"), nil
 }
