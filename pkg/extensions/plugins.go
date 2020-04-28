@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -118,6 +119,12 @@ func FindPluginUrl(plugin jenkinsv1.PluginSpec) (string, error) {
 // EnsurePluginInstalled ensures that the correct version of a plugin is installed locally.
 // It will clean up old versions.
 func EnsurePluginInstalled(plugin jenkinsv1.Plugin) (string, error) {
+	return EnsurePluginInstalledForAliasFile(plugin, "")
+}
+
+// EnsurePluginInstalledForAliasFile ensures that the correct version of a plugin is installed locally.
+// It will clean up old versions.
+func EnsurePluginInstalledForAliasFile(plugin jenkinsv1.Plugin, aliasFileName string) (string, error) {
 	pluginBinDir, err := util.PluginBinDir(plugin.ObjectMeta.Namespace)
 	if err != nil {
 		return "", err
@@ -182,7 +189,21 @@ func EnsurePluginInstalled(plugin jenkinsv1.Plugin) (string, error) {
 			return path, err
 		}
 		defer out.Close()
-		resp, err := httpClient.Get(u)
+		requestU := u
+		if pluginURL.User != nil {
+			copy := *pluginURL
+			copy.User = nil
+			requestU = copy.String()
+		}
+		req, err := http.NewRequest("GET", requestU, nil)
+		req.Header.Add("Accept", "application/octet-stream")
+		if pluginURL.User != nil {
+			pwd, ok := pluginURL.User.Password()
+			if ok {
+				req.Header.Add("Authorization", fmt.Sprintf("token %s", pwd))
+			}
+		}
+		resp, err := httpClient.Do(req)
 		if err != nil {
 			return path, err
 		}
@@ -198,14 +219,14 @@ func EnsurePluginInstalled(plugin jenkinsv1.Plugin) (string, error) {
 		}
 
 		oldPath := downloadFile
-		if strings.HasSuffix(filename, ".tar.gz") {
+		if strings.HasSuffix(filename, ".tar.gz") || strings.HasSuffix(aliasFileName, ".tar.gz") {
 			err = util.UnTargz(downloadFile, tmpDir, make([]string, 0))
 			if err != nil {
 				return "", err
 			}
 			oldPath = filepath.Join(tmpDir, plugin.Spec.Name)
 		}
-		if strings.HasSuffix(filename, ".zip") {
+		if strings.HasSuffix(filename, ".zip") || strings.HasSuffix(aliasFileName, ".zip") {
 			err = util.Unzip(downloadFile, tmpDir)
 			if err != nil {
 				return "", err
