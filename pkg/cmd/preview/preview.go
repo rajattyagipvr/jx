@@ -515,6 +515,7 @@ func (o *PreviewOptions) Run() error {
 		SetStrings:  setStrings,
 		ValueFiles:  []string{configFileName},
 		Wait:        true,
+		NoForce:     false,
 	}
 
 	// if the preview chart has values.yaml then pass that so we can replace any secrets from vault
