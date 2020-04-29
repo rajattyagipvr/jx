@@ -218,6 +218,9 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
+		log.Logger().Infof("committed: %s", commitMessage)
+	} else {
+		log.Logger().Infof("commit skipped")
 	}
 
 	headPrefix := ""
@@ -373,6 +376,7 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 	if existingPr == nil {
 		gha.Head = headPrefix + prDetails.BranchName
 
+		log.Logger().Infof("Creating Pull Request from: %s", gha.Head)
 		pr, err = provider.CreatePullRequest(gha)
 		if err != nil {
 			return nil, errors.Wrapf(err, "creating pull request with arguments %v", gha.String())
@@ -385,6 +389,8 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 		PullRequest:          pr,
 		PullRequestArguments: gha,
 	}
+
+	log.Logger().Infof("Adding labels %s to PR", strings.Join(prDetails.Labels, " "))
 
 	err = addLabelsToPullRequest(prInfo, prDetails.Labels)
 	if err != nil {
@@ -721,10 +727,14 @@ func ForkAndPullRepo(gitURL string, dir string, baseRef string, branchName strin
 }
 
 func configureJxAsGitCredentialHelper(dir string, gitter Gitter, repoOwner string) error {
-	// configure jx as git credential helper for this repo
-	jxProcessBinary, err := os.Executable()
-	if err != nil {
-		return errors.Wrapf(err, "unable to determine jx binary location")
+	jxProcessBinary := os.Getenv("JX_CREDENTIAL_BINARY")
+	if jxProcessBinary == "" {
+		// configure jx as git credential helper for this repo
+		var err error
+		jxProcessBinary, err = os.Executable()
+		if err != nil {
+			return errors.Wrapf(err, "unable to determine jx binary location")
+		}
 	}
 	config := []string{"--local", "credential.helper", fmt.Sprintf("%s step git credentials --credential-helper --repo-owner %s", jxProcessBinary, repoOwner)}
 	log.Logger().Debugf("setting git config to: %s", strings.Join(config, " "))

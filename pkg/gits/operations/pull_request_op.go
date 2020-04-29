@@ -96,10 +96,13 @@ func (o *PullRequestOperation) CreatePullRequest(kind string, update ChangeFiles
 		if len(o.Labels) > 0 {
 			labels = append(labels, o.Labels...)
 		}
-		filter := &gits.PullRequestFilter{
-			Labels: labels,
+		var filter *gits.PullRequestFilter
+		if len(labels) > 0 {
+			filter = &gits.PullRequestFilter{
+				Labels: labels,
+			}
 		}
-
+		log.Logger().Infof("using PR filter of labels: %s", strings.Join(labels, " "))
 		details.Labels = labels
 		result, err = gits.PushRepoAndCreatePullRequest(dir, upstreamInfo, forkInfo, o.Base, details, filter, !o.SkipCommit, commitMessage, true, o.NoPR, o.DryRun, o.Git(), provider)
 		if err != nil {
