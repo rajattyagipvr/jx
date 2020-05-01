@@ -36,7 +36,6 @@ func CreateRegexChangeFunctions(version string, rs ...RegexFiles) ([]operations.
 func CreatePromotePR(o *StepCreatePrOptions, fn func(string) ([]operations.ChangeFilesFn, error), useOldVerisons bool, gitURLs ...string) error {
 	if o == nil {
 		o = &StepCreatePrOptions{}
-		o.SkipAutoMerge = true
 	}
 	if o.CommonOptions == nil {
 		f := clients.NewFactory()
