@@ -136,8 +136,8 @@ func EnsurePluginInstalledForAliasFile(plugin jenkinsv1.Plugin, aliasFileName st
 		if err != nil {
 			return "", err
 		}
-		log.Logger().Infof("Installing plugin %s version %s for command %s from %s", util.ColorInfo(plugin.Spec.Name),
-			util.ColorInfo(version), util.ColorInfo(fmt.Sprintf("jx %s", plugin.Spec.SubCommand)), util.ColorInfo(u))
+		log.Logger().Infof("Installing plugin %s version %s for command %s from %s into %s", util.ColorInfo(plugin.Spec.Name),
+			util.ColorInfo(version), util.ColorInfo(fmt.Sprintf("jx %s", plugin.Spec.SubCommand)), util.ColorInfo(u), pluginBinDir)
 
 		// Look for other versions to cleanup
 		files, err := ioutil.ReadDir(pluginBinDir)
