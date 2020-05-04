@@ -219,8 +219,6 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 			return nil, errors.WithStack(err)
 		}
 		log.Logger().Infof("committed: %s", commitMessage)
-	} else {
-		log.Logger().Infof("commit skipped")
 	}
 
 	headPrefix := ""
