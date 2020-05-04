@@ -83,7 +83,7 @@ func PluginBinDir(ns string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	path := filepath.Join(configDir, "plugins", ns, "bin")
+	path := filepath.Join(configDir, "plugins", "bin")
 	err = os.MkdirAll(path, DefaultWritePermissions)
 	if err != nil {
 		return "", err
