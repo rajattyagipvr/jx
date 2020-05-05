@@ -20,7 +20,16 @@ import (
 
 // CloneJXVersionsRepo clones the jenkins-x versions repo to a local working dir
 func CloneJXVersionsRepo(versionRepository string, versionRef string, settings *v1.TeamSettings, gitter gits.Gitter, batchMode bool, advancedMode bool, handles util.IOFileHandles) (string, string, error) {
-	dir, versionRef, err := cloneJXVersionsRepo(versionRepository, versionRef, settings, gitter, batchMode, advancedMode, handles)
+	configDir, err := util.ConfigDir()
+	if err != nil {
+		return "", "", fmt.Errorf("error determining config dir %v", err)
+	}
+	return CloneJXVersionsRepoToDir(configDir, versionRepository, versionRef, settings, gitter, batchMode, advancedMode, handles)
+}
+
+// CloneJXVersionsRepoToDir clones the version stream to the given directory
+func CloneJXVersionsRepoToDir(configDir string, versionRepository string, versionRef string, settings *v1.TeamSettings, gitter gits.Gitter, batchMode bool, advancedMode bool, handles util.IOFileHandles) (string, string, error) {
+	dir, versionRef, err := cloneJXVersionsRepo(configDir, versionRepository, versionRef, settings, gitter, batchMode, advancedMode, handles)
 	if err != nil {
 		return "", "", errors.Wrapf(err, "")
 	}
@@ -34,12 +43,8 @@ func CloneJXVersionsRepo(versionRepository string, versionRef string, settings *
 	return dir, "", nil
 }
 
-func cloneJXVersionsRepo(versionRepository string, versionRef string, settings *v1.TeamSettings, gitter gits.Gitter, batchMode bool, advancedMode bool, handles util.IOFileHandles) (string, string, error) {
+func cloneJXVersionsRepo(configDir string, versionRepository string, versionRef string, settings *v1.TeamSettings, gitter gits.Gitter, batchMode bool, advancedMode bool, handles util.IOFileHandles) (string, string, error) {
 	surveyOpts := survey.WithStdio(handles.In, handles.Out, handles.Err)
-	configDir, err := util.ConfigDir()
-	if err != nil {
-		return "", "", fmt.Errorf("error determining config dir %v", err)
-	}
 	wrkDir := filepath.Join(configDir, "jenkins-x-versions")
 
 	if settings != nil {
