@@ -218,9 +218,6 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		log.Logger().Infof("committed: %s", commitMessage)
-	} else {
-		log.Logger().Infof("commit skipped")
 	}
 
 	headPrefix := ""
@@ -375,8 +372,6 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 	}
 	if existingPr == nil {
 		gha.Head = headPrefix + prDetails.BranchName
-
-		log.Logger().Infof("Creating Pull Request from: %s", gha.Head)
 		pr, err = provider.CreatePullRequest(gha)
 		if err != nil {
 			return nil, errors.Wrapf(err, "creating pull request with arguments %v", gha.String())
@@ -389,8 +384,6 @@ func PushRepoAndCreatePullRequest(dir string, upstreamRepo *GitRepository, forkR
 		PullRequest:          pr,
 		PullRequestArguments: gha,
 	}
-
-	log.Logger().Infof("Adding labels %s to PR", strings.Join(prDetails.Labels, " "))
 
 	err = addLabelsToPullRequest(prInfo, prDetails.Labels)
 	if err != nil {
