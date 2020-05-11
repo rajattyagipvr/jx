@@ -343,6 +343,8 @@ func (p *GitHubProvider) CreateRepository(owner string, name string, private boo
 		}
 		return nil, errors.New(msg)
 	}
+	// Sleep 5 seconds to ensure repository exists enough to be pushed to.
+	time.Sleep(5 * time.Second)
 	return toGitHubRepo(name, owner, repo), nil
 }
 
@@ -418,6 +420,8 @@ func (p *GitHubProvider) ForkRepository(originalOrg string, name string, destina
 			return nil, fmt.Errorf("failed to fork repository %s/%s%s due to: %s", originalOrg, name, msg, err)
 		}
 	}
+	// Sleep 5 seconds to ensure repository exists enough to be pushed to.
+	time.Sleep(5 * time.Second)
 	answer := &GitRepository{
 		Name:             name,
 		AllowMergeCommit: util.DereferenceBool(repo.AllowMergeCommit),
@@ -700,7 +704,9 @@ func (p *GitHubProvider) updatePullRequest(pr *GitPullRequest, source *github.Pu
 	}
 	if pr.Author == nil && source.User != nil && source.User.Login != nil {
 		pr.Author = &GitUser{
-			Login: *source.User.Login,
+			Login:     *source.User.Login,
+			AvatarURL: *source.User.AvatarURL,
+			URL:       *source.User.HTMLURL,
 		}
 	}
 	pr.Assignees = make([]*GitUser, 0)
@@ -1451,12 +1457,7 @@ func (p *GitHubProvider) ListCommits(owner, repo string, opt *ListCommitsArgumen
 
 	for _, commit := range githubCommits {
 		if commit.Commit != nil {
-			var author *GitUser
-			if commit.Author != nil && commit.Author.Login != nil {
-				author = &GitUser{
-					Login: *commit.Author.Login,
-				}
-			}
+			author := extractRepositoryCommitAuthor(commit)
 			commits = append(commits, &GitCommit{
 				SHA:     asText(commit.SHA),
 				Message: asText(commit.Commit.Message),

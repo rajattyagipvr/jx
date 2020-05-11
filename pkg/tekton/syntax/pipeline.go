@@ -274,10 +274,6 @@ type PipelineOverride struct {
 
 var _ apis.Validatable = (*ParsedPipeline)(nil)
 
-func (s *Stage) taskName() string {
-	return strings.ToLower(strings.NewReplacer(" ", "-").Replace(s.Name))
-}
-
 // stageLabelName replaces invalid characters in stage names for label usage.
 func (s *Stage) stageLabelName() string {
 	return MangleToRfc1035Label(s.Name, "")
@@ -1713,7 +1709,7 @@ func generateSteps(params generateStepsParams) ([]tektonv1alpha1.Step, map[strin
 			}
 		} else {
 			c.Image = stepImage
-			c.Command = []string{"/bin/sh", "-c"}
+			c.Command = []string{util.GetSh(), "-c"}
 		}
 
 		resolvedImage, err := versionstream.ResolveDockerImage(params.stageParams.parentParams.VersionsDir, c.Image)
@@ -2099,18 +2095,6 @@ func (ts *transformedStage) getEnclosing(depth int8) *transformedStage {
 		return nil
 	} else {
 		return ts.EnclosingStage.getEnclosing(depth)
-	}
-}
-
-// Return the first stage that will execute before this stage
-// Depth must be >= 0
-func (ts transformedStage) getClosestAncestor() *transformedStage {
-	if ts.PreviousSiblingStage != nil {
-		return ts.PreviousSiblingStage
-	} else if ts.EnclosingStage == nil {
-		return nil
-	} else {
-		return ts.EnclosingStage.getClosestAncestor()
 	}
 }
 

@@ -18,25 +18,25 @@ func InstallVaultCli() error {
 		return err
 	}
 	binary := "vault"
-	fileName, flag, err := packages.ShouldInstallBinary(binary)
+	flag, err := packages.ShouldInstallBinary(binary)
 	if err != nil || !flag {
 		return err
 	}
-	latestVersion, err := util.GetLatestFullTagFromGithub("hashicorp", "vault")
+	latestTag, err := util.GetLatestFullTagFromGithub("hashicorp", "vault")
 	if err != nil {
 		return err
 	}
 	// Strip the v off the beginning of the version number
-	latestVersion = strings.Replace(latestVersion, "v", "", 1)
+	latestVersion := strings.Replace(*latestTag.Name, "v", "", 1)
 
 	clientURL := fmt.Sprintf("https://releases.hashicorp.com/vault/%s/vault_%s_%s_%s.zip", latestVersion, latestVersion, runtime.GOOS, runtime.GOARCH)
-	fullPath := filepath.Join(binDir, fileName)
+	fullPath := filepath.Join(binDir, binary)
 	tarFile := fullPath + ".zip"
 	err = packages.DownloadFile(clientURL, tarFile)
 	if err != nil {
 		return err
 	}
-	err = util.UnzipSpecificFiles(tarFile, binDir, fileName)
+	err = util.UnzipSpecificFiles(tarFile, binDir, binary)
 	if err != nil {
 		return err
 	}

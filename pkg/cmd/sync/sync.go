@@ -100,13 +100,16 @@ func NewCmdSync(commonOpts *opts.CommonOptions) *cobra.Command {
 func (o *SyncOptions) Run() error {
 
 	// ksync is installed to the jx/bin dir, so we can add it for the user
-	os.Setenv("PATH", util.PathWithBinary())
+	err := os.Setenv("PATH", util.PathWithBinary())
+	if err != nil {
+		return err
+	}
 
 	client, err := o.KubeClient()
 	if err != nil {
 		return err
 	}
-	version, err := ksync.InstallKSync()
+	sha, err := ksync.InstallKSync()
 	if err != nil {
 		return err
 	}
@@ -115,9 +118,12 @@ func (o *SyncOptions) Run() error {
 		flag, err := kube.IsDaemonSetExists(client, "ksync", "kube-system")
 		if !flag || err != nil {
 			log.Logger().Infof("Initialising ksync")
-			// Deal with https://github.com/vapor-ware/ksync/issues/218
-			err = o.RunCommandInteractive(true, "ksync", "init", "--upgrade", "--image",
-				fmt.Sprintf("vaporio/ksync:%s", version))
+			kcli, err := ksync.NewCLI()
+			if err != nil {
+				return err
+			}
+			// Deal with https://github.com/ksync/ksync/issues/218
+			_, err = kcli.Init("--upgrade", "--image", fmt.Sprintf("ksync/ksync:git-%s", sha))
 			if err != nil {
 				return err
 			}
@@ -252,10 +258,4 @@ func (o *SyncOptions) CreateKsync(client kubernetes.Interface, ns string, name s
 	time.Sleep(1 * time.Second)
 
 	return o.RunCommand("ksync", "create", "--name", name, "-l", "jenkins.io/devpod="+name, reload, "-n", ns, dir, remoteDir)
-}
-
-func (o *SyncOptions) killWatchProcess(cmd *exec.Cmd) {
-	if err := cmd.Process.Kill(); err != nil {
-		log.Logger().Warnf("failed to kill 'ksync watch' process: %s", err)
-	}
 }

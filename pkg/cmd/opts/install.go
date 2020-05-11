@@ -3,22 +3,15 @@ package opts
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
 
+	"github.com/jenkins-x/jx/pkg/brew"
 	"github.com/jenkins-x/jx/pkg/cloud/openshift"
 	"github.com/jenkins-x/jx/pkg/dependencymatrix"
-
-	"github.com/jenkins-x/jx/pkg/virtualmachines/kvm"
-
-	"github.com/jenkins-x/jx/pkg/virtualmachines/kvm2"
-
-	"github.com/jenkins-x/jx/pkg/virtualmachines/virtualbox"
-
-	"github.com/jenkins-x/jx/pkg/brew"
+	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/jenkins-x/jx/pkg/ksync"
 
@@ -87,25 +80,16 @@ const (
 
 // DoInstallMissingDependencies install missing dependencies from the given list
 func (o *CommonOptions) DoInstallMissingDependencies(install []string) error {
-	// install package managers first
-	for _, i := range install {
-		if i == "brew" {
-			log.Logger().Infof("Installing %s", util.ColorInfo(i))
-			o.InstallBrew()
-			break
-		}
-	}
-
 	for _, i := range install {
 		log.Logger().Infof("Installing %s", util.ColorInfo(i))
 		var err error
 		switch i {
 		case "az":
-			err = o.InstallAzureCli()
+			o.InstallAzureCli()
 		case "kubectl":
 			err = packages.InstallKubectl(false)
 		case "gcloud":
-			err = o.InstallGcloud()
+			o.InstallGcloud()
 		case "helm":
 			err = o.InstallHelm()
 		case "ibmcloud":
@@ -116,24 +100,10 @@ func (o *CommonOptions) DoInstallMissingDependencies(install []string) error {
 			err = o.InstallTiller()
 		case "helm3":
 			err = o.InstallHelm3()
-		case "kops":
-			err = amazon.InstallKops()
-		case "kvm":
-			err = kvm.InstallKvm()
-		case "kvm2":
-			err = kvm2.InstallKvm2()
 		case "ksync":
 			_, err = ksync.InstallKSync()
 		case "oc":
 			err = openshift.InstallOc()
-		case "virtualbox":
-			err = virtualbox.InstallVirtualBox()
-		case "xhyve":
-			err = o.InstallXhyve()
-		case "hyperv":
-			err = o.Installhyperv()
-		case "terraform":
-			err = o.InstallTerraform()
 		case "oci":
 			err = o.InstallOciCli()
 		case "aws":
@@ -154,53 +124,23 @@ func (o *CommonOptions) DoInstallMissingDependencies(install []string) error {
 	return nil
 }
 
-// InstallBrew installs brew
-func (o *CommonOptions) InstallBrew() error {
-	if runtime.GOOS != "darwin" {
-		return nil
-	}
-	log.Logger().Infof("Please enter your root password when prompted by the %s installation", util.ColorInfo("brew"))
-	//Make sure to run command through sh in order to get $() expanded.
-	return o.RunCommand("sh", "-c", "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"")
-}
-
-// InstallBrewIfRequired installs brew if required
-func (o *CommonOptions) InstallBrewIfRequired() error {
-	if runtime.GOOS != "darwin" || o.NoBrew {
-		return nil
-	}
-
-	_, flag, err := packages.ShouldInstallBinary("brew")
-	if err != nil || !flag {
-		return err
-	}
-	return o.InstallBrew()
-}
-
 // InstallGlooctl Installs glooctl tool
 func (o *CommonOptions) InstallGlooctl() error {
-	if runtime.GOOS == "darwin" && !o.NoBrew {
-		return o.RunCommand("brew", "install", "glooctl")
-	}
 	binDir, err := util.JXBinLocation()
 	if err != nil {
 		return err
 	}
-	fileName, flag, err := packages.ShouldInstallBinary("glooctl")
+	fileName := "glooctl"
+	flag, err := packages.ShouldInstallBinary("glooctl")
 	if err != nil || !flag {
 		return err
-	}
-
-	latestVersion, err := util.GetLatestVersionFromGitHub("solo-io", "gloo")
-	if err != nil {
-		return fmt.Errorf("unable to get latest version for github.com/%s/%s %v", "kubernetes-sigs", "kustomize", err)
 	}
 
 	suffix := runtime.GOARCH
 	if runtime.GOOS == "windows" {
 		suffix += ".exe"
 	}
-	clientURL := fmt.Sprintf("https://github.com/solo-io/gloo/releases/download/v%v/glooctl-%s-%s", latestVersion, runtime.GOOS, suffix)
+	clientURL := fmt.Sprintf("https://github.com/solo-io/gloo/releases/download/v%v/glooctl-%s-%s", packages.GlooVersion, runtime.GOOS, suffix)
 	fullPath := filepath.Join(binDir, fileName)
 	tmpFile := fullPath + ".tmp"
 	err = packages.DownloadFile(clientURL, tmpFile)
@@ -216,10 +156,6 @@ func (o *CommonOptions) InstallGlooctl() error {
 
 // InstallKustomize installs kustomize
 func (o *CommonOptions) InstallKustomize() error {
-	if runtime.GOOS == "darwin" && !o.NoBrew {
-		return o.RunCommand("brew", "install", "kustomize")
-	}
-
 	binDir, err := util.JXBinLocation()
 	if err != nil {
 		return errors.Wrapf(err, "unable to find JXBinLocation")
@@ -235,18 +171,7 @@ func (o *CommonOptions) InstallKustomize() error {
 		return nil
 	}
 
-	// get the stable jx supported version of kustomize to be install
-	versionResolver, err := o.GetVersionResolver()
-	if err != nil {
-		return errors.Wrapf(err, "unable to retrieve version resolver")
-	}
-
-	stableVersion, err := versionResolver.StableVersion(versionstream.KindPackage, "kustomize")
-	if err != nil {
-		return errors.Wrapf(err, "unable to get stable version from the jenkins-x-versions for github.com/%s/%s %v ", "kubernetes-sigs", "kustomize", err)
-	}
-
-	clientURL := fmt.Sprintf("https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%%2Fv%s/kustomize_v%s_%s_%s.tar.gz", stableVersion.Version, stableVersion.Version, runtime.GOOS, runtime.GOARCH)
+	clientURL := fmt.Sprintf("https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%%2Fv%s/kustomize_v%s_%s_%s.tar.gz", packages.KustomizeVersion, packages.KustomizeVersion, runtime.GOOS, runtime.GOARCH)
 	tmpDir := filepath.Join(binDir, "kustomize.tmp")
 	err = os.MkdirAll(tmpDir, util.DefaultWritePermissions)
 	if err != nil {
@@ -286,116 +211,27 @@ func (o *CommonOptions) InstallKustomize() error {
 	return os.Chmod(fullPath, 0755)
 }
 
-// InstallXhyve installs xhyve
-func (o *CommonOptions) InstallXhyve() error {
-	info, err := o.GetCommandOutput("", "brew", "info", "docker-machine-driver-xhyve")
-
-	if err != nil || strings.Contains(info, "Not installed") {
-		err = o.RunCommand("brew", "install", "docker-machine-driver-xhyve")
-		if err != nil {
-			return err
-		}
-
-		brewPrefix, err := o.GetCommandOutput("", "brew", "--prefix")
-		if err != nil {
-			return err
-		}
-
-		file := brewPrefix + "/opt/docker-machine-driver-xhyve/bin/docker-machine-driver-xhyve"
-		err = o.RunCommand("sudo", "chown", "root:wheel", file)
-		if err != nil {
-			return err
-		}
-
-		err = o.RunCommand("sudo", "chmod", "u+s", file)
-		if err != nil {
-			return err
-		}
-		log.Logger().Info("xhyve driver installed")
-	} else {
-		pgmPath, _ := exec.LookPath("docker-machine-driver-xhyve")
-		log.Logger().Infof("xhyve driver is already available on your PATH at %s", pgmPath)
-	}
-	return nil
-}
-
-// Installhyperv installs hyperv
-func (o *CommonOptions) Installhyperv() error {
-	info, err := o.GetCommandOutput("", "powershell", "Get-WindowsOptionalFeature", "-FeatureName", "Microsoft-Hyper-V-All", "-Online")
-
-	if err != nil {
-		return err
-	}
-	if strings.Contains(info, "Disabled") {
-
-		log.Logger().Info("hyperv is Disabled, this computer will need to restart\n and after restart you will need to rerun your inputted command.")
-
-		message := fmt.Sprintf("Would you like to restart your computer?")
-
-		if answer, err := util.Confirm(message, true, "Please indicate if you would like to restart your computer.", o.GetIOFileHandles()); err != nil {
-			return err
-		} else if answer {
-
-			err = o.RunCommand("powershell", "Enable-WindowsOptionalFeature", "-Online", "-FeatureName", "Microsoft-Hyper-V", "-All", "-NoRestart")
-			if err != nil {
-				return err
-			}
-			err = o.RunCommand("powershell", "Restart-Computer")
-			if err != nil {
-				return err
-			}
-
-		} else {
-			err = errors.New("hyperv was not Disabled")
-			return err
-		}
-
-	} else {
-		log.Logger().Info("hyperv is already Enabled")
-	}
-	return nil
-}
-
 // InstallHelm install helm cli
 func (o *CommonOptions) InstallHelm() error {
 	binary := "helm"
-
-	if runtime.GOOS == "darwin" && !o.NoBrew {
-		err := o.RunCommand("brew", "install", "helm@2")
-		if err != nil {
-			return err
-		}
-		return o.installHelmSecretsPlugin(binary, true)
-	}
-
 	binDir, err := util.JXBinLocation()
 	if err != nil {
 		return err
 	}
 
-	fileName, flag, err := packages.ShouldInstallBinary(binary)
+	flag, err := packages.ShouldInstallBinary(binary)
 	if err != nil || !flag {
 		return err
 	}
 
-	versionResolver, err := o.GetVersionResolver()
-	if err != nil {
-		return err
-	}
-
-	stableVersion, err := versionResolver.StableVersionNumber(versionstream.KindPackage, "helm")
-	if err != nil {
-		return err
-	}
-
-	clientURL := fmt.Sprintf("https://get.helm.sh/helm-v%s-%s-%s.tar.gz", stableVersion, runtime.GOOS, runtime.GOARCH)
-	fullPath := filepath.Join(binDir, fileName)
+	clientURL := fmt.Sprintf("https://get.helm.sh/helm-v%s-%s-%s.tar.gz", packages.Helm2Version, runtime.GOOS, runtime.GOARCH)
+	fullPath := filepath.Join(binDir, binary)
 	tarFile := fullPath + ".tgz"
 	err = packages.DownloadFile(clientURL, tarFile)
 	if err != nil {
 		return err
 	}
-	err = util.UnTargz(tarFile, binDir, []string{binary, fileName})
+	err = util.UnTargz(tarFile, binDir, []string{binary, binary})
 	if err != nil {
 		return err
 	}
@@ -421,15 +257,8 @@ func (o *CommonOptions) InstallTiller() error {
 	if runtime.GOOS == "windows" {
 		fileName += ".exe"
 	}
-	// TODO workaround until 2.11.x GA is released
-	latestVersion := "2.11.0-rc.3"
-	/*
-		latestVersion, err := util.GetLatestVersionFromGitHub("kubernetes", "helm")
-			if err != nil {
-				return err
-			}
-	*/
-	clientURL := fmt.Sprintf("https://get.helm.sh/helm-v%s-%s-%s.tar.gz", latestVersion, runtime.GOOS, runtime.GOARCH)
+
+	clientURL := fmt.Sprintf("https://get.helm.sh/helm-v%s-%s-%s.tar.gz", packages.Helm2Version, runtime.GOOS, runtime.GOARCH)
 	fullPath := filepath.Join(binDir, fileName)
 	helmFullPath := filepath.Join(binDir, "helm")
 	tarFile := fullPath + ".tgz"
@@ -463,14 +292,12 @@ func (o *CommonOptions) InstallHelm3() error {
 		return err
 	}
 	binary := "helm3"
-	fileName, flag, err := packages.ShouldInstallBinary(binary)
+	flag, err := packages.ShouldInstallBinary(binary)
 	if err != nil || !flag {
 		return err
 	}
 
-	// https://get.helm.sh/helm-v3.0.0-alpha.1-darwin-amd64.tar.gz
-	latestVersion := "v3.0.0-alpha.1"
-	clientURL := fmt.Sprintf("https://get.helm.sh/helm-%v-%s-%s.tar.gz", latestVersion, runtime.GOOS, runtime.GOARCH)
+	clientURL := fmt.Sprintf("https://get.helm.sh/helm-v%v-%s-%s.tar.gz", packages.Helm3Version, runtime.GOOS, runtime.GOARCH)
 
 	tmpDir := filepath.Join(binDir, "helm3.tmp")
 	err = os.MkdirAll(tmpDir, util.DefaultWritePermissions)
@@ -478,7 +305,7 @@ func (o *CommonOptions) InstallHelm3() error {
 		return err
 	}
 	fullPath := filepath.Join(binDir, binary)
-	tarFile := filepath.Join(tmpDir, fileName+".tgz")
+	tarFile := filepath.Join(tmpDir, binary+".tgz")
 	err = packages.DownloadFile(clientURL, tarFile)
 	if err != nil {
 		return err
@@ -509,9 +336,12 @@ func (o *CommonOptions) InstallHelm3() error {
 
 func (o *CommonOptions) installHelmSecretsPlugin(helmBinary string, clientOnly bool) error {
 	log.Logger().Infof("Installing %s", util.ColorInfo("helm secrets plugin"))
-	err := o.Helm().Init(clientOnly, "", "", false)
-	if err != nil {
-		return errors.Wrap(err, "failed to initialize helm")
+	var err error
+	if !strings.Contains(helmBinary, "helm3") {
+		err := o.Helm().Init(clientOnly, "", "", false)
+		if err != nil {
+			return errors.Wrap(err, "failed to initialize helm")
+		}
 	}
 	// remove the plugin just in case is already installed
 	cmd := util.Command{
@@ -534,44 +364,6 @@ func (o *CommonOptions) installHelmSecretsPlugin(helmBinary string, clientOnly b
 	}
 	// End of Workaround
 	return err
-}
-
-// InstallTerraform installs terraform
-func (o *CommonOptions) InstallTerraform() error {
-	if runtime.GOOS == "darwin" && !o.NoBrew {
-		return o.RunCommand("brew", "install", "terraform")
-	}
-
-	binDir, err := util.JXBinLocation()
-	if err != nil {
-		return err
-	}
-	binary := "terraform"
-	fileName, flag, err := packages.ShouldInstallBinary(binary)
-	if err != nil || !flag {
-		return err
-	}
-	latestVersion, err := util.GetLatestVersionFromGitHub("hashicorp", "terraform")
-	if err != nil {
-		return err
-	}
-
-	clientURL := fmt.Sprintf("https://releases.hashicorp.com/terraform/%s/terraform_%s_%s_%s.zip", latestVersion, latestVersion, runtime.GOOS, runtime.GOARCH)
-	fullPath := filepath.Join(binDir, fileName)
-	zipFile := fullPath + ".zip"
-	err = packages.DownloadFile(clientURL, zipFile)
-	if err != nil {
-		return err
-	}
-	err = util.Unzip(zipFile, binDir)
-	if err != nil {
-		return err
-	}
-	err = os.Remove(zipFile)
-	if err != nil {
-		return err
-	}
-	return os.Chmod(fullPath, 0755)
 }
 
 // GetLatestJXVersion returns latest jx version
@@ -655,11 +447,10 @@ func (o *CommonOptions) InstallJx(upgrade bool, version string) error {
 	binary := "jx"
 	fileName := binary
 	if !upgrade {
-		f, flag, err := packages.ShouldInstallBinary(binary)
+		flag, err := packages.ShouldInstallBinary(binary)
 		if err != nil || !flag {
 			return err
 		}
-		fileName = f
 	}
 	org := "jenkins-x"
 	repo := "jx"
@@ -739,16 +530,13 @@ func (o *CommonOptions) InstallJx(upgrade bool, version string) error {
 }
 
 // InstallGcloud installs gcloud cli
-func (o *CommonOptions) InstallGcloud() error {
-	if runtime.GOOS != "darwin" || o.NoBrew {
-		return errors.New("please install missing gcloud sdk - see https://cloud.google.com/sdk/downloads#interactive")
-	}
-	return o.RunCommand("brew", "cask", "install", "google-cloud-sdk")
+func (o *CommonOptions) InstallGcloud() {
+	log.Logger().Infof("please install missing gcloud sdk - see https://cloud.google.com/sdk/downloads#interactive")
 }
 
 // InstallAzureCli installs azure cli
-func (o *CommonOptions) InstallAzureCli() error {
-	return o.RunCommand("brew", "install", "azure-cli")
+func (o *CommonOptions) InstallAzureCli() {
+	log.Logger().Infof("please install missing azure cli https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest")
 }
 
 // InstallOciCli installs oci cli
@@ -1118,7 +906,7 @@ func (o *CommonOptions) CreateWebhookProw(gitURL string, gitProvider gits.GitPro
 	}
 	webhookUrl := util.UrlJoin(baseURL, "hook")
 
-	hmacToken, err := client.CoreV1().Secrets(ns).Get("hmac-token", metav1.GetOptions{})
+	hmacToken, err := o.GetHMACTokenSecret()
 	if err != nil {
 		return err
 	}
@@ -1130,10 +918,31 @@ func (o *CommonOptions) CreateWebhookProw(gitURL string, gitProvider gits.GitPro
 		Owner:       gitInfo.Organisation,
 		Repo:        gitInfo,
 		URL:         webhookUrl,
-		Secret:      string(hmacToken.Data["hmac"]),
+		Secret:      hmacToken,
 		InsecureSSL: isInsecureSSL,
 	}
 	return gitProvider.CreateWebHook(webhook)
+}
+
+// GetHMACTokenSecret gets the appropriate HMAC secret, for either Prow or Lighthouse
+func (o *CommonOptions) GetHMACTokenSecret() (string, error) {
+	client, err := o.KubeClient()
+	if err != nil {
+		return "", err
+	}
+	ns, _, err := kube.GetDevNamespace(client, o.currentNamespace)
+	if err != nil {
+		return "", err
+	}
+	hmacTokenSecret, err := client.CoreV1().Secrets(ns).Get("hmac-token", metav1.GetOptions{})
+	if err != nil && k8sErrors.IsNotFound(err) {
+		// Try again with the Lighthouse HMAC token name
+		hmacTokenSecret, err = client.CoreV1().Secrets(ns).Get("lighthouse-hmac-token", metav1.GetOptions{})
+	}
+	if err != nil {
+		return "", err
+	}
+	return string(hmacTokenSecret.Data["hmac"]), nil
 }
 
 // IsProw checks if prow is available in the cluster

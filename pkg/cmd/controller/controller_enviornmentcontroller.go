@@ -24,6 +24,7 @@ import (
 	"github.com/jenkins-x/jx/pkg/cmd/step/create"
 	"github.com/jenkins-x/jx/pkg/gits"
 	"github.com/jenkins-x/jx/pkg/jenkinsfile"
+	"github.com/jenkins-x/jx/pkg/kube"
 	"github.com/jenkins-x/jx/pkg/kube/services"
 	"github.com/jenkins-x/jx/pkg/log"
 	"github.com/jenkins-x/jx/pkg/util"
@@ -295,6 +296,7 @@ func (o *ControllerEnvironmentOptions) startPipelineRun(w http.ResponseWriter, r
 	pr.Revision = revision
 	pr.RemoteCluster = true
 	pr.DisableConcurrent = true
+	pr.CustomEnvs = append(pr.CustomEnvs, fmt.Sprintf("%s=%s", kube.DisableBuildLockEnvKey, "true"))
 
 	// turn map into string array with = separator to match type of custom labels which are CLI flags
 	for key, value := range o.Labels {
@@ -427,19 +429,6 @@ func (o *ControllerEnvironmentOptions) ensureHmacTokenPopulated() error {
 func (o *ControllerEnvironmentOptions) isReady() bool {
 	// TODO a better readiness check
 	return true
-}
-
-func (o *ControllerEnvironmentOptions) unmarshalBody(w http.ResponseWriter, r *http.Request, result interface{}) error {
-	// TODO assume JSON for now
-	data, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return errors.Wrap(err, "reading the JSON request body")
-	}
-	err = json.Unmarshal(data, result)
-	if err != nil {
-		return errors.Wrap(err, "unmarshalling the JSON request body")
-	}
-	return nil
 }
 
 func (o *ControllerEnvironmentOptions) marshalPayload(w http.ResponseWriter, r *http.Request, payload interface{}) error {

@@ -292,9 +292,12 @@ func (g *GitlabProvider) UpdatePullRequest(data *GitPullRequestArguments, number
 	base := data.Base
 
 	o := &gitlab.UpdateMergeRequestOptions{
-		Title:        &title,
-		Description:  &body,
-		TargetBranch: &base,
+		Title:       &title,
+		Description: &body,
+	}
+
+	if base != "" {
+		o.TargetBranch = &base
 	}
 
 	pid, err := g.projectId(owner, g.Username, repo)
@@ -325,15 +328,22 @@ func fromMergeRequest(mr *gitlab.MergeRequest, owner, repo string) *GitPullReque
 	if mr.MergedAt != nil {
 		merged = true
 	}
+	var assignees []*GitUser
+	if mr.Assignee != nil {
+		assignees = append(assignees, convertUser(mr.Assignee))
+	}
+	for _, a := range mr.Assignees {
+		assignees = append(assignees, convertUser(a))
+	}
 	return &GitPullRequest{
-		Author: &GitUser{
-			Login: mr.Author.Username,
-		},
+		Author:         convertUser(mr.Author),
+		Assignees:      assignees,
 		URL:            mr.WebURL,
 		Owner:          owner,
 		Repo:           repo,
 		Number:         &mr.IID,
 		State:          &mr.State,
+		Labels:         convertPullRequestLabels(mr.Labels),
 		Title:          mr.Title,
 		Body:           mr.Description,
 		MergeCommitSHA: &mr.MergeCommitSHA,
@@ -376,7 +386,7 @@ func (g *GitlabProvider) GetPullRequest(owner string, repo *GitRepository, numbe
 // ListOpenPullRequests lists the open pull requests
 func (g *GitlabProvider) ListOpenPullRequests(owner string, repo string) ([]*GitPullRequest, error) {
 	gitlabOpen := "opened"
-	opt := &gitlab.ListMergeRequestsOptions{
+	opt := &gitlab.ListProjectMergeRequestsOptions{
 		State: &gitlabOpen,
 		ListOptions: gitlab.ListOptions{
 			Page:    0,
@@ -384,8 +394,12 @@ func (g *GitlabProvider) ListOpenPullRequests(owner string, repo string) ([]*Git
 		},
 	}
 	answer := []*GitPullRequest{}
+	pid, err := g.projectId(owner, g.Username, repo)
+	if err != nil {
+		return nil, err
+	}
 	for {
-		prs, _, err := g.Client.MergeRequests.ListMergeRequests(opt)
+		prs, _, err := g.Client.MergeRequests.ListProjectMergeRequests(pid, opt)
 		if err != nil {
 			return answer, err
 		}
@@ -483,8 +497,12 @@ func (g *GitlabProvider) UpdateCommitStatus(owner string, repo string, sha strin
 	if err != nil {
 		return nil, err
 	}
+	glState := gitlab.BuildStateValue(status.State)
+	if status.State == "failure" {
+		glState = gitlab.Failed
+	}
 	statusOptions := &gitlab.SetCommitStatusOptions{
-		State:       gitlab.BuildStateValue(status.State),
+		State:       glState,
 		Name:        &status.Context,
 		Context:     &status.Context,
 		Description: &status.Description,
@@ -499,16 +517,23 @@ func (g *GitlabProvider) UpdateCommitStatus(owner string, repo string, sha strin
 		Description: c.Description,
 		State:       c.Status,
 		Context:     c.Name,
+		URL:         c.TargetURL,
 		TargetURL:   c.TargetURL,
 	}, err
 }
 
 func fromCommitStatus(status *gitlab.CommitStatus) *GitRepoStatus {
+	jxState := status.Status
+	if status.Status == "failed" {
+		jxState = "failure"
+	}
 	return &GitRepoStatus{
-		ID:          string(status.ID),
+		ID:          strconv.Itoa(status.ID),
 		URL:         status.TargetURL,
-		State:       status.Status,
+		TargetURL:   status.TargetURL,
+		State:       jxState,
 		Description: status.Description,
+		Context:     status.Name,
 	}
 }
 
@@ -766,6 +791,20 @@ func (g *GitlabProvider) UserAuth() auth.UserAuth {
 	return g.User
 }
 
+func (g *GitlabProvider) getUserID(username string) (*int, error) {
+	users, _, err := g.Client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &username})
+
+	if err != nil {
+		return nil, err
+	}
+	if len(users) == 0 {
+		return nil, nil
+	}
+
+	user := users[0]
+	return &user.ID, nil
+}
+
 func (g *GitlabProvider) UserInfo(username string) *GitUser {
 	users, _, err := g.Client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &username})
 
@@ -800,8 +839,22 @@ func (g *GitlabProvider) IssueURL(org string, name string, number int, isPull bo
 
 // AddCollaborator adds a collaborator
 func (g *GitlabProvider) AddCollaborator(user string, organisation string, repo string) error {
-	log.Logger().Infof("Automatically adding the pipeline user as a collaborator is currently not implemented for gitlab. Please add user: %v as a collaborator to this project.", user)
-	return nil
+	pid, err := g.projectId(organisation, g.Username, repo)
+	if err != nil {
+		return err
+	}
+
+	userId, err := g.getUserID(user)
+	if err != nil {
+		return err
+	}
+	accessLevel := gitlab.DeveloperPermissions
+	opts := &gitlab.AddProjectMemberOptions{
+		UserID:      userId,
+		AccessLevel: &accessLevel,
+	}
+	_, _, err = g.Client.ProjectMembers.AddProjectMember(pid, opts)
+	return err
 }
 
 // ListInvitations lists pending invites
@@ -841,7 +894,44 @@ func (g *GitlabProvider) ListCommits(owner, repo string, opt *ListCommitsArgumen
 
 // AddLabelsToIssue adds labels to issues or pullrequests
 func (g *GitlabProvider) AddLabelsToIssue(owner, repo string, number int, labels []string) error {
-	log.Logger().Warnf("Adding labels not supported on gitlab yet for repo %s/%s issue %d labels %v", owner, repo, number, labels)
+	pr, err := g.GetPullRequest(owner, &GitRepository{Name: repo}, number)
+	if err != nil {
+		return err
+	}
+	labelMap := make(map[string]struct{})
+	for _, l := range pr.Labels {
+		if l.Name != nil {
+			labelMap[*l.Name] = struct{}{}
+		}
+	}
+	for _, l := range labels {
+		labelMap[l] = struct{}{}
+	}
+
+	glLabels := gitlab.Labels{}
+
+	for l := range labelMap {
+		glLabels = append(glLabels, l)
+	}
+	o := &gitlab.UpdateMergeRequestOptions{
+		Labels: &glLabels,
+	}
+
+	pid, err := g.projectId(owner, g.Username, repo)
+	if err != nil {
+		return err
+	}
+	_, resp, err := g.Client.MergeRequests.UpdateMergeRequest(pid, number, o)
+	if err != nil {
+		if resp != nil && resp.Body != nil {
+			data, err2 := ioutil.ReadAll(resp.Body)
+			if err2 == nil && len(data) > 0 {
+				return errors2.Wrapf(err, "response: %s", string(data))
+			}
+		}
+		return err
+	}
+
 	return nil
 }
 
@@ -874,4 +964,24 @@ func (g *GitlabProvider) ConfigureFeatures(owner string, repo string, issues *bo
 // IsWikiEnabled returns true if a wiki is enabled for owner/repo
 func (g *GitlabProvider) IsWikiEnabled(owner string, repo string) (bool, error) {
 	return false, nil
+}
+
+func convertPullRequestLabels(from gitlab.Labels) []*Label {
+	var labels []*Label
+	for _, label := range from {
+		l := label
+		labels = append(labels, &Label{
+			Name: &l,
+		})
+	}
+	return labels
+}
+
+func convertUser(from *gitlab.BasicUser) *GitUser {
+	return &GitUser{
+		URL:       from.WebURL,
+		Login:     from.Username,
+		Name:      from.Name,
+		AvatarURL: from.AvatarURL,
+	}
 }

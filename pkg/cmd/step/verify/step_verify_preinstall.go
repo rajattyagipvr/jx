@@ -1044,7 +1044,7 @@ func (o *StepVerifyPreInstallOptions) verifyIngress(requirements *config.Require
 			return errors.Wrapf(err, "failed to save changes to file: %s", requirementsFileName)
 		}
 	}
-
+	o.showPermissionsModeMessage(requirements)
 	log.Logger().Info("\n")
 	return nil
 }
@@ -1091,6 +1091,7 @@ func (o *StepVerifyPreInstallOptions) ValidateRequirements(requirements *config.
 			return errors.Wrapf(err, "failed to save changes to file: %s", fileName)
 		}
 	}
+	o.showPermissionsModeMessage(requirements)
 	return nil
 }
 
@@ -1174,4 +1175,11 @@ func (o *StepVerifyPreInstallOptions) validateSecretsYAML() error {
 
 	// TODO lets validate the contents and populate the secrets file?
 	return nil
+}
+
+func (o *StepVerifyPreInstallOptions) showPermissionsModeMessage(requirementsConfig *config.RequirementsConfig) {
+	if requirementsConfig.Cluster.Provider != cloud.OPENSHIFT {
+		log.Logger().Info(`The provided requirements file has 'strictPermissions' enabled but 'provider' is not Openshift.
+This feature is only supported on Openshift`)
+	}
 }

@@ -604,11 +604,10 @@ func (o *BootOptions) verifyRequirements(requirements *config.RequirementsConfig
 }
 
 func (o *BootOptions) verifyClusterConnection() error {
-	client, err := o.KubeClient()
+	client, ns, err := o.KubeClientAndNamespace()
 	if err == nil {
-		_, err = client.CoreV1().Namespaces().List(metav1.ListOptions{})
+		_, err = client.CoreV1().Pods(ns).List(metav1.ListOptions{})
 	}
-
 	if err != nil {
 		log.Logger().Warnf("failed to list namespaces to check kubernetes cluster connectivity: %s", err.Error())
 
