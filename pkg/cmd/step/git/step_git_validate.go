@@ -5,6 +5,7 @@ import (
 	"os/user"
 
 	"github.com/jenkins-x/jx/pkg/cmd/opts/step"
+	"github.com/pkg/errors"
 
 	"github.com/jenkins-x/jx/pkg/cmd/helper"
 	"github.com/jenkins-x/jx/pkg/cmd/opts"
@@ -59,6 +60,14 @@ func (o *StepGitValidateOptions) Run() error {
 	userName, _ := o.Git().Username("")
 	userEmail, _ := o.Git().Email("")
 	var err error
+	if userName == "" || userEmail == "" {
+		// lets make sure there's a home directory
+		dir := util.HomeDir()
+		err := os.MkdirAll(dir, util.DefaultWritePermissions)
+		if err != nil {
+			return errors.Wrapf(err, "failed to make sure the home directory %s was created", dir)
+		}
+	}
 	if userName == "" {
 		// check the OS first
 		userName = os.Getenv("GIT_AUTHOR_NAME")
