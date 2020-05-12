@@ -300,5 +300,9 @@ func toString(flag bool) string {
 
 // ToDeployArguments converts the given deploy kind, canary and HPA to CLI arguments we can parse on the command object
 func ToDeployArguments(optionsKind string, kind string, canary bool, hpa bool) []string {
-	return []string{"--" + optionsKind + "=" + kind, "--" + opts.OptionCanary + "=" + toString(canary), "--" + opts.OptionHPA + "=" + toString(hpa)}
+	args := []string{"--" + opts.OptionCanary + "=" + toString(canary), "--" + opts.OptionHPA + "=" + toString(hpa)}
+	if kind != "" {
+		return append([]string{"--" + optionsKind + "=" + kind}, args...)
+	}
+	return args
 }

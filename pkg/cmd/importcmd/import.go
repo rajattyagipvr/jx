@@ -538,7 +538,6 @@ func (options *ImportOptions) DraftCreate() error {
 	}
 
 	err = options.modifyDeployKind()
-	err = options.modifyDeployKind()
 	if err != nil {
 		return err
 	}
@@ -1564,6 +1563,9 @@ func (options *ImportOptions) DefaultsFromTeamSettings() error {
 func (options *ImportOptions) DefaultValuesFromTeamSettings(settings *v1.TeamSettings) error {
 	if options.DeployKind == "" {
 		options.DeployKind = settings.DeployKind
+		if options.DeployKind == "" {
+			options.DeployKind = opts.DeployKindDefault
+		}
 	}
 
 	// lets override any deploy options from the team settings if they are not specified
@@ -1652,9 +1654,6 @@ func (options *ImportOptions) GetGitRepositoryDetails() (*gits.CreateRepoData, e
 // modifyDeployKind lets modify the deployment kind if the team settings or CLI settings are different
 func (options *ImportOptions) modifyDeployKind() error {
 	deployKind := options.DeployKind
-	if deployKind == "" {
-		return nil
-	}
 	dopts := options.DeployOptions
 
 	copy := *options.CommonOptions
