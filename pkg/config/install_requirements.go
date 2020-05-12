@@ -517,6 +517,8 @@ type RequirementsConfig struct {
 	Cluster ClusterConfig `json:"cluster"`
 	// Environments the requirements for the environments
 	Environments []EnvironmentConfig `json:"environments,omitempty"`
+	// DeployOptions the default deployment options
+	DeployOptions *v1.DeployOptions `json:"deployOptions,omitempty"`
 	// GithubApp contains github app config
 	GithubApp *GithubAppConfig `json:"githubApp,omitempty"`
 	// GitOps if enabled we will setup a webhook in the boot configuration git repository so that we can
