@@ -329,8 +329,15 @@ func (o *CommonOptions) IsGitHubAppMode() (bool, error) {
 
 // InitGitConfigAndUser validates we have git setup
 func (o *CommonOptions) InitGitConfigAndUser() error {
+	// lets make sure the home dir exists
+	dir := util.HomeDir()
+	err := os.MkdirAll(dir, util.DefaultWritePermissions)
+	if err != nil {
+		return errors.Wrapf(err, "failed to make sure the home directory %s was created", dir)
+	}
+
 	// lets validate we have git configured
-	_, _, err := gits.EnsureUserAndEmailSetup(o.Git())
+	_, _, err = gits.EnsureUserAndEmailSetup(o.Git())
 	if err != nil {
 		return err
 	}
