@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/ghodss/yaml"
 	v1 "github.com/jenkins-x/jx/pkg/apis/jenkins.io/v1"
@@ -17,11 +18,9 @@ import (
 )
 
 const (
-	pipelineFileName          = "pipeline.yml"
-	pipelineRunFileName       = "pipelinerun.yml"
-	structureFileName         = "structure.yml"
-	pipelineResourcesFileName = "pipelineresources.yml"
-	tasksFileName             = "tasks.yml"
+	pipelineFileName    = "pipeline.yml"
+	pipelineRunFileName = "pipelinerun.yml"
+	structureFileName   = "structure.yml"
 )
 
 // CRDWrapper is a wrapper around the various Tekton CRDs
@@ -195,37 +194,41 @@ func (crds *CRDWrapper) WriteToDisk(dir string, pipelineActivity *kube.PromoteSt
 		log.Logger().Infof("generated PipelineStructure at %s", util.ColorInfo(fileName))
 	}
 
-	taskList := &pipelineapi.TaskList{}
-	for _, task := range crds.tasks {
-		taskList.Items = append(taskList.Items, *task)
+	for i, task := range crds.tasks {
+		data, err = yaml.Marshal(task)
+		if err != nil {
+			return errors.Wrapf(err, "failed to marshal Task YAML")
+		}
+		taskFileName := "task"
+		if i > 0 {
+			taskFileName += strconv.Itoa(i + 1)
+		}
+		taskFileName += ".yml"
+		fileName = filepath.Join(dir, taskFileName)
+		err = ioutil.WriteFile(fileName, data, util.DefaultWritePermissions)
+		if err != nil {
+			return errors.Wrapf(err, "failed to save Task file %s", fileName)
+		}
+		log.Logger().Infof("generated Task at %s", util.ColorInfo(fileName))
 	}
 
-	resourceList := &pipelineapi.PipelineResourceList{}
-	for _, resource := range crds.resources {
-		resourceList.Items = append(resourceList.Items, *resource)
+	for i, resource := range crds.resources {
+		data, err = yaml.Marshal(resource)
+		if err != nil {
+			return errors.Wrapf(err, "failed to marshal Task YAML")
+		}
+		pipelineResourceFileName := "pipelineResource"
+		if i > 0 {
+			pipelineResourceFileName += strconv.Itoa(i + 1)
+		}
+		pipelineResourceFileName += ".yml"
+		fileName = filepath.Join(dir, pipelineResourceFileName)
+		err = ioutil.WriteFile(fileName, data, util.DefaultWritePermissions)
+		if err != nil {
+			return errors.Wrapf(err, "failed to save Task file %s", fileName)
+		}
+		log.Logger().Infof("generated PipelineResource at %s", util.ColorInfo(fileName))
 	}
-
-	data, err = yaml.Marshal(taskList)
-	if err != nil {
-		return errors.Wrapf(err, "failed to marshal Task YAML")
-	}
-	fileName = filepath.Join(dir, tasksFileName)
-	err = ioutil.WriteFile(fileName, data, util.DefaultWritePermissions)
-	if err != nil {
-		return errors.Wrapf(err, "failed to save Task file %s", fileName)
-	}
-	log.Logger().Infof("generated Tasks at %s", util.ColorInfo(fileName))
-
-	data, err = yaml.Marshal(resourceList)
-	if err != nil {
-		return errors.Wrapf(err, "failed to marshal PipelineResource YAML")
-	}
-	fileName = filepath.Join(dir, pipelineResourcesFileName)
-	err = ioutil.WriteFile(fileName, data, util.DefaultWritePermissions)
-	if err != nil {
-		return errors.Wrapf(err, "failed to save PipelineResource file %s", fileName)
-	}
-	log.Logger().Infof("generated PipelineResources at %s", util.ColorInfo(fileName))
 
 	if pipelineActivity != nil {
 		data, err = yaml.Marshal(pipelineActivity)
