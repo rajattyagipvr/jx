@@ -109,6 +109,8 @@ type StepCreateTaskOptions struct {
 	FromRepo            bool
 	NoKaniko            bool
 	SemanticRelease     bool
+	DisableGitClone     bool
+	NoOutput            bool
 	KanikoImage         string
 	KanikoSecretMount   string
 	KanikoSecret        string
@@ -265,7 +267,7 @@ func (o *StepCreateTaskOptions) Run() error {
 	if !exists {
 		// TODO this branch all things depending on it can be removed once the meta pipeline is working
 		// TODO keeping this to keep existing behavior until then (HF)
-		if o.CloneGitURL != "" {
+		if o.CloneGitURL != "" && !o.DisableGitClone {
 			o.CloneDir = o.cloneGitRepositoryToTempDir(o.CloneGitURL, o.Branch, o.PullRequestNumber, o.Revision)
 			if o.DeleteTempDir {
 				defer func() {
@@ -285,9 +287,16 @@ func (o *StepCreateTaskOptions) Run() error {
 		}
 	}
 
-	o.GitInfo, err = o.FindGitInfo(o.CloneDir)
-	if err != nil {
-		return errors.Wrapf(err, "failed to find git information from dir %s", o.CloneDir)
+	if o.CloneGitURL != "" {
+		o.GitInfo, err = gits.ParseGitURL(o.CloneGitURL)
+		if err != nil {
+			return errors.Wrapf(err, "failed to parse git clone URL %s", o.CloneGitURL)
+		}
+	} else {
+		o.GitInfo, err = o.FindGitInfo(o.CloneDir)
+		if err != nil {
+			return errors.Wrapf(err, "failed to find git information from dir %s", o.CloneDir)
+		}
 	}
 
 	if o.Branch == "" {
@@ -352,10 +361,12 @@ func (o *StepCreateTaskOptions) Run() error {
 	}
 
 	if *o.NoApply || o.DryRun {
-		log.Logger().Infof("Writing output ")
-		err := tektonCRDs.WriteToDisk(o.OutDir, nil)
-		if err != nil {
-			return errors.Wrapf(err, "Failed to output Tekton CRDs")
+		if !o.NoOutput {
+			log.Logger().Infof("Writing output ")
+			err := tektonCRDs.WriteToDisk(o.OutDir, nil)
+			if err != nil {
+				return errors.Wrapf(err, "Failed to output Tekton CRDs")
+			}
 		}
 	} else {
 		activityKey := tekton.GeneratePipelineActivity(o.BuildNumber, o.Branch, o.GitInfo, o.Context, pr)
