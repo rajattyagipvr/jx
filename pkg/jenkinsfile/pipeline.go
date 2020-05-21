@@ -798,7 +798,10 @@ func (a *CreateJenkinsfileArguments) GenerateJenkinsfile(resolver ImportFileReso
 func (c *PipelineConfig) createPipelineSteps(step *syntax.Step, prefixPath string, args CreatePipelineArguments) ([]syntax.Step, int) {
 	steps := []syntax.Step{}
 
-	containerName := c.Agent.GetImage()
+	containerName := ""
+	if c.Agent != nil {
+		containerName = c.Agent.GetImage()
+	}
 
 	if step.GetImage() != "" {
 		containerName = step.GetImage()

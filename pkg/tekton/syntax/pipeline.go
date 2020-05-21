@@ -442,6 +442,9 @@ func (a *Agent) Groovy() string {
 
 // GetImage gets the agent's image to run on, opting for Image if set, then Container.
 func (a *Agent) GetImage() string {
+	if a == nil {
+		return ""
+	}
 	if a.Image != "" {
 		return a.Image
 	}
