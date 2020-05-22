@@ -19,7 +19,6 @@ import (
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline"
 	tektonv1alpha1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
-	knativeapis "knative.dev/pkg/apis"
 )
 
 // PipelineRunInfo provides information on a PipelineRun and its stages for use in getting logs and populating activity
@@ -301,6 +300,25 @@ func CreatePipelineRunInfo(prName string, podList *corev1.PodList, ps *v1.Pipeli
 		lastCommitSha = shaFromGitInit
 	}
 
+	podAnn := pod.Annotations
+	if podAnn == nil {
+		podAnn = map[string]string{}
+	}
+	if gitURL == "" {
+		gitURL = podAnn["tekton.dev/sourceUrl"]
+	}
+	if branch == "" {
+		branch = podAnn["tekton.dev/branch"]
+	}
+	if build == "" {
+		build = podAnn["tekton.dev/build"]
+	}
+	if owner == "" {
+		owner = podAnn["tekton.dev/repositoryOwner"]
+	}
+	if repo == "" {
+		repo = podAnn["tekton.dev/repositoryName"]
+	}
 	if build == "" {
 		build = builds.GetBuildNumberFromLabels(pr.Labels)
 	}

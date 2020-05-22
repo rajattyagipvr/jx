@@ -12,6 +12,7 @@ import (
 	clientv1 "github.com/jenkins-x/jx/pkg/client/clientset/versioned/typed/jenkins.io/v1"
 	"github.com/jenkins-x/jx/pkg/kube/naming"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/util/rand"
 
@@ -509,7 +510,7 @@ func StructureForPipelineRun(jxClient versioned.Interface, ns string, run *pipel
 		return nil, fmt.Errorf("couldn't find a Pipeline name for PipelineRun %s", run.Name)
 	}
 	structure, err := jxClient.JenkinsV1().PipelineStructures(ns).Get(pipelineName, metav1.GetOptions{})
-	if err != nil {
+	if err != nil && !apierrors.IsNotFound(err) {
 		return nil, errors.Wrapf(err, "getting PipelineStructure with Pipeline name %s for PipelineRun %s", pipelineName, run.Name)
 	}
 	return structure, nil

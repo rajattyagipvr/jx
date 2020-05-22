@@ -11,6 +11,7 @@ import (
 	"unicode"
 
 	"github.com/jenkins-x/jx/pkg/cmd/step/git/credentials"
+	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 
 	"github.com/ghodss/yaml"
 	"github.com/jenkins-x/jx/pkg/cmd/helper"
@@ -311,6 +312,13 @@ func (o *ControllerBuildOptions) onPipelinePod(obj interface{}, kubeClient kuber
 					log.Logger().Warnf("Error getting PipelineStructure for PipelineRun %s: %s", prName, err)
 					return
 				}
+				if structure == nil || structure.Name == "" {
+					structure, err = createStructureFromTekton(pod, pr)
+					if err != nil {
+						log.Logger().Warnf("Error generating PipelineStructure for PipelineRun %s: %s", prName, err)
+						return
+					}
+				}
 				pri, err := tekton.CreatePipelineRunInfo(prName, podList, structure, pr)
 				if err != nil {
 					log.Logger().Warnf("Error creating PipelineRunInfo for PipelineRun %s: %s", prName, err)
@@ -321,7 +329,7 @@ func (o *ControllerBuildOptions) onPipelinePod(obj interface{}, kubeClient kuber
 					return
 				}
 
-				log.Logger().Debugf("Found pipeline run %s", pri.Name)
+				log.Logger().Debugf("Found pipeline run %s with git URL %s", pri.Name, pri.GitURL)
 
 				activities := jxClient.JenkinsV1().PipelineActivities(ns)
 				key := o.createPromoteStepActivityKeyFromRun(pri)
@@ -357,6 +365,29 @@ func (o *ControllerBuildOptions) onPipelinePod(obj interface{}, kubeClient kuber
 			}
 		}
 	}
+}
+
+func createStructureFromTekton(pod *corev1.Pod, pr *v1alpha1.PipelineRun) (*v1.PipelineStructure, error) {
+	podLabels := pod.Labels
+	stageName := podLabels["jenkins.io/task-stage-name"]
+	if stageName == "" {
+		stageName = "from-build-pack"
+	}
+	taskRef := podLabels["tekton.dev/task"]
+	pipelineRef := podLabels["tekton.dev/pipeline"]
+	if pipelineRef == "" {
+		pipelineRef = pr.Name
+	}
+	s := &v1.PipelineStructure{}
+	s.PipelineRef = &pipelineRef
+	s.PipelineRunRef = &pr.Name
+	stage := v1.PipelineStructureStage{
+		Name:    stageName,
+		TaskRef: &taskRef,
+	}
+
+	s.Stages = []v1.PipelineStructureStage{stage}
+	return s, nil
 }
 
 // createPromoteStepActivityKey deduces the pipeline metadata from the build pod
