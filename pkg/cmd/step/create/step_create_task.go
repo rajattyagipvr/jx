@@ -122,15 +122,16 @@ type StepCreateTaskOptions struct {
 	PodTemplates        map[string]*corev1.Pod
 	UseBranchAsRevision bool
 
-	GitInfo              *gits.GitRepository
-	BuildNumber          string
-	labels               map[string]string
-	Results              tekton.CRDWrapper
-	pipelineParams       []pipelineapi.Param
-	version              string
-	previewVersionPrefix string
-	VersionResolver      *versionstream.VersionResolver
-	CloneDir             string
+	GitInfo                *gits.GitRepository
+	BuildNumber            string
+	labels                 map[string]string
+	Results                tekton.CRDWrapper
+	pipelineParams         []pipelineapi.Param
+	version                string
+	previewVersionPrefix   string
+	VersionResolver        *versionstream.VersionResolver
+	CloneDir               string
+	EffectiveProjectConfig *config.ProjectConfig
 }
 
 // NewCmdStepCreateTask Creates a new Command object
@@ -260,6 +261,14 @@ func (o *StepCreateTaskOptions) Run() error {
 		return errors.Wrap(err, "Unable to find or parse PULL_REFS from custom environment")
 	}
 
+	done, err := o.invokePipelineTriggerPlugin(pr)
+	if err != nil {
+		return errors.Wrap(err, "failed to invoke pipeline trigger plugin")
+	}
+	if done {
+		return nil
+	}
+
 	exists, err := o.effectiveProjectConfigExists()
 	if err != nil {
 		return err
@@ -328,6 +337,7 @@ func (o *StepCreateTaskOptions) Run() error {
 			return errors.Wrap(err, "failed to create effective project configuration")
 		}
 	}
+	o.EffectiveProjectConfig = effectiveProjectConfig
 
 	err = o.setBuildValues()
 	if err != nil {
@@ -700,6 +710,94 @@ func (o *StepCreateTaskOptions) loadProjectConfig() (*config.ProjectConfig, stri
 		}
 	}
 	return config.LoadProjectConfig(o.CloneDir)
+}
+
+// invokePipelineTriggerPlugin if configured lets trigger a binary plugin for triggering pipelines
+// returns true if processing has completed and we should terminate triggering
+func (o *StepCreateTaskOptions) invokePipelineTriggerPlugin(pr *tekton.PullRefs) (bool, error) {
+	projectConfig, _, err := config.LoadProjectConfig(o.CloneDir)
+	if err != nil {
+		return true, errors.Wrapf(err, "failed to load project config in dir %s", o.CloneDir)
+	}
+	triggerPlugin := projectConfig.PipelineTriggerPlugin
+	if triggerPlugin == "" {
+		log.Logger().Debugf("no pipeline trigger plugin installed")
+		return false, nil
+	}
+
+	args := []string{triggerPlugin}
+	if o.PipelineKind != "" {
+		args = append(args, "--context", o.PipelineKind)
+	} else if o.Context != "" {
+		args = append(args, "--context", o.Context)
+	}
+	if o.Branch != "" {
+		args = append(args, "--branch", o.Branch)
+	}
+	if o.BuildNumber != "" {
+		args = append(args, "--build", o.BuildNumber)
+	}
+	if pr != nil {
+		prt := pr.String()
+		if prt != "" {
+			args = append(args, "--pull-ref", prt)
+		}
+	}
+	var requirements *config.RequirementsConfig
+	settings, err := o.TeamSettings()
+	if err != nil {
+		log.Logger().Warnf("could not find TeamSettings:  %s", err.Error())
+	} else {
+		requirements, err = config.GetRequirementsConfigFromTeamSettings(settings)
+		if err != nil {
+			log.Logger().Warnf("failed to get Requirements from TeamSettings:  %s", err.Error())
+		}
+	}
+	containerRegistry := ""
+	containerRegistryOwner := ""
+	if projectConfig != nil {
+		containerRegistry = projectConfig.DockerRegistryHost
+		containerRegistryOwner = projectConfig.DockerRegistryOwner
+	}
+	if requirements != nil {
+		if containerRegistry == "" {
+			containerRegistry = requirements.Cluster.Registry
+		}
+		if containerRegistryOwner == "" {
+			containerRegistryOwner = requirements.Cluster.ProjectID
+		}
+	}
+	if containerRegistry != "" {
+		args = append(args, "--container-registry", containerRegistry)
+	}
+	if containerRegistryOwner != "" {
+		args = append(args, "--container-registry-owner", containerRegistryOwner)
+	}
+
+	argText := "jx " + strings.Join(args, " ")
+
+	log.Logger().Infof("running: %s in dir %s", util.ColorInfo(argText), util.ColorInfo(o.CloneDir))
+
+	c := util.Command{
+		Dir:  o.CloneDir,
+		Name: "jx",
+		Args: args,
+		Out:  os.Stdout,
+		Err:  os.Stderr,
+	}
+	_, err = c.RunWithoutRetry()
+	if err != nil {
+		return true, errors.Wrapf(err, "failed to invoke trigger plugin %s with args %s", triggerPlugin, argText)
+	}
+	log.Logger().Infof("completed: %s in dir %s", util.ColorInfo(argText), util.ColorInfo(o.CloneDir))
+
+	// if there is a custom build pack or pipeline then lets keep going
+	// only return completed if there's no defined build pack or pipeline configs
+	buildPack := projectConfig.BuildPack
+	if projectConfig.PipelineConfig != nil || (buildPack != "" && buildPack != "none") {
+		return false, nil
+	}
+	return true, nil
 }
 
 func (o *StepCreateTaskOptions) effectiveProjectConfigExists() (bool, error) {

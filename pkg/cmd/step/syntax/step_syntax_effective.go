@@ -322,6 +322,11 @@ func (o *StepSyntaxEffectiveOptions) CreateEffectivePipeline(packsDir string, pr
 	}
 
 	if pipelineConfig == nil {
+		// if we are using a binary plugin to trigger the pipelines then we don't need any explicit pipelines in the
+		// jenkins-x.yml
+		if projectConfig.PipelineTriggerPlugin != "" {
+			return projectConfig, nil
+		}
 		return nil, fmt.Errorf("failed to find PipelineConfig in file %s", projectConfigFile)
 	}
 

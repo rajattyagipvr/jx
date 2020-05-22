@@ -29,18 +29,19 @@ type ProjectConfig struct {
 	// List of global environment variables to add to each branch build and each step
 	Env []corev1.EnvVar `json:"env,omitempty"`
 
-	PreviewEnvironments *PreviewEnvironmentConfig   `json:"previewEnvironments,omitempty"`
-	IssueTracker        *IssueTrackerConfig         `json:"issueTracker,omitempty"`
-	Chat                *ChatConfig                 `json:"chat,omitempty"`
-	Wiki                *WikiConfig                 `json:"wiki,omitempty"`
-	Addons              []*AddonConfig              `json:"addons,omitempty"`
-	BuildPack           string                      `json:"buildPack,omitempty"`
-	BuildPackGitURL     string                      `json:"buildPackGitURL,omitempty"`
-	BuildPackGitURef    string                      `json:"buildPackGitRef,omitempty"`
-	PipelineConfig      *jenkinsfile.PipelineConfig `json:"pipelineConfig,omitempty"`
-	NoReleasePrepare    bool                        `json:"noReleasePrepare,omitempty"`
-	DockerRegistryHost  string                      `json:"dockerRegistryHost,omitempty"`
-	DockerRegistryOwner string                      `json:"dockerRegistryOwner,omitempty"`
+	PreviewEnvironments   *PreviewEnvironmentConfig   `json:"previewEnvironments,omitempty"`
+	IssueTracker          *IssueTrackerConfig         `json:"issueTracker,omitempty"`
+	Chat                  *ChatConfig                 `json:"chat,omitempty"`
+	Wiki                  *WikiConfig                 `json:"wiki,omitempty"`
+	Addons                []*AddonConfig              `json:"addons,omitempty"`
+	BuildPack             string                      `json:"buildPack,omitempty"`
+	BuildPackGitURL       string                      `json:"buildPackGitURL,omitempty"`
+	BuildPackGitURef      string                      `json:"buildPackGitRef,omitempty"`
+	PipelineConfig        *jenkinsfile.PipelineConfig `json:"pipelineConfig,omitempty"`
+	NoReleasePrepare      bool                        `json:"noReleasePrepare,omitempty"`
+	DockerRegistryHost    string                      `json:"dockerRegistryHost,omitempty"`
+	DockerRegistryOwner   string                      `json:"dockerRegistryOwner,omitempty"`
+	PipelineTriggerPlugin string                      `json:"pipelineTriggerPlugin,omitempty"`
 }
 
 type PreviewEnvironmentConfig struct {
