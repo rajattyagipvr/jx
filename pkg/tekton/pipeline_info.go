@@ -19,6 +19,7 @@ import (
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline"
 	tektonv1alpha1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
+	knativeapis "knative.dev/pkg/apis"
 )
 
 // PipelineRunInfo provides information on a PipelineRun and its stages for use in getting logs and populating activity
