@@ -1,0 +1,7 @@
+apiVersion: remote.jenkins.io/v1alpha1
+kind: DeployConfig
+metadata:
+  name: jx-deploy
+spec:
+  kptPath: namespaces/apps
+  namespace: myapps

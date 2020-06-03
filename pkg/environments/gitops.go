@@ -39,6 +39,9 @@ type ModifyChartFn func(requirements *helm.Requirements, metadata *chart.Metadat
 // ModifyAppsFn callback for modifying the `jx-apps.yml` in an environment git repository which is using helmfile and helm 3
 type ModifyAppsFn func(appsConfig *config.AppConfig, dir string, pullRequestDetails *gits.PullRequestDetails) error
 
+// ModifyKptFn callback for modifying the kpt based installations of resources
+type ModifyKptFn func(dir string, deployConfig *config.DeployConfig, pullRequestDetails *gits.PullRequestDetails) error
+
 // EnvironmentPullRequestOptions are options for creating a pull request against an environment.
 // The provide a Gitter client for performing git operations, a GitProvider client for talking to the git provider,
 // a callback ModifyChartFn which is where the changes you want to make are defined,
@@ -47,6 +50,7 @@ type EnvironmentPullRequestOptions struct {
 	GitProvider   gits.GitProvider
 	ModifyChartFn ModifyChartFn
 	ModifyAppsFn  ModifyAppsFn
+	ModifyKptFn   ModifyKptFn
 	Labels        []string
 }
 
@@ -76,6 +80,11 @@ func (o *EnvironmentPullRequestOptions) Create(env *jenkinsv1.Environment, prDir
 			prDir)
 	}
 
+	currentSha, err := o.Gitter.GetLatestCommitSha(dir)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not get current commit sha")
+	}
+
 	hasAppsFile := false
 	if o.ModifyAppsFn != nil {
 		hasAppsFile, err = ModifyAppsFile(dir, nil, o.ModifyAppsFn)
@@ -84,9 +93,26 @@ func (o *EnvironmentPullRequestOptions) Create(env *jenkinsv1.Environment, prDir
 		}
 	}
 	if !hasAppsFile {
-		err = ModifyChartFiles(dir, pullRequestDetails, o.ModifyChartFn, chartName)
+		// lets check if we have a DeployConfig
+		deployConfig, deployConfigFile, err := config.LoadDeployConfig(dir)
 		if err != nil {
-			return nil, err
+			return nil, errors.Wrapf(err, "failed to load DeployConfig in dir %s", dir)
+		}
+
+		if deployConfig != nil {
+			if deployConfig.Spec.KptPath == "" {
+				log.Logger().Warnf("the deploy config file %s does not contain a kptPath property so cannot use kpt to promote to this repository", deployConfigFile)
+			} else {
+				err = ModifyKptFiles(dir, deployConfig, pullRequestDetails, o.ModifyKptFn)
+				if err != nil {
+					return nil, err
+				}
+			}
+		} else {
+			err = ModifyChartFiles(dir, pullRequestDetails, o.ModifyChartFn, chartName)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 	labels := make([]string, 0)
@@ -96,7 +122,23 @@ func (o *EnvironmentPullRequestOptions) Create(env *jenkinsv1.Environment, prDir
 		labels = append(labels, gits.LabelUpdatebot)
 	}
 	pullRequestDetails.Labels = labels
-	prInfo, err := gits.PushRepoAndCreatePullRequest(dir, upstreamRepo, forkURL, base, pullRequestDetails, filter, true, pullRequestDetails.Message, true, false, false, o.Gitter, o.GitProvider)
+
+	latestSha, err := o.Gitter.GetLatestCommitSha(dir)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not get current latest commit sha")
+	}
+	doCommit := true
+	if latestSha != currentSha {
+		changed, err := o.Gitter.HasChanges(dir)
+		if err != nil {
+			return nil, errors.Wrapf(err, "failed to detect changes in dir %s", dir)
+		}
+		if !changed {
+			// lets avoid failing to create the PR as we really have made changes
+			doCommit = false
+		}
+	}
+	prInfo, err := gits.PushRepoAndCreatePullRequest(dir, upstreamRepo, forkURL, base, pullRequestDetails, filter, doCommit, pullRequestDetails.Message, true, false, false, o.Gitter, o.GitProvider)
 	if err != nil {
 		return nil, err
 	}
@@ -157,6 +199,15 @@ func ModifyChartFiles(dir string, details *gits.PullRequestDetails, modifyFn Mod
 	}
 
 	err = helm.SaveFile(chartFile, chart)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// ModifyKptFiles modifies the kpt files in the given directory using the given modify function
+func ModifyKptFiles(dir string, deployConfig *config.DeployConfig, details *gits.PullRequestDetails, modifyFn ModifyKptFn) error {
+	err := modifyFn(dir, deployConfig, details)
 	if err != nil {
 		return err
 	}

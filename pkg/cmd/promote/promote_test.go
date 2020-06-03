@@ -3,10 +3,15 @@
 package promote_test
 
 import (
+	"io/ioutil"
+	"path/filepath"
 	"sort"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/jenkins-x/jx/pkg/tests"
+	"github.com/jenkins-x/jx/pkg/util"
+	"github.com/stretchr/testify/require"
 
 	v1 "github.com/jenkins-x/jx/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx/pkg/cmd/opts"
@@ -273,4 +278,57 @@ type TestEnv struct {
 	DevRepo         *gits.FakeRepository
 	StagingRepo     *gits.FakeRepository
 	ProdRepo        *gits.FakeRepository
+}
+
+func TestUpdateNamespaceInYamlFiles(t *testing.T) {
+	sourceData := "test_data"
+	files, err := ioutil.ReadDir(sourceData)
+	assert.NoError(t, err)
+
+	tmpDir, err := ioutil.TempDir("", "")
+	require.NoError(t, err, "could not create temp dir")
+
+	type testCase struct {
+		SourceFile   string
+		ResultFile   string
+		ExpectedFile string
+	}
+
+	testCases := []testCase{}
+	for _, f := range files {
+		if f.IsDir() {
+			name := f.Name()
+			srcFile := filepath.Join(sourceData, name, "source.yaml")
+			expectedFile := filepath.Join(sourceData, name, "expected.yaml")
+			require.FileExists(t, srcFile)
+			require.FileExists(t, expectedFile)
+
+			outFile := filepath.Join(tmpDir, name+".yaml")
+			err = util.CopyFile(srcFile, outFile)
+			require.NoError(t, err, "failed to copy %s to %s", srcFile, outFile)
+
+			testCases = append(testCases, testCase{
+				SourceFile:   srcFile,
+				ResultFile:   outFile,
+				ExpectedFile: expectedFile,
+			})
+		}
+	}
+
+	err = promote.UpdateNamespaceInYamlFiles(tmpDir, "something")
+	require.NoError(t, err, "failed to update namespace in dir %s", tmpDir)
+
+	for _, tc := range testCases {
+		resultData, err := ioutil.ReadFile(tc.ResultFile)
+		require.NoError(t, err, "failed to load results %s", tc.ResultFile)
+
+		expectData, err := ioutil.ReadFile(tc.ExpectedFile)
+		require.NoError(t, err, "failed to load results %s", tc.ExpectedFile)
+
+		result := string(resultData)
+		if d := cmp.Diff(result, string(expectData)); d != "" {
+			t.Errorf("Generated Pipeline did not match expected: %s", d)
+		}
+		t.Logf("generated for file %s file %s\n", tc.SourceFile, result)
+	}
 }

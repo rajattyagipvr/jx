@@ -2,6 +2,7 @@ package promote
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -600,6 +601,87 @@ func (o *PromoteOptions) PromoteViaPullRequest(env *v1.Environment, releaseInfo 
 		return nil
 	}
 
+	modifyKptFn := func(dir string, deployConfig *config.DeployConfig, pullRequestDetails *gits.PullRequestDetails) error {
+		namespaceDir := dir
+		if deployConfig.Spec.KptPath != "" {
+			namespaceDir = filepath.Join(dir, deployConfig.Spec.KptPath)
+		}
+
+		if o.GitInfo == nil {
+			return errors.Errorf("could not find git URL for the app so cannot promote via kpt")
+		}
+		gitURL := o.GitInfo.HttpCloneURL()
+		if gitURL == "" {
+			return errors.Errorf("gitInfo has no clone URL for the app so cannot promote via kpt")
+		}
+
+		appDir := filepath.Join(namespaceDir, app)
+		// if the dir exists lets upgrade otherwise lets add it
+		exists, err := util.DirExists(appDir)
+		if err != nil {
+			return errors.Wrapf(err, "failed to check if the app dir exists %s", appDir)
+		}
+
+		if version == "" {
+			version, err = o.findLatestVersion(app)
+			if err != nil {
+				return err
+			}
+		}
+		if version != "" && !strings.HasPrefix(version, "v") {
+			version = "v" + version
+		}
+		if version == "" {
+			version = "master"
+		}
+		if exists {
+			// lets upgrade the version via kpt
+			args := []string{"pkg", "update", fmt.Sprintf("%s@%s", app, version), "--strategy=alpha-git-patch"}
+			c := util.Command{
+				Name: "kpt",
+				Args: args,
+				Dir:  namespaceDir,
+			}
+			log.Logger().Infof("running command: %s", c.String())
+			_, err = c.RunWithoutRetry()
+			if err != nil {
+				return errors.Wrapf(err, "failed to update kpt app %s", app)
+			}
+		} else {
+			if gitURL == "" {
+				return errors.Errorf("no gitURL")
+			}
+			gitURL = strings.TrimSuffix(gitURL, "/")
+			if !strings.HasSuffix(gitURL, ".git") {
+				gitURL += ".git"
+			}
+			// lets add the path to the released kubernetes resources
+			gitURL += fmt.Sprintf("/kubernetes/%s/templates", app)
+			args := []string{"pkg", "get", fmt.Sprintf("%s@%s", gitURL, version), app}
+			c := util.Command{
+				Name: "kpt",
+				Args: args,
+				Dir:  namespaceDir,
+			}
+			log.Logger().Infof("running command: %s", c.String())
+			_, err = c.RunWithoutRetry()
+			if err != nil {
+				return errors.Wrapf(err, "failed to get the app %s via kpt", app)
+			}
+
+			// update all *.yaml files in the appDir with the namespace
+			ens := env.Spec.Namespace
+			if deployConfig.Spec.Namespace != "" {
+				ens = deployConfig.Spec.Namespace
+			}
+			if ens != "" {
+				log.Logger().Infof("updating resources in dir %s to namespace %s", appDir, ens)
+				return UpdateNamespaceInYamlFiles(appDir, ens)
+			}
+		}
+		return nil
+	}
+
 	gitProvider, _, err := o.CreateGitProviderForURLWithoutKind(env.Spec.Source.URL)
 	if err != nil {
 		return errors.Wrapf(err, "creating git provider for %s", env.Spec.Source.URL)
@@ -614,8 +696,10 @@ func (o *PromoteOptions) PromoteViaPullRequest(env *v1.Environment, releaseInfo 
 		Gitter:        o.Git(),
 		ModifyChartFn: modifyChartFn,
 		ModifyAppsFn:  modifyAppsFn,
+		ModifyKptFn:   modifyKptFn,
 		GitProvider:   gitProvider,
 	}
+
 	filter := &gits.PullRequestFilter{}
 	if releaseInfo.PullRequestInfo != nil && releaseInfo.PullRequestInfo.PullRequest != nil {
 		filter.Number = releaseInfo.PullRequestInfo.PullRequest.Number
@@ -623,6 +707,65 @@ func (o *PromoteOptions) PromoteViaPullRequest(env *v1.Environment, releaseInfo 
 	info, err := options.Create(env, envDir, &details, filter, "", true)
 	releaseInfo.PullRequestInfo = info
 	return err
+}
+
+// UpdateNamespaceInYamlFiles updates the namespace in yaml files
+func UpdateNamespaceInYamlFiles(dir string, ens string) error {
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if info == nil || info.IsDir() {
+			return nil
+		}
+		if !strings.HasSuffix(path, "yaml") {
+			return nil
+		}
+
+		// lets load the file
+		data, err := ioutil.ReadFile(path)
+
+		// lets add a namespace line into the yaml
+		lines := strings.Split(string(data), "\n")
+		inMetadata := false
+		for i, line := range lines {
+			if strings.HasSuffix(line, "metadata:") {
+				inMetadata = true
+				continue
+			}
+			if line == "" {
+				continue
+			}
+			if strings.HasPrefix(line, " ") || strings.HasPrefix(line, "\t") {
+				if !inMetadata {
+					continue
+				}
+				t := strings.TrimSpace(line)
+				if strings.HasPrefix(t, "name:") {
+					// if the next line is namespace replace it otherwise insert it
+					nsLine := "  namespace: " + ens
+					j := i + 1
+					nextLine := lines[j]
+					if strings.HasPrefix(strings.TrimSpace(nextLine), "namespace:") {
+						lines[j] = nsLine
+					} else {
+						lines = append(lines[:j], append([]string{nsLine}, lines[j:]...)...)
+					}
+					break
+				}
+			} else {
+				inMetadata = false
+			}
+		}
+		data = []byte(strings.Join(lines, "\n"))
+		err = ioutil.WriteFile(path, data, util.DefaultFileWritePermissions)
+		if err != nil {
+			return errors.Wrapf(err, "failed to save %s", path)
+		}
+		return nil
+	})
+	if err != nil {
+		return errors.Wrapf(err, "failed to set namespace to %s in dir %s", ens, dir)
+	}
+	return nil
+
 }
 
 func (o *PromoteOptions) GetTargetNamespace(ns string, env string) (string, *v1.Environment, error) {
