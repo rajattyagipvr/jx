@@ -370,9 +370,13 @@ func (o *StepVerifyEnvironmentsOptions) createEnvironmentRepository(name string,
 		}
 
 		modifyFn := func(out io.Writer, dir string, git gits.Gitter) error {
-			envReq, fileName, err := config.LoadRequirementsConfig(dir)
+			envReq, fileName, err := config.LoadRequirementsConfigIfExists(dir, false)
 			if err != nil {
 				return errors.Wrap(err, "failed to load environment requirements")
+			}
+			if envReq == nil {
+				log.Logger().Infof("no jx-requirements.yml for environemnt %s", environment.Name)
+				return nil
 			}
 			exists, err := util.FileExists(fileName)
 			if err != nil {

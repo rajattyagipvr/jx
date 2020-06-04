@@ -561,6 +561,13 @@ func NewRequirementsConfig() *RequirementsConfig {
 // if there is not a file called `jx-requirements.yml` in the given dir we will scan up the parent
 // directories looking for the requirements file as we often run 'jx' steps in sub directories.
 func LoadRequirementsConfig(dir string) (*RequirementsConfig, string, error) {
+	return LoadRequirementsConfigIfExists(dir, true)
+}
+
+// LoadRequirementsConfigIfExists loads the project configuration if there is a project configuration file
+// if there is not a file called `jx-requirements.yml` in the given dir we will scan up the parent
+// directories looking for the requirements file as we often run 'jx' steps in sub directories.
+func LoadRequirementsConfigIfExists(dir string, failIfMissing bool) (*RequirementsConfig, string, error) {
 	absolute, err := filepath.Abs(dir)
 	if err != nil {
 		return nil, "", errors.Wrap(err, "creating absolute path")
@@ -581,7 +588,10 @@ func LoadRequirementsConfig(dir string) (*RequirementsConfig, string, error) {
 		config, err := LoadRequirementsConfigFile(fileName)
 		return config, fileName, err
 	}
-	return nil, "", errors.New("jx-requirements.yml file not found")
+	if failIfMissing {
+		return nil, "", errors.New("jx-requirements.yml file not found")
+	}
+	return nil, "", nil
 }
 
 // LoadRequirementsConfigFile loads a specific project YAML configuration file
