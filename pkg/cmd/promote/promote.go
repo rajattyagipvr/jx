@@ -656,7 +656,7 @@ func (o *PromoteOptions) PromoteViaPullRequest(env *v1.Environment, releaseInfo 
 				gitURL += ".git"
 			}
 			// lets add the path to the released kubernetes resources
-			gitURL += fmt.Sprintf("/charts/%s/templates", app)
+			gitURL += fmt.Sprintf("/charts/%s/resources", app)
 			args := []string{"pkg", "get", fmt.Sprintf("%s@%s", gitURL, version), app}
 			c := util.Command{
 				Name: "kpt",
