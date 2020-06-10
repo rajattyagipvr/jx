@@ -118,6 +118,7 @@ require (
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
 	golang.org/x/tools v0.0.0-20200415034506-5d8e1897c761
+	gomodules.xyz/jsonpatch/v2 v2.0.1
 	gopkg.in/AlecAivazis/survey.v1 v1.8.3
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v2 v2.2.8
@@ -159,5 +160,7 @@ replace github.com/banzaicloud/bank-vaults => github.com/banzaicloud/bank-vaults
 replace github.com/banzaicloud/bank-vaults/pkg/sdk => github.com/banzaicloud/bank-vaults/pkg/sdk v0.0.0-20191212164220-b327d7f2b681
 
 replace k8s.io/test-infra => github.com/abayer/test-infra v0.0.0-20200105180038-f2f6e1a9da0f
+
+replace gomodules.xyz/jsonpatch/v2 => gomodules.xyz/jsonpatch/v2 v2.0.1
 
 go 1.13
