@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jenkins-x/jx/cmd/codegen/util"
+	"github.com/jenkins-x/jx/v2/cmd/codegen/util"
 	"github.com/jenkins-x/jx/v2/pkg/log"
 	"gopkg.in/AlecAivazis/survey.v1/terminal"
 

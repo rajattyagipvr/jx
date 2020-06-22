@@ -371,7 +371,7 @@ func (o *StepVerifyEnvironmentsOptions) createEnvironmentRepository(name string,
 		}
 
 		modifyFn := func(out io.Writer, dir string, git gits.Gitter) error {
-			envReq, fileName, err := config.LoadRequirementsConfig(dir)
+			envReq, fileName, err := config.LoadRequirementsConfig(dir, config.DefaultFailOnValidationError)
 			if err != nil {
 				return errors.Wrap(err, "failed to load environment requirements")
 			}

@@ -3,10 +3,6 @@ package opts
 import (
 	"strings"
 
-	"github.com/jenkins-x/jx/v2/pkg/versionstream/versionstreamrepo"
-
-	"github.com/jenkins-x/jx/v2/pkg/versionstream"
-
 	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/envctx"
 	"github.com/jenkins-x/jx/v2/pkg/kube"
@@ -38,7 +34,7 @@ func (o *CommonOptions) EnvironmentContext(dir string, preferRequirementsFile bo
 	exists := false
 	if preferRequirementsFile {
 		fileName := ""
-		tc.Requirements, fileName, err = config.LoadRequirementsConfig(dir)
+		tc.Requirements, fileName, err = config.LoadRequirementsConfig(dir, config.DefaultFailOnValidationError)
 		if fileName != "" {
 			exists, _ = util.FileExists(fileName)
 		}
@@ -65,7 +61,7 @@ func (o *CommonOptions) EnvironmentContext(dir string, preferRequirementsFile bo
 
 	// if we can't find a requirements then lets just create the defaults for now
 	if tc.Requirements == nil {
-		tc.Requirements, _, err = config.LoadRequirementsConfig(dir)
+		tc.Requirements, _, err = config.LoadRequirementsConfig(dir, config.DefaultFailOnValidationError)
 		if err != nil {
 			return tc, err
 		}

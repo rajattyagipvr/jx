@@ -8,33 +8,18 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/envctx"
 
-	"github.com/jenkins-x/jx/v2/pkg/kube/cluster"
-
 	gojenkins "github.com/jenkins-x/golang-jenkins"
-	"github.com/jenkins-x/jx/v2/pkg/cloud/gke"
-	"github.com/jenkins-x/jx/v2/pkg/prow"
-	"github.com/jenkins-x/jx/v2/pkg/versionstream"
+
 	"github.com/spf13/viper"
 
-	"github.com/jenkins-x/jx/v2/pkg/secreturl"
 	"github.com/spf13/pflag"
 
 	"github.com/heptio/sonobuoy/pkg/client"
-	"github.com/jenkins-x/jx/v2/pkg/cmd/clients"
-	"github.com/jenkins-x/jx/v2/pkg/io/secrets"
-	"github.com/jenkins-x/jx/v2/pkg/vault"
-
-	"github.com/jenkins-x/jx/v2/pkg/kube/resources"
-	"github.com/jenkins-x/jx/v2/pkg/kube/services"
-	"github.com/pkg/errors"
 
 	vaultoperatorclient "github.com/banzaicloud/bank-vaults/operator/pkg/client/clientset/versioned"
 	certmngclient "github.com/jetstack/cert-manager/pkg/client/clientset/versioned"
-	istioclient "github.com/knative/pkg/client/clientset/versioned"
-	kserve "github.com/knative/serving/pkg/client/clientset/versioned"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	tektonclient "github.com/tektoncd/pipeline/pkg/client/clientset/versioned"
@@ -47,7 +32,6 @@ import (
 	kserve "knative.dev/serving/pkg/client/clientset/versioned"
 	istioclient "knative.dev/serving/pkg/client/istio/clientset/versioned"
 
-	gojenkins "github.com/jenkins-x/golang-jenkins"
 	jenkinsv1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx/v2/pkg/auth"
 	"github.com/jenkins-x/jx/v2/pkg/client/clientset/versioned"

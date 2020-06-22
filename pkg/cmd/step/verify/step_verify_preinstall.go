@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/blang/semver"
-	v1 "github.com/jenkins-x/jx/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx/pkg/versionstream"
+	v1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
+	"github.com/jenkins-x/jx/v2/pkg/versionstream"
 
 	"github.com/jenkins-x/jx/v2/pkg/cloud/amazon/session"
 	"github.com/jenkins-x/jx/v2/pkg/prow"

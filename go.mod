@@ -3,8 +3,6 @@ module github.com/jenkins-x/jx/v2
 require (
 	code.gitea.io/sdk/gitea v0.12.0
 	contrib.go.opencensus.io/exporter/stackdriver v0.12.9-0.20191108183826-59d068f8d8ff // indirect
-	cloud.google.com/go v0.34.0
-	contrib.go.opencensus.io/exporter/prometheus v0.1.0 // indirect
 	github.com/Azure/draft v0.15.0
 	github.com/Comcast/kuberhealthy v1.0.2
 	github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
@@ -17,12 +15,10 @@ require (
 	github.com/TV4/logrus-stackdriver-formatter v0.1.0
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/alecthomas/jsonschema v0.0.0-20190504002508-159cbd5dba26
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
 	github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
 	github.com/andygrunwald/go-jira v1.5.0
-	github.com/antchfx/xpath v1.1.5 // indirect
 	github.com/antham/chyle v1.6.0
 	github.com/aws/aws-sdk-go v1.27.1
 	github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
@@ -38,7 +34,6 @@ require (
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect
 	github.com/davecgh/go-spew v1.1.1
 	github.com/denormal/go-gitignore v0.0.0-20180713143441-75ce8f3e513c
-	github.com/docker/docker v0.0.0-20171206114025-5e5fadb3c020
 	github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c // indirect
 	github.com/dsnet/compress v0.0.0-20171208185109-cc9eb1d7ad76 // indirect
 	github.com/elazarl/goproxy v0.0.0-20181111060418-2ce16c963a8a // indirect
@@ -52,9 +47,6 @@ require (
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.7
 	github.com/go-openapi/swag v0.19.9 // indirect
-	github.com/go-openapi/jsonreference v0.19.2
-	github.com/go-openapi/loads v0.19.4 // indirect
-	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/protobuf v1.3.3
@@ -75,12 +67,12 @@ require (
 	github.com/jenkins-x/lighthouse-config v0.0.4
 	github.com/jetstack/cert-manager v0.9.1
 	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/knative/pkg v0.0.0-20190624141606-d82505e6c5b4
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5 // indirect
 	github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6 // indirect
 	github.com/magiconair/properties v1.8.0
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/markbates/inflect v1.0.4 // indirect
 	github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mitchellh/mapstructure v1.2.2
@@ -106,14 +98,9 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.4.0
 	github.com/stoewer/go-strcase v1.0.1
-<<<<<<< HEAD
 	github.com/stretchr/testify v1.6.0
+	github.com/subchen/go-xmldom v1.1.2
 	github.com/tektoncd/pipeline v0.11.3
-=======
-	github.com/stretchr/testify v1.4.0
-	github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
-	github.com/tektoncd/pipeline v0.8.0
->>>>>>> fix: support modifying the pom.xml on next version
 	github.com/trivago/tgo v1.0.1 // indirect
 	github.com/ulikunitz/xz v0.5.6 // indirect
 	github.com/viniciuschiele/tarx v0.0.0-20151205142357-6e3da540444d // indirect
@@ -131,8 +118,6 @@ require (
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
 	golang.org/x/tools v0.0.0-20200415034506-5d8e1897c761
-	golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7 // indirect
-	google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
 	gopkg.in/AlecAivazis/survey.v1 v1.8.3
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v2 v2.2.8
@@ -178,7 +163,5 @@ replace github.com/banzaicloud/bank-vaults/pkg/sdk => github.com/banzaicloud/ban
 replace k8s.io/test-infra => github.com/jenkins-x/test-infra v0.0.0-20200611142252-211a92405c22
 
 replace gomodules.xyz/jsonpatch/v2 => gomodules.xyz/jsonpatch/v2 v2.0.1
-
-replace github.com/banzaicloud/bank-vaults => github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
 
 go 1.13

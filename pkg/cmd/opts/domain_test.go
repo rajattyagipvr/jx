@@ -3,7 +3,7 @@ package opts_test
 import (
 	"testing"
 
-	"github.com/jenkins-x/jx/pkg/cmd/opts"
+	"github.com/jenkins-x/jx/v2/pkg/cmd/opts"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	corev1 "k8s.io/api/core/v1"

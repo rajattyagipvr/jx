@@ -10,12 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jenkins-x/jx/v2/pkg/kube/naming"
-	rbacv1 "k8s.io/api/rbac/v1"
-
-	corev1 "k8s.io/api/core/v1"
-
-	"github.com/jenkins-x/jx/v2/pkg/kube"
 	corev1 "k8s.io/api/core/v1"
 	rbacv1 "k8s.io/api/rbac/v1"
 
@@ -25,13 +19,7 @@ import (
 
 	jenkinsv1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx/v2/pkg/client/clientset/versioned"
-	"github.com/jenkins-x/jx/v2/pkg/environments"
-	"github.com/jenkins-x/jx/v2/pkg/gits"
-	"github.com/jenkins-x/jx/v2/pkg/vault"
-	"k8s.io/client-go/kubernetes"
 
-	jenkinsv1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx/v2/pkg/client/clientset/versioned"
 	"github.com/jenkins-x/jx/v2/pkg/envctx"
 	"github.com/jenkins-x/jx/v2/pkg/environments"
 	"github.com/jenkins-x/jx/v2/pkg/gits"

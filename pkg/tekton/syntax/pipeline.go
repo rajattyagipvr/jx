@@ -17,7 +17,6 @@ import (
 	"github.com/jenkins-x/jx/v2/pkg/log"
 	"github.com/jenkins-x/jx/v2/pkg/util"
 	"github.com/jenkins-x/jx/v2/pkg/versionstream"
-	"github.com/knative/pkg/apis"
 	"github.com/pkg/errors"
 	"github.com/tektoncd/pipeline/pkg/apis/pipeline"
 	tektonv1alpha1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"

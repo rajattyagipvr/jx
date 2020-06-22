@@ -4,14 +4,6 @@ import (
 	"io/ioutil"
 
 	v1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
-	"github.com/jenkins-x/jx/v2/pkg/cmd/clients"
-	"github.com/jenkins-x/jx/v2/pkg/flagger"
-	"github.com/jenkins-x/jx/v2/pkg/kube"
-	"github.com/jenkins-x/jx/v2/pkg/kube/naming"
-	"github.com/jenkins-x/jx/v2/pkg/kube/services"
-	"github.com/jenkins-x/jx/v2/pkg/util"
-
-	v1 "github.com/jenkins-x/jx/v2/pkg/apis/jenkins.io/v1"
 	"github.com/jenkins-x/jx/v2/pkg/cloud"
 	"github.com/jenkins-x/jx/v2/pkg/cmd/clients"
 	"github.com/jenkins-x/jx/v2/pkg/config"
@@ -262,7 +254,7 @@ func GetRequirementsFromGit(gitURL string) (*config.RequirementsConfig, error) {
 		return nil, errors.Wrapf(err, "failed to git clone %s to dir %s", gitURL, tempDir)
 	}
 
-	requirements, _, err := config.LoadRequirementsConfig(tempDir)
+	requirements, _, err := config.LoadRequirementsConfig(tempDir, config.DefaultFailOnValidationError)
 	if err != nil {
 		return requirements, errors.Wrapf(err, "failed to requirements YAML file from %s", tempDir)
 	}
