@@ -279,6 +279,22 @@ type IngressConfig struct {
 	Kind IngressType `json:"kind,omitempty"`
 }
 
+// BuildPackConfig contains build pack info
+type BuildPackConfig struct {
+	// Location contains location config
+	BuildPackLibrary *BuildPackLibrary `json:"buildPackLibrary,omitempty"`
+}
+
+// BuildPackLibrary contains buildpack location
+type BuildPackLibrary struct {
+	// Name
+	Name string `json:"name,omitempty"`
+	// GitURL
+	GitURL string `json:"gitURL,omitempty"`
+	// GitRef
+	GitRef string `json:"gitRef,omitempty"`
+}
+
 // TLSConfig contains TLS specific requirements
 type TLSConfig struct {
 	// TLS enabled
@@ -507,12 +523,10 @@ type RequirementsValues struct {
 type RequirementsConfig struct {
 	// AutoUpdate contains auto update config
 	AutoUpdate AutoUpdateConfig `json:"autoUpdate,omitempty"`
-	// BuildPackURL  the git URL of the build pack to use
-	BuildPackURL string `json:"buildPackURL,omitempty"`
-	// BuildPackRef the git ref (branch, tag, SHA) of the build pack to use
-	BuildPackRef string `json:"buildPackRef,omitempty"`
 	// BootConfigURL contains the url to which the dev environment is associated with
 	BootConfigURL string `json:"bootConfigURL,omitempty"`
+	// BuildPackConfig contains custom build pack settings
+	BuildPacks *BuildPackConfig `json:"buildPacks,omitempty"`
 	// Cluster contains cluster specific requirements
 	Cluster ClusterConfig `json:"cluster"`
 	// Environments the requirements for the environments

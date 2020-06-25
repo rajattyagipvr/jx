@@ -704,23 +704,29 @@ func (o *StepVerifyPreInstallOptions) gatherRequirements(requirements *config.Re
 		requirements.VersionStream.Ref = ref
 	}
 
-	if requirements.BuildPackURL == "" {
-		requirements.BuildPackURL = v1.KubernetesWorkloadBuildPackURL
+	if requirements.BuildPacks == nil {
+		requirements.BuildPacks = &config.BuildPackConfig{}
 	}
-	if requirements.BuildPackRef == "" || requirements.BuildPackRef == "master" {
+	if requirements.BuildPacks.BuildPackLibrary == nil {
+		requirements.BuildPacks.BuildPackLibrary = &config.BuildPackLibrary{}
+	}
+	if requirements.BuildPacks.BuildPackLibrary.GitURL == "" {
+		requirements.BuildPacks.BuildPackLibrary.GitURL = v1.KubernetesWorkloadBuildPackURL
+	}
+	if requirements.BuildPacks.BuildPackLibrary.GitRef == "" || requirements.BuildPacks.BuildPackLibrary.GitRef == "master" {
 		// lets resolve the version from the version stream
 		resolver := &versionstream.VersionResolver{
 			VersionsDir: versionStreamDir,
 		}
-		gitVersion, err := resolver.StableVersionNumber(versionstream.KindGit, requirements.BuildPackURL)
+		gitVersion, err := resolver.StableVersionNumber(versionstream.KindGit, requirements.BuildPacks.BuildPackLibrary.GitURL)
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to resolve git version of %s in the version stream at dir %s", requirements.BuildPackURL, versionStreamDir)
+			return nil, errors.Wrapf(err, "failed to resolve git version of %s in the version stream at dir %s", requirements.BuildPacks.BuildPackLibrary.GitURL, versionStreamDir)
 		}
 		if gitVersion != "" {
-			requirements.BuildPackRef = gitVersion
-			log.Logger().Infof("setting the build pack %s to version %s", requirements.BuildPackURL, gitVersion)
+			requirements.BuildPacks.BuildPackLibrary.GitRef = gitVersion
+			log.Logger().Infof("setting the build pack %s to version %s", requirements.BuildPacks.BuildPackLibrary.GitURL, gitVersion)
 		} else {
-			log.Logger().Warnf("the version stream at %s does not have a stable git version for %s", versionStreamDir, requirements.BuildPackURL)
+			log.Logger().Warnf("the version stream at %s does not have a stable git version for %s", versionStreamDir, requirements.BuildPacks.BuildPackLibrary.GitURL)
 		}
 	}
 
