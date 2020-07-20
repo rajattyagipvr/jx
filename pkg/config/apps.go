@@ -69,6 +69,11 @@ type App struct {
 	Atomic *bool `json:"atomic,omitempty"`
 	// CleanupOnFail, when set to true, the --cleanup-on-fail helm flag is passed to the upgrade command
 	CleanupOnFail *bool `json:"cleanupOnFail,omitempty"`
+	// These settings requires helm-x integration to work
+	Dependencies          []helmfile.Dependency `json:"dependencies,omitempty"`
+	JSONPatches           []interface{}         `json:"jsonPatches,omitempty"`
+	StrategicMergePatches []interface{}         `json:"strategicMergePatches,omitempty"`
+	Adopt                 []string              `json:"adopt,omitempty"`
 }
 
 // Phase of the pipeline to install application

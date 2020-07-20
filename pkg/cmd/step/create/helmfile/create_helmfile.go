@@ -312,6 +312,11 @@ func (o *CreateHelmfileOptions) generateHelmFile(ec *envctx.EnvironmentContext, 
 			Installed:     app.Installed,
 			Atomic:        app.Atomic,
 			CleanupOnFail: app.CleanupOnFail,
+			//Rajat added helmfile feature for helm 3.2.0
+			Dependencies:          app.Dependencies,
+			JSONPatches:           app.JSONPatches,
+			StrategicMergePatches: app.StrategicMergePatches,
+			Adopt:                 app.Adopt,
 		}
 		releases = append(releases, release)
 	}
