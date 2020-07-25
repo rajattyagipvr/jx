@@ -12,8 +12,8 @@ import (
 
 	helm_test "github.com/jenkins-x/jx/v2/pkg/helm/mocks"
 
+	"github.com/google/uuid"
 	"github.com/jenkins-x/jx/v2/pkg/secreturl/localvault"
-	"github.com/pborman/uuid"
 	"github.com/petergtz/pegomock"
 	"github.com/stretchr/testify/require"
 
@@ -106,8 +106,8 @@ func TestStoreCredentials(t *testing.T) {
 	pegomock.RegisterMockTestingT(t)
 	vaultClient := secreturl_test.NewMockClient()
 	repository := "http://charts.acme.com"
-	username := uuid.New()
-	password := uuid.New()
+	username := uuid.New().String()
+	password := uuid.New().String()
 	username, password, err := helm.DecorateWithCredentials(repository, username, password, vaultClient, util.IOFileHandles{})
 	assert2.NoError(t, err)
 	vaultClient.VerifyWasCalledOnce().WriteObject(helm.RepoVaultPath, helm.HelmRepoCredentials{
@@ -122,8 +122,8 @@ func TestRetrieveCredentials(t *testing.T) {
 	pegomock.RegisterMockTestingT(t)
 	vaultClient := secreturl_test.NewMockClient()
 	repository := "http://charts.acme.com"
-	username := uuid.New()
-	password := uuid.New()
+	username := uuid.New().String()
+	password := uuid.New().String()
 	pegomock.When(vaultClient.ReadObject(pegomock.EqString(helm.RepoVaultPath),
 		pegomock.AnyInterface())).Then(func(params []pegomock.Param) pegomock.ReturnValues {
 		p := params[1].(*helm.HelmRepoCredentials)
@@ -148,10 +148,10 @@ func TestOverrideCredentials(t *testing.T) {
 	pegomock.RegisterMockTestingT(t)
 	vaultClient := secreturl_test.NewMockClient()
 	repository := "http://charts.acme.com"
-	username := uuid.New()
-	password := uuid.New()
-	newUsername := uuid.New()
-	newPassword := uuid.New()
+	username := uuid.New().String()
+	password := uuid.New().String()
+	newUsername := uuid.New().String()
+	newPassword := uuid.New().String()
 	pegomock.When(vaultClient.ReadObject(pegomock.EqString(helm.RepoVaultPath),
 		pegomock.AnyInterface())).Then(func(params []pegomock.Param) pegomock.ReturnValues {
 		p := params[1].(*helm.HelmRepoCredentials)
@@ -309,5 +309,35 @@ func TestFindLatestChart(t *testing.T) {
 				t.Errorf("FindLatestChart() got = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestIsGitURL(t *testing.T) {
+	tests := []string{
+		"https://github.com/jenkins-x/jx.git",
+		"https://github.com/jenkins-x/jx.git#master",
+		"git@github.com:jenkins-x/jx.git",
+		"git@github.com:jenkins-x/jx.git#master",
+	}
+
+	for _, test := range tests {
+		ok, err := helm.IsGitURL(test)
+		assert2.NoError(t, err)
+		assert2.Equalf(t, ok, true, "%s should be git URL", test)
+	}
+}
+
+func TestIsCommitSHA(t *testing.T) {
+	tests := []string{
+		"642c0ef2d0f640ba1bf0bd042fb29f758d924f55",
+		"0740afcdf8b69ec8d6f073a377752e8e70a86f21",
+		"6fbdd5b",
+		"0740afc",
+	}
+
+	for _, test := range tests {
+		ok, err := helm.IsCommitSHA(test)
+		assert2.NoError(t, err)
+		assert2.Equalf(t, ok, true, "%s should be git commit SHA", test)
 	}
 }

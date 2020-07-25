@@ -1,21 +1,19 @@
 package storage
 
 import (
-	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"strings"
 	"time"
 
+	uuid2 "github.com/google/uuid"
 	"github.com/jenkins-x/jx-logging/pkg/log"
 	"github.com/jenkins-x/jx/v2/pkg/cloud/buckets"
 	"github.com/jenkins-x/jx/v2/pkg/cloud/gke"
 	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/util"
 	"github.com/pkg/errors"
-	uuid "github.com/satori/go.uuid"
 )
 
 var (
@@ -30,8 +28,8 @@ type GKEBucketProvider struct {
 
 // CreateNewBucketForCluster creates a new dynamic bucket
 func (b *GKEBucketProvider) CreateNewBucketForCluster(clusterName string, bucketKind string) (string, error) {
-	uuid4, _ := uuid.NewV4()
-	bucketURL := fmt.Sprintf("gs://%s-%s-%s", clusterName, bucketKind, uuid4.String())
+	uuid := uuid2.New()
+	bucketURL := fmt.Sprintf("gs://%s-%s-%s", clusterName, bucketKind, uuid.String())
 	if len(bucketURL) > 60 {
 		bucketURL = bucketURL[:60]
 	}
@@ -50,7 +48,7 @@ func (b *GKEBucketProvider) CreateNewBucketForCluster(clusterName string, bucket
 func (b *GKEBucketProvider) EnsureBucketIsCreated(bucketURL string) error {
 	project := b.Requirements.Cluster.ProjectID
 	if project == "" {
-		return fmt.Errorf("Requirements do not specify a project")
+		return fmt.Errorf("requirements do not specify a project")
 	}
 	u, err := url.Parse(bucketURL)
 	if err != nil {
@@ -80,18 +78,13 @@ func (b *GKEBucketProvider) EnsureBucketIsCreated(bucketURL string) error {
 
 // UploadFileToBucket uploads a file to the provided GCS bucket with the provided outputName
 func (b *GKEBucketProvider) UploadFileToBucket(reader io.Reader, key string, bucketURL string) (string, error) {
-	data, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return "", err
-	}
-
-	log.Logger().Debugf("Uploading %d bytes to bucket %s with key %s", len(data), bucketURL, key)
-	err = buckets.WriteBucket(bucketURL, key, data, defaultBucketWriteTimeout)
+	log.Logger().Debugf("Uploading to bucket %s with key %s", bucketURL, key)
+	err := buckets.WriteBucket(bucketURL, key, reader, defaultBucketWriteTimeout)
 	return bucketURL + "/" + key, err
 }
 
 // DownloadFileFromBucket downloads a file from GCS from the given bucketURL and server its contents with a bufio.Scanner
-func (b *GKEBucketProvider) DownloadFileFromBucket(bucketURL string) (*bufio.Scanner, error) {
+func (b *GKEBucketProvider) DownloadFileFromBucket(bucketURL string) (io.ReadCloser, error) {
 	return gke.StreamTransferFileFromBucket(bucketURL)
 }
 

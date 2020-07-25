@@ -1,11 +1,11 @@
 package storage
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/url"
+	"os"
 	"strings"
 
 	session2 "github.com/jenkins-x/jx/v2/pkg/cloud/amazon/session"
@@ -16,12 +16,12 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager/s3manageriface"
+	"github.com/google/uuid"
 	"github.com/jenkins-x/jx-logging/pkg/log"
 	"github.com/jenkins-x/jx/v2/pkg/cloud/buckets"
 	"github.com/jenkins-x/jx/v2/pkg/config"
 	"github.com/jenkins-x/jx/v2/pkg/util"
 	"github.com/pkg/errors"
-	uuid "github.com/satori/go.uuid"
 )
 
 // AmazonBucketProvider the bucket provider for AWS
@@ -83,7 +83,7 @@ func (b *AmazonBucketProvider) s3ManagerUploader() (s3manageriface.UploaderAPI, 
 
 // CreateNewBucketForCluster creates a new dynamic bucket
 func (b *AmazonBucketProvider) CreateNewBucketForCluster(clusterName string, bucketKind string) (string, error) {
-	uuid4, _ := uuid.NewV4()
+	uuid4 := uuid.New()
 	bucketName := fmt.Sprintf("%s-%s-%s", clusterName, bucketKind, uuid4.String())
 
 	// Max length is 63, https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
@@ -164,7 +164,7 @@ func (b *AmazonBucketProvider) UploadFileToBucket(reader io.Reader, outputName s
 }
 
 // DownloadFileFromBucket downloads a file from an S3 bucket and converts the contents to a bufio.Scanner
-func (b *AmazonBucketProvider) DownloadFileFromBucket(bucketURL string) (*bufio.Scanner, error) {
+func (b *AmazonBucketProvider) DownloadFileFromBucket(bucketURL string) (io.ReadCloser, error) {
 	downloader, err := b.s3ManagerDownloader()
 	if err != nil {
 		return nil, errors.Wrap(err, "there was a problem downloading from the bucket")
@@ -179,16 +179,35 @@ func (b *AmazonBucketProvider) DownloadFileFromBucket(bucketURL string) (*bufio.
 		Key:    aws.String(u.Path),
 	}
 
-	buf := aws.NewWriteAtBuffer([]byte{})
-	_, err = downloader.Download(buf, &requestInput)
+	f, err := ioutil.TempFile("", ".tmp-s3-download-")
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			_ = f.Close()
+			_ = os.Remove(f.Name())
+		}
+	}()
+	_, err = downloader.Download(f, &requestInput)
 	if err != nil {
 		return nil, err
 	}
 
-	reader := bytes.NewReader(buf.Bytes())
-	scanner := bufio.NewScanner(reader)
-	scanner.Split(bufio.ScanLines)
-	return scanner, nil
+	return &tempDownloadDestination{f}, nil
+}
+
+type tempDownloadDestination struct {
+	*os.File
+}
+
+func (f *tempDownloadDestination) Close() error {
+	err1 := f.File.Close()
+	err2 := os.Remove(f.File.Name())
+	if err2 != nil && err1 == nil {
+		err1 = err2
+	}
+	return err1
 }
 
 // NewAmazonBucketProvider create a new provider for AWS

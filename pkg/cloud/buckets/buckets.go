@@ -3,6 +3,7 @@ package buckets
 import (
 	"context"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -47,7 +48,7 @@ func KubeProviderToBucketScheme(provider string) string {
 
 // ReadURL reads the given URL from either a http/https endpoint or a bucket URL path.
 // if specified the httpFn is a function which can append the user/password or token and/or add a header with the token if using a git provider
-func ReadURL(urlText string, timeout time.Duration, httpFn func(urlString string) (string, func(*http.Request), error)) ([]byte, error) {
+func ReadURL(urlText string, timeout time.Duration, httpFn func(urlString string) (string, func(*http.Request), error)) (io.ReadCloser, error) {
 	u, err := url.Parse(urlText)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to parse URL %s", urlText)
@@ -68,7 +69,7 @@ func ReadURL(urlText string, timeout time.Duration, httpFn func(urlString string
 }
 
 // ReadHTTPURL reads the HTTP based URL, modifying the headers as needed, and returns the data or returning an error if a 2xx status is not returned
-func ReadHTTPURL(u string, headerFunc func(*http.Request), timeout time.Duration) ([]byte, error) {
+func ReadHTTPURL(u string, headerFunc func(*http.Request), timeout time.Duration) (io.ReadCloser, error) {
 	httpClient := util.GetClientWithTimeout(timeout)
 
 	req, err := http.NewRequest("GET", u, nil)
@@ -81,22 +82,18 @@ func ReadHTTPURL(u string, headerFunc func(*http.Request), timeout time.Duration
 		return nil, errors.Wrapf(err, "failed to invoke GET on %s", u)
 	}
 	stream := resp.Body
-	defer stream.Close()
 
-	data, err := ioutil.ReadAll(stream)
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to GET data from %s", u)
-	}
 	if resp.StatusCode >= 400 {
-		return data, fmt.Errorf("status %s when performing GET on %s", resp.Status, u)
+		_ = stream.Close()
+		return nil, fmt.Errorf("status %s when performing GET on %s", resp.Status, u)
 	}
-	return data, err
+	return stream, nil
 }
 
 // ReadBucketURL reads the content of a bucket URL of the for 's3://bucketName/foo/bar/whatnot.txt?param=123'
 // where any of the query arguments are applied to the underlying Bucket URL and the path is extracted and resolved
 // within the bucket
-func ReadBucketURL(u *url.URL, timeout time.Duration) ([]byte, error) {
+func ReadBucketURL(u *url.URL, timeout time.Duration) (io.ReadCloser, error) {
 	bucketURL, key := SplitBucketURL(u)
 
 	ctx, _ := context.WithTimeout(context.Background(), timeout)
@@ -104,7 +101,7 @@ func ReadBucketURL(u *url.URL, timeout time.Duration) ([]byte, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to open bucket %s", bucketURL)
 	}
-	data, err := bucket.ReadAll(ctx, key)
+	data, err := bucket.NewReader(ctx, key, nil)
 	if err != nil {
 		return data, errors.Wrapf(err, "failed to read key %s in bucket %s", key, bucketURL)
 	}
@@ -113,18 +110,22 @@ func ReadBucketURL(u *url.URL, timeout time.Duration) ([]byte, error) {
 
 // WriteBucketURL writes the data to a bucket URL of the for 's3://bucketName/foo/bar/whatnot.txt?param=123'
 // with the given timeout
-func WriteBucketURL(u *url.URL, data []byte, timeout time.Duration) error {
+func WriteBucketURL(u *url.URL, data io.Reader, timeout time.Duration) error {
 	bucketURL, key := SplitBucketURL(u)
 	return WriteBucket(bucketURL, key, data, timeout)
 }
 
 // WriteBucket writes the data to a bucket URL and key of the for 's3://bucketName' and key 'foo/bar/whatnot.txt'
 // with the given timeout
-func WriteBucket(bucketURL string, key string, data []byte, timeout time.Duration) error {
+func WriteBucket(bucketURL string, key string, reader io.Reader, timeout time.Duration) (err error) {
 	ctx, _ := context.WithTimeout(context.Background(), timeout)
 	bucket, err := blob.Open(ctx, bucketURL)
 	if err != nil {
 		return errors.Wrapf(err, "failed to open bucket %s", bucketURL)
+	}
+	data, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return errors.Wrapf(err, "failed to read data for key %s in bucket %s", key, bucketURL)
 	}
 	err = bucket.WriteAll(ctx, key, data, nil)
 	if err != nil {
