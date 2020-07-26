@@ -1,0 +1,312 @@
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-credential-initializer-mfx67[0m
+{"level":"warn","ts":1595759689.4693067,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1595759689.4698243,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-working-dir-initializer-llzgs[0m
+{"level":"warn","ts":1595759690.7566,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1595759690.757519,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-git-source-rajattyagipvr-jx-multicluster-t88w2-xktxh[0m
+{"level":"warn","ts":1595759697.858322,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1595759702.8012698,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/*************/**.git @ v2.1.105 in path /workspace/source"}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-git-merge[0m
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-init-helm[0m
+Creating /builder/home/.helm 
+Creating /builder/home/.helm/repository 
+Creating /builder/home/.helm/repository/cache 
+Creating /builder/home/.helm/repository/local 
+Creating /builder/home/.helm/plugins 
+Creating /builder/home/.helm/starters 
+Creating /builder/home/.helm/cache/archive 
+Creating /builder/home/.helm/repository/repositories.yaml 
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com 
+Adding local repo with URL: http://127.0.0.1:8879/charts 
+$HELM_HOME has been configured at /builder/home/.helm.
+Not installing Tiller due to 'client-only' flag having been set
+Happy Helming!
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-t88w2-4[0m stage [32mrelease[0m and container [32mstep-release[0m
+rm -rf build release dist
+CGO_ENABLED=0 GO111MODULE=on go build -ldflags " -X github.com/jenkins-x/**/pkg/version.Version=2.1.105 -X github.com/jenkins-x/**/pkg/version.Revision='7a1b702' -X github.com/jenkins-x/**/pkg/version.Branch='master' -X github.com/jenkins-x/**/pkg/version.BuildDate='20200726-10:35:07' -X github.com/jenkins-x/**/pkg/version.GoVersion='1.12.16' """ -p 2 -o build/** cmd/**/**.go
+go: finding github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+go: finding github.com/google/btree v1.0.0
+go: finding github.com/evanphx/json-patch v4.5.0+incompatible
+go: finding github.com/andygrunwald/go-jira v1.5.0
+go: finding github.com/chromedp/cdproto v0.0.0-20180720050708-57cf4773008d
+go: finding k8s.io/test-infra v0.0.0-20190131093439-a22cef183a8f
+go: finding cloud.google.com/go v0.34.0
+go: finding github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964
+go: finding github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+go: finding github.com/dsnet/compress v0.0.0-20171208185109-cc9eb1d7ad76
+go: github.com/dsnet/compress@v0.0.0-20171208185109-cc9eb1d7ad76: Get http://jenkins-x-athens-proxy/github.com/dsnet/compress/@v/v0.0.0-20171208185109-cc9eb1d7ad76.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6
+go: cloud.google.com/go@v0.34.0: Get http://jenkins-x-athens-proxy/cloud.google.com/go/@v/v0.34.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/cenkalti/backoff v2.1.1+incompatible
+go: k8s.io/test-infra@v0.0.0-20190131093439-a22cef183a8f: Get http://jenkins-x-athens-proxy/k8s.io/test-infra/@v/v0.0.0-20190131093439-a22cef183a8f.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/danwakefield/fnmatch@v0.0.0-20160403171240-cbb64ac3d964: Get http://jenkins-x-athens-proxy/github.com/danwakefield/fnmatch/@v/v0.0.0-20160403171240-cbb64ac3d964.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5
+go: finding github.com/wbrefvem/go-bitbucket v0.0.0-20190128183802-fc08fd046abb
+go: github.com/acarl005/stripansi@v0.0.0-20180116102854-5a71ef0e047d: Get http://jenkins-x-athens-proxy/github.com/acarl005/stripansi/@v/v0.0.0-20180116102854-5a71ef0e047d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
+go: github.com/google/btree@v1.0.0: Get http://jenkins-x-athens-proxy/github.com/google/btree/@v/v1.0.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/evanphx/json-patch@v4.5.0+incompatible: Get http://jenkins-x-athens-proxy/github.com/evanphx/json-patch/@v/v4.5.0+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/alecthomas/template@v0.0.0-20190718012654-fb15b899a751: Get http://jenkins-x-athens-proxy/github.com/alecthomas/template/@v/v0.0.0-20190718012654-fb15b899a751.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/rodaine/hclencoder v0.0.0-20180926060551-0680c4321930
+go: finding github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
+go: finding github.com/petergtz/pegomock v2.7.0+incompatible
+go: github.com/andygrunwald/go-jira@v1.5.0: Get http://jenkins-x-athens-proxy/github.com/andygrunwald/go-jira/@v/v1.5.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/beevik/etree v1.0.1
+go: github.com/chromedp/cdproto@v0.0.0-20180720050708-57cf4773008d: Get http://jenkins-x-athens-proxy/github.com/chromedp/cdproto/@v/v0.0.0-20180720050708-57cf4773008d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
+go: github.com/IBM-Cloud/bluemix-go@v0.0.0-20181008063305-d718d474c7c2: Get http://jenkins-x-athens-proxy/github.com/%21i%21b%21m-%21cloud/bluemix-go/@v/v0.0.0-20181008063305-d718d474c7c2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/cenkalti/backoff@v2.1.1+incompatible: Get http://jenkins-x-athens-proxy/github.com/cenkalti/backoff/@v/v2.1.1+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/lusis/go-slackbot@v0.0.0-20180109053408-401027ccfef5: Get http://jenkins-x-athens-proxy/github.com/lusis/go-slackbot/@v/v0.0.0-20180109053408-401027ccfef5.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/wbrefvem/go-bitbucket@v0.0.0-20190128183802-fc08fd046abb: Get http://jenkins-x-athens-proxy/github.com/wbrefvem/go-bitbucket/@v/v0.0.0-20190128183802-fc08fd046abb.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/google/uuid v1.1.1
+go: finding github.com/xeipuuv/gojsonschema v1.1.0
+go: github.com/alexflint/go-filemutex@v0.0.0-20171028004239-d358565f3c3f: Get http://jenkins-x-athens-proxy/github.com/alexflint/go-filemutex/@v/v0.0.0-20171028004239-d358565f3c3f.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/trivago/tgo v1.0.1
+go: github.com/rodaine/hclencoder@v0.0.0-20180926060551-0680c4321930: Get http://jenkins-x-athens-proxy/github.com/rodaine/hclencoder/@v/v0.0.0-20180926060551-0680c4321930.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/helm v2.7.2+incompatible
+go: github.com/lusis/slack-test@v0.0.0-20180109053238-3c758769bfa6: Get http://jenkins-x-athens-proxy/github.com/lusis/slack-test/@v/v0.0.0-20180109053238-3c758769bfa6.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/awslabs/goformation@v0.0.0-20190320125420-ac0a17860cf1: Get http://jenkins-x-athens-proxy/github.com/awslabs/goformation/@v/v0.0.0-20190320125420-ac0a17860cf1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/golang/protobuf v1.3.2
+go: finding github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c
+go: finding contrib.go.opencensus.io/exporter/prometheus v0.1.0
+go: github.com/petergtz/pegomock@v2.7.0+incompatible: Get http://jenkins-x-athens-proxy/github.com/petergtz/pegomock/@v/v2.7.0+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/go-openapi/loads v0.19.4
+go: finding github.com/google/go-cmp v0.3.1
+go: github.com/beevik/etree@v1.0.1: Get http://jenkins-x-athens-proxy/github.com/beevik/etree/@v/v1.0.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/go-openapi/spec v0.19.3
+go: github.com/go-openapi/spec@v0.19.3: Get http://jenkins-x-athens-proxy/github.com/go-openapi/spec/@v/v0.19.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/google/uuid@v1.1.1: Get http://jenkins-x-athens-proxy/github.com/google/uuid/@v/v1.1.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding gopkg.in/yaml.v2 v2.2.4
+go: finding github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
+go: k8s.io/helm@v2.7.2+incompatible: Get http://jenkins-x-athens-proxy/k8s.io/helm/@v/v2.7.2+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/Comcast/kuberhealthy v1.0.2
+go: github.com/golang/protobuf@v1.3.2: Get http://jenkins-x-athens-proxy/github.com/golang/protobuf/@v/v1.3.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding go.opencensus.io v0.22.2
+go: github.com/go-openapi/loads@v0.19.4: Get http://jenkins-x-athens-proxy/github.com/go-openapi/loads/@v/v0.19.4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/google/go-cmp@v0.3.1: Get http://jenkins-x-athens-proxy/github.com/google/go-cmp/@v/v0.3.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/hashicorp/go-version v1.1.0
+go: finding github.com/nlopes/slack v0.0.0-20180721202243-347a74b1ea30
+go: github.com/hinshun/vt10x@v0.0.0-20180809195222-d55458df857c: Get http://jenkins-x-athens-proxy/github.com/hinshun/vt10x/@v/v0.0.0-20180809195222-d55458df857c.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/xeipuuv/gojsonschema@v1.1.0: Get http://jenkins-x-athens-proxy/github.com/xeipuuv/gojsonschema/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/pkg/errors v0.8.1
+go: finding github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+go: github.com/trivago/tgo@v1.0.1: Get http://jenkins-x-athens-proxy/github.com/trivago/tgo/@v/v1.0.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: contrib.go.opencensus.io/exporter/prometheus@v0.1.0: Get http://jenkins-x-athens-proxy/contrib.go.opencensus.io/exporter/prometheus/@v/v0.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/alecthomas/jsonschema v0.0.0-20190504002508-159cbd5dba26
+go: finding github.com/Azure/draft v0.15.0
+go: github.com/Azure/draft@v0.15.0: Get http://jenkins-x-athens-proxy/github.com/%21azure/draft/@v/v0.15.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: gopkg.in/yaml.v2@v2.2.4: Get http://jenkins-x-athens-proxy/gopkg.in/yaml.v2/@v/v2.2.4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/hashicorp/hcl v1.0.0
+go: finding github.com/elazarl/goproxy v0.0.0-20181111060418-2ce16c963a8a
+go: github.com/Comcast/kuberhealthy@v1.0.2: Get http://jenkins-x-athens-proxy/github.com/%21comcast/kuberhealthy/@v/v1.0.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/nlopes/slack@v0.0.0-20180721202243-347a74b1ea30: Get http://jenkins-x-athens-proxy/github.com/nlopes/slack/@v/v0.0.0-20180721202243-347a74b1ea30.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/xi2/xz@v0.0.0-20171230120015-48954b6210f8: Get http://jenkins-x-athens-proxy/github.com/xi2/xz/@v/v0.0.0-20171230120015-48954b6210f8.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/go-ole/go-ole v1.2.1
+go: finding sigs.k8s.io/yaml v1.1.0
+go: github.com/pkg/errors@v0.8.1: Get http://jenkins-x-athens-proxy/github.com/pkg/errors/@v/v0.8.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/spf13/pflag v1.0.3
+go: go.opencensus.io@v0.22.2: Get http://jenkins-x-athens-proxy/go.opencensus.io/@v/v0.22.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/xeipuuv/gojsonreference@v0.0.0-20180127040603-bd5ef7bd5415: Get http://jenkins-x-athens-proxy/github.com/xeipuuv/gojsonreference/@v/v0.0.0-20180127040603-bd5ef7bd5415.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/client-go v0.0.0-20190528110200-4f3abb12cae2
+go: finding gopkg.in/alecthomas/kingpin.v2 v2.2.6
+go: github.com/alecthomas/jsonschema@v0.0.0-20190504002508-159cbd5dba26: Get http://jenkins-x-athens-proxy/github.com/alecthomas/jsonschema/@v/v0.0.0-20190504002508-159cbd5dba26.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding knative.dev/pkg v0.0.0-20191217184203-cf220a867b3d
+go: github.com/hashicorp/go-version@v1.1.0: Get http://jenkins-x-athens-proxy/github.com/hashicorp/go-version/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/fatih/color v1.7.0
+go: finding github.com/knative/serving v0.7.0
+go: github.com/knative/serving@v0.7.0: Get http://jenkins-x-athens-proxy/github.com/knative/serving/@v/v0.7.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/spf13/pflag@v1.0.3: Get http://jenkins-x-athens-proxy/github.com/spf13/pflag/@v/v1.0.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/gfleury/go-bitbucket-v1 v0.0.0-20200320173742-022f4bab9090
+go: github.com/elazarl/goproxy@v0.0.0-20181111060418-2ce16c963a8a: Get http://jenkins-x-athens-proxy/github.com/elazarl/goproxy/@v/v0.0.0-20181111060418-2ce16c963a8a.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/blang/semver v3.5.1+incompatible
+go: github.com/go-ole/go-ole@v1.2.1: Get http://jenkins-x-athens-proxy/github.com/go-ole/go-ole/@v/v1.2.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/apiextensions-apiserver v0.0.0-20190528110544-fa58353d80f3
+go: finding github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
+go: github.com/hashicorp/hcl@v1.0.0: Get http://jenkins-x-athens-proxy/github.com/hashicorp/hcl/@v/v1.0.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: knative.dev/pkg@v0.0.0-20191217184203-cf220a867b3d: Get http://jenkins-x-athens-proxy/knative.dev/pkg/@v/v0.0.0-20191217184203-cf220a867b3d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: sigs.k8s.io/yaml@v1.1.0: Get http://jenkins-x-athens-proxy/sigs.k8s.io/yaml/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
+go: finding github.com/vrischmann/envconfig v1.2.0
+go: k8s.io/client-go@v0.0.0-20190528110200-4f3abb12cae2: Get http://jenkins-x-athens-proxy/k8s.io/client-go/@v/v0.0.0-20190528110200-4f3abb12cae2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/chromedp/chromedp v0.1.1
+go: github.com/fatih/color@v1.7.0: Get http://jenkins-x-athens-proxy/github.com/fatih/color/@v/v1.7.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/knative/pkg v0.0.0-20190624141606-d82505e6c5b4
+go: finding k8s.io/metrics v0.0.0-20181128195641-3954d62a524d
+go: gopkg.in/alecthomas/kingpin.v2@v2.2.6: Get http://jenkins-x-athens-proxy/gopkg.in/alecthomas/kingpin.v2/@v/v2.2.6.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/jtnord/logrus v1.4.2-0.20190423161236-606ffcaf8f5d
+go: github.com/jtnord/logrus@v1.4.2-0.20190423161236-606ffcaf8f5d: Get http://jenkins-x-athens-proxy/github.com/jtnord/logrus/@v/v1.4.2-0.20190423161236-606ffcaf8f5d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/api v0.0.0-20190528110122-9ad12a4af326
+go: github.com/gfleury/go-bitbucket-v1@v0.0.0-20200320173742-022f4bab9090: Get http://jenkins-x-athens-proxy/github.com/gfleury/go-bitbucket-v1/@v/v0.0.0-20200320173742-022f4bab9090.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7
+go: github.com/blang/semver@v3.5.1+incompatible: Get http://jenkins-x-athens-proxy/github.com/blang/semver/@v/v3.5.1+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
+go: k8s.io/apiextensions-apiserver@v0.0.0-20190528110544-fa58353d80f3: Get http://jenkins-x-athens-proxy/k8s.io/apiextensions-apiserver/@v/v0.0.0-20190528110544-fa58353d80f3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/onsi/ginkgo v1.7.0
+go: github.com/xeipuuv/gojsonpointer@v0.0.0-20180127040702-4e3ac2762d5f: Get http://jenkins-x-athens-proxy/github.com/xeipuuv/gojsonpointer/@v/v0.0.0-20180127040702-4e3ac2762d5f.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding gopkg.in/AlecAivazis/survey.v1 v1.8.3
+go: github.com/andygrunwald/go-gerrit@v0.0.0-20181026193842-43cfd7a94eb4: Get http://jenkins-x-athens-proxy/github.com/andygrunwald/go-gerrit/@v/v0.0.0-20181026193842-43cfd7a94eb4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/heptio/sonobuoy v0.16.0
+go: github.com/vrischmann/envconfig@v1.2.0: Get http://jenkins-x-athens-proxy/github.com/vrischmann/envconfig/@v/v1.2.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/pierrec/lz4 v2.0.5+incompatible
+go: github.com/chromedp/chromedp@v0.1.1: Get http://jenkins-x-athens-proxy/github.com/chromedp/chromedp/@v/v0.1.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/stretchr/testify v1.4.0
+go: github.com/knative/pkg@v0.0.0-20190624141606-d82505e6c5b4: Get http://jenkins-x-athens-proxy/github.com/knative/pkg/@v/v0.0.0-20190624141606-d82505e6c5b4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+go: k8s.io/metrics@v0.0.0-20181128195641-3954d62a524d: Get http://jenkins-x-athens-proxy/k8s.io/metrics/@v/v0.0.0-20181128195641-3954d62a524d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/Netflix/go-expect v0.0.0-20180814212900-124a37274874
+go: github.com/Netflix/go-expect@v0.0.0-20180814212900-124a37274874: Get http://jenkins-x-athens-proxy/github.com/%21netflix/go-expect/@v/v0.0.0-20180814212900-124a37274874.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/pierrec/lz4@v2.0.5+incompatible: Get http://jenkins-x-athens-proxy/github.com/pierrec/lz4/@v/v2.0.5+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: k8s.io/api@v0.0.0-20190528110122-9ad12a4af326: Get http://jenkins-x-athens-proxy/k8s.io/api/@v/v0.0.0-20190528110122-9ad12a4af326.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/gobwas/glob v0.2.3
+go: finding github.com/spf13/viper v1.3.2
+go: finding github.com/tektoncd/pipeline v0.8.0
+go: github.com/heptio/sonobuoy@v0.16.0: Get http://jenkins-x-athens-proxy/github.com/heptio/sonobuoy/@v/v0.16.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c
+go: golang.org/x/xerrors@v0.0.0-20190717185122-a985d3407aa7: Get http://jenkins-x-athens-proxy/golang.org/x/xerrors/@v/v0.0.0-20190717185122-a985d3407aa7.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/docker/docker v0.0.0-20171206114025-5e5fadb3c020
+go: github.com/golang/glog@v0.0.0-20160126235308-23def4e6c14b: Get http://jenkins-x-athens-proxy/github.com/golang/glog/@v/v0.0.0-20160126235308-23def4e6c14b.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: gopkg.in/AlecAivazis/survey.v1@v1.8.3: Get http://jenkins-x-athens-proxy/gopkg.in/%21alec%21aivazis/survey.v1/@v/v1.8.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/satori/go.uuid@v1.2.1-0.20180103174451-36e9d2ebbde5: Get http://jenkins-x-athens-proxy/github.com/satori/go.uuid/@v/v1.2.1-0.20180103174451-36e9d2ebbde5.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
+go: finding github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6
+go: finding github.com/jbrukh/bayesian v0.0.0-20161210175230-bf3f261f9a9c
+go: github.com/stretchr/testify@v1.4.0: Get http://jenkins-x-athens-proxy/github.com/stretchr/testify/@v/v1.4.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/onsi/ginkgo@v1.7.0: Get http://jenkins-x-athens-proxy/github.com/onsi/ginkgo/@v/v1.7.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/kubernetes v1.11.3
+go: finding github.com/mholt/archiver v3.1.1+incompatible
+go: github.com/mholt/archiver@v3.1.1+incompatible: Get http://jenkins-x-athens-proxy/github.com/mholt/archiver/@v/v3.1.1+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/docker/docker@v0.0.0-20171206114025-5e5fadb3c020: Get http://jenkins-x-athens-proxy/github.com/docker/docker/@v/v0.0.0-20171206114025-5e5fadb3c020.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/tektoncd/pipeline@v0.8.0: Get http://jenkins-x-athens-proxy/github.com/tektoncd/pipeline/@v/v0.8.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/MakeNowJust/heredoc v0.0.0-20171113091838-e9091a26100e
+go: github.com/gobwas/glob@v0.2.3: Get http://jenkins-x-athens-proxy/github.com/gobwas/glob/@v/v0.2.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding gocloud.dev v0.9.0
+go: finding github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d
+go: github.com/docker/spdystream@v0.0.0-20181023171402-6480d4af844c: Get http://jenkins-x-athens-proxy/github.com/docker/spdystream/@v/v0.0.0-20181023171402-6480d4af844c.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/spf13/viper@v1.3.2: Get http://jenkins-x-athens-proxy/github.com/spf13/viper/@v/v1.3.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/pkg/browser v0.0.0-20170505125900-c90ca0c84f15
+go: github.com/subchen/go-xmldom@v1.1.2-0.20171223153236-c38add8757d0: Get http://jenkins-x-athens-proxy/github.com/subchen/go-xmldom/@v/v1.1.2-0.20171223153236-c38add8757d0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/c2h5oh/datasize v0.0.0-20171227191756-4eba002a5eae
+go: finding github.com/spf13/cobra v0.0.5
+go: finding github.com/sethvargo/go-password v0.1.2
+go: github.com/jbrukh/bayesian@v0.0.0-20161210175230-bf3f261f9a9c: Get http://jenkins-x-athens-proxy/github.com/jbrukh/bayesian/@v/v0.0.0-20161210175230-bf3f261f9a9c.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: k8s.io/kubernetes@v1.11.3: Get http://jenkins-x-athens-proxy/k8s.io/kubernetes/@v/v1.11.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/StackExchange/wmi@v0.0.0-20180116203802-5d049714c4a6: Get http://jenkins-x-athens-proxy/github.com/%21stack%21exchange/wmi/@v/v0.0.0-20180116203802-5d049714c4a6.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
+go: finding github.com/magiconair/properties v1.8.0
+go: finding golang.org/x/sync v0.0.0-20190423024810-112230192c58
+go: golang.org/x/sync@v0.0.0-20190423024810-112230192c58: Get http://jenkins-x-athens-proxy/golang.org/x/sync/@v/v0.0.0-20190423024810-112230192c58.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: gocloud.dev@v0.9.0: Get http://jenkins-x-athens-proxy/gocloud.dev/@v/v0.9.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/spf13/cobra@v0.0.5: Get http://jenkins-x-athens-proxy/github.com/spf13/cobra/@v/v0.0.5.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding gopkg.in/src-d/go-git.v4 v4.13.1
+go: github.com/magiconair/properties@v1.8.0: Get http://jenkins-x-athens-proxy/github.com/magiconair/properties/@v/v1.8.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/russross/blackfriday v1.5.2
+go: finding github.com/hashicorp/vault v1.1.2
+go: github.com/sethvargo/go-password@v0.1.2: Get http://jenkins-x-athens-proxy/github.com/sethvargo/go-password/@v/v0.1.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/mattbaird/jsonpatch@v0.0.0-20171005235357-81af80346b1a: Get http://jenkins-x-athens-proxy/github.com/mattbaird/jsonpatch/@v/v0.0.0-20171005235357-81af80346b1a.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314
+go: finding github.com/Masterminds/semver v1.4.2
+go: github.com/MakeNowJust/heredoc@v0.0.0-20171113091838-e9091a26100e: Get http://jenkins-x-athens-proxy/github.com/%21make%21now%21just/heredoc/@v/v0.0.0-20171113091838-e9091a26100e.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/denormal/go-gitignore v0.0.0-20180713143441-75ce8f3e513c
+go: finding github.com/hashicorp/go-sockaddr v1.0.2
+go: github.com/alecthomas/units@v0.0.0-20190924025748-f65c72e2690d: Get http://jenkins-x-athens-proxy/github.com/alecthomas/units/@v/v0.0.0-20190924025748-f65c72e2690d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding k8s.io/kube-openapi v0.0.0-20190228160746-b3a7cee44a30
+go: github.com/pkg/browser@v0.0.0-20170505125900-c90ca0c84f15: Get http://jenkins-x-athens-proxy/github.com/pkg/browser/@v/v0.0.0-20170505125900-c90ca0c84f15.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/aws/aws-sdk-go v1.24.0
+go: github.com/c2h5oh/datasize@v0.0.0-20171227191756-4eba002a5eae: Get http://jenkins-x-athens-proxy/github.com/c2h5oh/datasize/@v/v0.0.0-20171227191756-4eba002a5eae.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/antham/chyle v1.6.0
+go: github.com/antham/chyle@v1.6.0: Get http://jenkins-x-athens-proxy/github.com/antham/chyle/@v/v1.6.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/Masterminds/semver@v1.4.2: Get http://jenkins-x-athens-proxy/github.com/%21masterminds/semver/@v/v1.4.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/russross/blackfriday@v1.5.2: Get http://jenkins-x-athens-proxy/github.com/russross/blackfriday/@v/v1.5.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: k8s.io/kube-openapi@v0.0.0-20190228160746-b3a7cee44a30: Get http://jenkins-x-athens-proxy/k8s.io/kube-openapi/@v/v0.0.0-20190228160746-b3a7cee44a30.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4
+go: finding github.com/kylelemons/godebug v1.1.0
+go: finding github.com/briandowns/spinner v1.7.0
+go: github.com/hashicorp/vault@v1.1.2: Get http://jenkins-x-athens-proxy/github.com/hashicorp/vault/@v/v1.1.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/denormal/go-gitignore@v0.0.0-20180713143441-75ce8f3e513c: Get http://jenkins-x-athens-proxy/github.com/denormal/go-gitignore/@v/v0.0.0-20180713143441-75ce8f3e513c.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: gopkg.in/src-d/go-git.v4@v4.13.1: Get http://jenkins-x-athens-proxy/gopkg.in/src-d/go-git.v4/@v/v4.13.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/hashicorp/go-sockaddr@v1.0.2: Get http://jenkins-x-athens-proxy/github.com/hashicorp/go-sockaddr/@v/v1.0.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/aws/aws-sdk-go@v1.24.0: Get http://jenkins-x-athens-proxy/github.com/aws/aws-sdk-go/@v/v1.24.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/fatih/structs v1.1.0
+go: github.com/jenkins-x/golang-jenkins@v0.0.0-20180919102630-65b83ad42314: Get http://jenkins-x-athens-proxy/github.com/jenkins-x/golang-jenkins/@v/v0.0.0-20180919102630-65b83ad42314.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/knative/build v0.7.0
+go: finding github.com/TV4/logrus-stackdriver-formatter v0.1.0
+go: finding github.com/pborman/uuid v1.2.0
+go: finding github.com/ulikunitz/xz v0.5.6
+go: finding github.com/jenkins-x/draft-repo v0.0.0-20180417100212-2f66cc518135
+go: finding github.com/go-openapi/jsonreference v0.19.2
+go: github.com/jenkins-x/draft-repo@v0.0.0-20180417100212-2f66cc518135: Get http://jenkins-x-athens-proxy/github.com/jenkins-x/draft-repo/@v/v0.0.0-20180417100212-2f66cc518135.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/knative/build@v0.7.0: Get http://jenkins-x-athens-proxy/github.com/knative/build/@v/v0.7.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/briandowns/spinner@v1.7.0: Get http://jenkins-x-athens-proxy/github.com/briandowns/spinner/@v/v1.7.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/markbates/inflect v1.0.4
+go: finding github.com/onsi/gomega v1.4.3
+go: finding github.com/davecgh/go-spew v1.1.1
+go: github.com/shirou/w32@v0.0.0-20160930032740-bb4de0191aa4: Get http://jenkins-x-athens-proxy/github.com/shirou/w32/@v/v0.0.0-20160930032740-bb4de0191aa4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/kylelemons/godebug@v1.1.0: Get http://jenkins-x-athens-proxy/github.com/kylelemons/godebug/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/antchfx/xpath v1.1.5
+go: finding github.com/nwaples/rardecode v1.0.0
+go: github.com/fatih/structs@v1.1.0: Get http://jenkins-x-athens-proxy/github.com/fatih/structs/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/pborman/uuid@v1.2.0: Get http://jenkins-x-athens-proxy/github.com/pborman/uuid/@v/v1.2.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/ulikunitz/xz@v0.5.6: Get http://jenkins-x-athens-proxy/github.com/ulikunitz/xz/@v/v0.5.6.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/Jeffail/gabs v1.1.1
+go: finding github.com/viniciuschiele/tarx v0.0.0-20151205142357-6e3da540444d
+go: github.com/TV4/logrus-stackdriver-formatter@v0.1.0: Get http://jenkins-x-athens-proxy/github.com/%21t%21v4/logrus-stackdriver-formatter/@v/v0.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/google/go-containerregistry v0.0.0-20190317040536-ebbba8469d06
+go: github.com/go-openapi/jsonreference@v0.19.2: Get http://jenkins-x-athens-proxy/github.com/go-openapi/jsonreference/@v/v0.19.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/Pallinder/go-randomdata v1.1.0
+go: finding code.gitea.io/sdk v0.0.0-20180702024448-79a281c4e34a
+go: code.gitea.io/sdk@v0.0.0-20180702024448-79a281c4e34a: Get http://jenkins-x-athens-proxy/code.gitea.io/sdk/@v/v0.0.0-20180702024448-79a281c4e34a.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/nwaples/rardecode@v1.0.0: Get http://jenkins-x-athens-proxy/github.com/nwaples/rardecode/@v/v1.0.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/onsi/gomega@v1.4.3: Get http://jenkins-x-athens-proxy/github.com/onsi/gomega/@v/v1.4.3.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/xanzy/go-gitlab v0.22.1
+go: finding github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
+go: finding github.com/jetstack/cert-manager v0.5.2
+go: github.com/markbates/inflect@v1.0.4: Get http://jenkins-x-athens-proxy/github.com/markbates/inflect/@v/v1.0.4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/davecgh/go-spew@v1.1.1: Get http://jenkins-x-athens-proxy/github.com/davecgh/go-spew/@v/v1.1.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/antchfx/xpath@v1.1.5: Get http://jenkins-x-athens-proxy/github.com/antchfx/xpath/@v/v1.1.5.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037
+go: github.com/google/go-containerregistry@v0.0.0-20190317040536-ebbba8469d06: Get http://jenkins-x-athens-proxy/github.com/google/go-containerregistry/@v/v0.0.0-20190317040536-ebbba8469d06.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/Pallinder/go-randomdata@v1.1.0: Get http://jenkins-x-athens-proxy/github.com/%21pallinder/go-randomdata/@v/v1.1.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/google/go-github v17.0.0+incompatible
+go: finding github.com/mitchellh/mapstructure v1.1.2
+go: github.com/Jeffail/gabs@v1.1.1: Get http://jenkins-x-athens-proxy/github.com/%21jeffail/gabs/@v/v1.1.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/imdario/mergo v0.3.8
+go: github.com/viniciuschiele/tarx@v0.0.0-20151205142357-6e3da540444d: Get http://jenkins-x-athens-proxy/github.com/viniciuschiele/tarx/@v/v0.0.0-20151205142357-6e3da540444d.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/shirou/gopsutil v0.0.0-20180901134234-eb1f1ab16f2e
+go: finding k8s.io/apimachinery v0.0.0-20190221084156-01f179d85dbc
+go: finding github.com/ghodss/yaml v1.0.0
+go: github.com/ghodss/yaml@v1.0.0: Get http://jenkins-x-athens-proxy/github.com/ghodss/yaml/@v/v1.0.0.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/jetstack/cert-manager@v0.5.2: Get http://jenkins-x-athens-proxy/github.com/jetstack/cert-manager/@v/v0.5.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/xanzy/go-gitlab@v0.22.1: Get http://jenkins-x-athens-proxy/github.com/xanzy/go-gitlab/@v/v0.22.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+go: finding golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e
+go: github.com/banzaicloud/bank-vaults@v0.0.0-20190508130850-5673d28c46bd: Get http://jenkins-x-athens-proxy/github.com/banzaicloud/bank-vaults/@v/v0.0.0-20190508130850-5673d28c46bd.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: k8s.io/apimachinery@v0.0.0-20190221084156-01f179d85dbc: Get http://jenkins-x-athens-proxy/k8s.io/apimachinery/@v/v0.0.0-20190221084156-01f179d85dbc.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/iancoleman/orderedmap v0.0.0-20181121102841-22c6ecc9fe13
+go: finding github.com/rollout/rox-go v0.0.0-20181220111955-29ddae74a8c4
+go: github.com/rickar/props@v0.0.0-20170718221555-0b06aeb2f037: Get http://jenkins-x-athens-proxy/github.com/rickar/props/@v/v0.0.0-20170718221555-0b06aeb2f037.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: finding github.com/stoewer/go-strcase v1.0.1
+go: finding google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
+go: github.com/google/go-github@v17.0.0+incompatible: Get http://jenkins-x-athens-proxy/github.com/google/go-github/@v/v17.0.0+incompatible.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/mitchellh/mapstructure@v1.1.2: Get http://jenkins-x-athens-proxy/github.com/mitchellh/mapstructure/@v/v1.1.2.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/imdario/mergo@v0.3.8: Get http://jenkins-x-athens-proxy/github.com/imdario/mergo/@v/v0.3.8.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/shirou/gopsutil@v0.0.0-20180901134234-eb1f1ab16f2e: Get http://jenkins-x-athens-proxy/github.com/shirou/gopsutil/@v/v0.0.0-20180901134234-eb1f1ab16f2e.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: google.golang.org/genproto@v0.0.0-20190425155659-357c62f0e4bb: Get http://jenkins-x-athens-proxy/google.golang.org/genproto/@v/v0.0.0-20190425155659-357c62f0e4bb.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/rollout/rox-go@v0.0.0-20181220111955-29ddae74a8c4: Get http://jenkins-x-athens-proxy/github.com/rollout/rox-go/@v/v0.0.0-20181220111955-29ddae74a8c4.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: golang.org/x/oauth2@v0.0.0-20190604053449-0f29369cfe45: Get http://jenkins-x-athens-proxy/golang.org/x/oauth2/@v/v0.0.0-20190604053449-0f29369cfe45.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: golang.org/x/sys@v0.0.0-20190726091711-fc99dfbffb4e: Get http://jenkins-x-athens-proxy/golang.org/x/sys/@v/v0.0.0-20190726091711-fc99dfbffb4e.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/iancoleman/orderedmap@v0.0.0-20181121102841-22c6ecc9fe13: Get http://jenkins-x-athens-proxy/github.com/iancoleman/orderedmap/@v/v0.0.0-20181121102841-22c6ecc9fe13.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: github.com/stoewer/go-strcase@v1.0.1: Get http://jenkins-x-athens-proxy/github.com/stoewer/go-strcase/@v/v1.0.1.info: dial tcp: lookup jenkins-x-athens-proxy on 10.100.0.10:53: no such host
+go: error loading module requirements
+make: *** [build] Error 1
+[31m
+Pipeline failed on stage 'release' : container 'step-release'. The execution of the pipeline has stopped.[0m
