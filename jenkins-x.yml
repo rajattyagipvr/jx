@@ -88,48 +88,48 @@ pipelineConfig:
                 command: /kaniko/executor
                 args: ['--dockerfile=/workspace/source/Dockerfile','--destination=gcr.io/jenkinsxio/jx:${inputs.params.version}','--destination=gcr.io/jenkinsxio/jx:latest','--context=/workspace/source','--cache-dir=/workspace']
 
-              - name: release-charts
-                image: gcr.io/jenkinsxio/builder-go
-                command: make
-                args:
-                - "release"
-                - -f
-                - /workspace/source/charts/jx/Makefile
+              # - name: release-charts
+              #   image: gcr.io/jenkinsxio/builder-go
+              #   command: make
+              #   args:
+              #   - "release"
+              #   - -f
+              #   - /workspace/source/charts/jx/Makefile
 
-              - name: update-builders
-                image: gcr.io/jenkinsxio/builder-go
-                command: jx
-                args:
-                - step
-                - create
-                - pr
-                - docker
-                - --name
-                - JX_VERSION
-                - --version
-                - $VERSION
-                - --repo
-                - https://github.com/jenkins-x/jenkins-x-builders.git
-                - --repo
-                - https://github.com/jenkins-x/jenkins-x-builders-ml.git
+              # - name: update-builders
+              #   image: gcr.io/jenkinsxio/builder-go
+              #   command: jx
+              #   args:
+              #   - step
+              #   - create
+              #   - pr
+              #   - docker
+              #   - --name
+              #   - JX_VERSION
+              #   - --version
+              #   - $VERSION
+              #   - --repo
+              #   - https://github.com/jenkins-x/jenkins-x-builders.git
+              #   - --repo
+              #   - https://github.com/jenkins-x/jenkins-x-builders-ml.git
 
-              - name: update-lighthouse
-                image: gcr.io/jenkinsxio/builder-go
-                command: jx
-                args:
-                - step
-                - create
-                - pr
-                - go
-                - --name
-                - github.com/jenkins-x/jx
-                - --version
-                - $VERSION
-                - --build
-                - "make mod"
-                - --repo
-                - https://github.com/jenkins-x/lighthouse.git
-                # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
+              # - name: update-lighthouse
+              #   image: gcr.io/jenkinsxio/builder-go
+              #   command: jx
+              #   args:
+              #   - step
+              #   - create
+              #   - pr
+              #   - go
+              #   - --name
+              #   - github.com/jenkins-x/jx
+              #   - --version
+              #   - $VERSION
+              #   - --build
+              #   - "make mod"
+              #   - --repo
+              #   - https://github.com/jenkins-x/lighthouse.git
+              #   # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
                 # env:
                 # - name: GOPROXY
                 #   value: ""

@@ -173,7 +173,7 @@ test-release: clean build
 	REV=$(REV) BRANCH=$(BRANCH) BUILDDATE=$(BUILD_DATE) GOVERSION=$(GO_VERSION) ROOTPACKAGE=$(ROOT_PACKAGE) VERSION=$(VERSION) goreleaser --config=./.goreleaser.yml --snapshot --skip-publish --rm-dist --skip-validate --debug
 
 .PHONY: release
-release: clean build test-slow-integration linux # Release the binary
+release: clean build linux # rajat -> test-slow-integration linux # Release the binary
 	git fetch origin refs/tags/v$(VERSION)
 	# Don't create a changelog for the distro
 	@if [[ -z "${DISTRO}" ]]; then \
