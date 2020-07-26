@@ -27,8 +27,8 @@ pipelineConfig:
                 value: /builder/home/.helm
               - name: GOPATH
                 value: /workspace/go
-              - name: GOPROXY
-                value: http://jenkins-x-athens-proxy
+              # - name: GOPROXY
+              #   value: http://jenkins-x-athens-proxy
               - name: PARALLEL_BUILDS
                 value: "2"
               - name: DISABLE_TEST_CACHING
@@ -130,27 +130,27 @@ pipelineConfig:
                 - --repo
                 - https://github.com/jenkins-x/lighthouse.git
                 # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
-                env:
-                - name: GOPROXY
-                  value: ""
+                # env:
+                # - name: GOPROXY
+                #   value: ""
 
-              - name: update-jxui-backend
-                image: gcr.io/jenkinsxio/builder-go
-                command: jx
-                args:
-                - step
-                - create
-                - pr
-                - go
-                - --name
-                - github.com/jenkins-x/jx
-                - --version
-                - $VERSION
-                - --build
-                - "make build"
-                - --repo
-                - https://github.com/cloudbees/jxui-backend.git
-                # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
-                env:
-                  - name: GOPROXY
-                    value: ""
+              # - name: update-jxui-backend
+              #   image: gcr.io/jenkinsxio/builder-go
+              #   command: jx
+              #   args:
+              #   - step
+              #   - create
+              #   - pr
+              #   - go
+              #   - --name
+              #   - github.com/jenkins-x/jx
+              #   - --version
+              #   - $VERSION
+              #   - --build
+              #   - "make build"
+              #   - --repo
+              #   - https://github.com/cloudbees/jxui-backend.git
+              #   # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
+              #   env:
+              #     - name: GOPROXY
+              #       value: ""
