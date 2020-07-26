@@ -35,16 +35,16 @@ pipelineConfig:
                 value: "true"
               - name: GOOGLE_APPLICATION_CREDENTIALS
                 value: /secrets/kaniko/kaniko-secret.json
-              - name: CHARTMUSEUM_USER
-                valueFrom:
-                  secretKeyRef:
-                    name: jenkins-x-chartmuseum
-                    key: BASIC_AUTH_USER
-              - name: CHARTMUSEUM_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: jenkins-x-chartmuseum
-                    key: BASIC_AUTH_PASS
+              # - name: CHARTMUSEUM_USER
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: jenkins-x-chartmuseum
+              #       key: BASIC_AUTH_USER
+              # - name: CHARTMUSEUM_PASS
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: jenkins-x-chartmuseum
+              #       key: BASIC_AUTH_PASS
               - name: GITHUB_ACCESS_TOKEN 
                 valueFrom:
                   secretKeyRef:
