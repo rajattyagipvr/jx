@@ -1,0 +1,2772 @@
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-credential-initializer-wvmmc[0m
+{"level":"warn","ts":1595760318.5770695,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1595760318.577502,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-working-dir-initializer-6ffcp[0m
+{"level":"warn","ts":1595760319.5990674,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/HEAD: no such file or directory"}
+{"level":"info","ts":1595760319.6001654,"logger":"fallback-logger","caller":"bash/main.go:64","msg":"Successfully executed command \"sh -c mkdir -p /workspace/source\"; output "}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-place-tools[0m
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-git-source-rajattyagipvr-jx-multicluster-bkrlt-k5gxf[0m
+{"level":"warn","ts":1595760325.76035,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/0.8.0-**-support-backwards-incompats\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1595760330.7183418,"logger":"fallback-logger","caller":"git/git.go:103","msg":"Successfully cloned https://github.com/*************/**.git @ v2.1.107 in path /workspace/source"}
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-git-merge[0m
+WARNING: no SHAs to merge, falling back to initial cloned commit
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-init-helm[0m
+Creating /builder/home/.helm 
+Creating /builder/home/.helm/repository 
+Creating /builder/home/.helm/repository/cache 
+Creating /builder/home/.helm/repository/local 
+Creating /builder/home/.helm/plugins 
+Creating /builder/home/.helm/starters 
+Creating /builder/home/.helm/cache/archive 
+Creating /builder/home/.helm/repository/repositories.yaml 
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com 
+Adding local repo with URL: http://127.0.0.1:8879/charts 
+$HELM_HOME has been configured at /builder/home/.helm.
+Not installing Tiller due to 'client-only' flag having been set
+Happy Helming!
+
+Showing logs for build [32mrajattyagipvr-jx-multicluster-bkrlt-6[0m stage [32mrelease[0m and container [32mstep-release[0m
+rm -rf build release dist
+CGO_ENABLED=0 GO111MODULE=on go build -ldflags " -X github.com/*************/**/pkg/version.Version=2.1.107 -X github.com/*************/**/pkg/version.Revision='bca6552' -X github.com/*************/**/pkg/version.Branch='master' -X github.com/*************/**/pkg/version.BuildDate='20200726-10:45:35' -X github.com/*************/**/pkg/version.GoVersion='1.12.16' """ -p 2 -o build/** cmd/**/**.go
+go: finding github.com/Masterminds/semver v1.4.2
+go: finding github.com/Jeffail/gabs v1.1.1
+go: finding github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d
+go: finding github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+go: finding github.com/TV4/logrus-stackdriver-formatter v0.1.0
+go: finding github.com/Netflix/go-expect v0.0.0-20180814212900-124a37274874
+go: finding github.com/Pallinder/go-randomdata v1.1.0
+go: finding github.com/elazarl/goproxy v0.0.0-20181111060418-2ce16c963a8a
+go: finding github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6
+go: finding cloud.google.com/go v0.34.0
+go: finding github.com/onsi/ginkgo v1.7.0
+go: finding github.com/dsnet/compress v0.0.0-20171208185109-cc9eb1d7ad76
+go: finding github.com/jtnord/logrus v1.4.2-0.20190423161236-606ffcaf8f5d
+go: finding github.com/knative/pkg v0.0.0-20190624141606-d82505e6c5b4
+go: finding k8s.io/apimachinery v0.0.0-20190221084156-01f179d85dbc
+go: finding github.com/ghodss/yaml v1.0.0
+go: finding github.com/fatih/color v1.7.0
+go: finding github.com/ulikunitz/xz v0.5.6
+go: finding github.com/jenkins-x/draft-repo v0.0.0-20180417100212-2f66cc518135
+go: finding github.com/spf13/cobra v0.0.5
+go: finding github.com/mitchellh/mapstructure v1.1.2
+go: finding contrib.go.opencensus.io/exporter/prometheus v0.1.0
+go: finding github.com/antham/chyle v1.6.0
+go: finding github.com/docker/docker v0.0.0-20171206114025-5e5fadb3c020
+go: finding github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
+go: finding github.com/stretchr/testify v1.4.0
+go: finding gopkg.in/AlecAivazis/survey.v1 v1.8.3
+go: finding gopkg.in/alecthomas/kingpin.v2 v2.2.6
+go: finding github.com/wbrefvem/go-bitbucket v0.0.0-20190128183802-fc08fd046abb
+go: finding github.com/stretchr/ob** v0.1.1
+go: finding gopkg.in/src-d/go-git.v4 v4.13.1
+go: finding github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
+go: finding golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+go: finding github.com/knative/serving v0.7.0
+go: finding github.com/konsorten/go-windows-terminal-sequences v1.0.2
+go: finding github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
+go: finding github.com/viniciuschiele/tarx v0.0.0-20151205142357-6e3da540444d
+go: finding github.com/rollout/rox-go v0.0.0-20181220111955-29ddae74a8c4
+go: finding github.com/russross/blackfriday v1.5.2
+go: finding github.com/jetstack/cert-manager v0.5.2
+go: finding github.com/Masterminds/sprig v2.21.0+incompatible
+go: finding github.com/hashicorp/go-sockaddr v1.0.2
+go: finding golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33
+go: finding github.com/imdario/mergo v0.3.7
+go: finding github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5
+go: finding golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e
+go: finding github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
+go: finding github.com/shirou/gopsutil v0.0.0-20180901134234-eb1f1ab16f2e
+go: finding github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4
+go: finding github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c
+go: finding github.com/mitchellh/go-homedir v1.1.0
+go: finding github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
+go: finding github.com/gfleury/go-bitbucket-v1 v0.0.0-20200320173742-022f4bab9090
+go: finding github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
+go: finding k8s.io/apiextensions-apiserver v0.0.0-20190528110544-fa58353d80f3
+go: finding github.com/pkg/browser v0.0.0-20170505125900-c90ca0c84f15
+go: finding github.com/smartystreets/goconvey v0.0.0-20180222194500-ef6db91d284a
+go: finding github.com/google/go-github v17.0.0+incompatible
+go: finding github.com/mholt/archiver v3.1.1+incompatible
+go: finding github.com/hashicorp/hcl v1.0.0
+go: finding github.com/huandu/xstrings v1.2.0
+go: finding github.com/jbrukh/bayesian v0.0.0-20161210175230-bf3f261f9a9c
+go: finding github.com/go-errors/errors v1.0.1
+go: finding k8s.io/api v0.0.0-20190528110122-9ad12a4af326
+go: finding github.com/mattn/go-colorable v0.0.9
+go: finding github.com/pelletier/go-buffruneio v0.2.0
+go: finding code.gitea.io/sdk v0.0.0-20180702024448-79a281c4e34a
+go: finding github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
+go: finding golang.org/x/net v0.0.0-20190628185345-da137c7871d7
+go: finding github.com/stretchr/ob** v0.2.0
+go: finding github.com/xanzy/ssh-agent v0.2.1
+go: finding go.uber.org/zap v1.9.1
+go: finding github.com/dgrijalva/jwt-go v3.2.0+incompatible
+go: finding github.com/antchfx/xpath v1.1.5
+go: finding github.com/kevinburke/ssh_config v0.0.0-20190630040420-2e50c441276c
+go: finding github.com/xeipuuv/gojsonschema v1.1.0
+go: finding github.com/jpillora/backoff v0.0.0-20180909062703-3050d21c67d7
+go: finding k8s.io/gengo v0.0.0-20190327210449-e17681d19d3a
+go: finding go.opencensus.io v0.22.2
+go: finding github.com/antham/envh v1.3.0
+go: finding k8s.io/klog v0.2.0
+go: finding github.com/chromedp/chromedp v0.1.1
+go: finding github.com/coreos/etcd v3.2.13+incompatible
+go: finding github.com/aws/aws-sdk-go v1.24.0
+go: finding github.com/xeipuuv/gojsonpointer v0.0.0-20170225233418-6fe8760cad35
+go: finding github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037
+go: finding gopkg.in/cenkalti/backoff.v1 v1.1.0
+go: finding knative.dev/pkg v0.0.0-20191217184203-cf220a867b3d
+go: finding github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
+go: finding golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
+go: finding gopkg.in/yaml.v2 v2.2.4
+go: finding github.com/golang/protobuf v1.3.2
+go: finding github.com/fsnotify/fsnotify v1.4.7
+go: finding github.com/chromedp/cdproto v0.0.0-20180703215205-c125a34ea3b3
+go: finding github.com/Netflix/go-expect v0.0.0-20180615182759-c93bf25de8e8
+go: finding github.com/trivago/tgo v1.0.1
+go: finding cloud.google.com/go v0.26.0
+go: finding github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be
+go: finding github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c
+go: finding sigs.k8s.io/yaml v1.1.0
+go: finding golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+go: finding github.com/gin-gonic/gin v0.0.0-20180512030042-bf7803815b0b
+go: finding github.com/sethvargo/go-password v0.1.2
+go: finding github.com/hashicorp/go-sockaddr v1.0.0
+go: finding gopkg.in/go-playground/assert.v1 v1.2.1
+go: finding sigs.k8s.io/controller-runtime v0.1.9
+go: finding github.com/onsi/ginkgo v1.5.0
+go: finding github.com/dimchansky/utfbom v1.1.0
+go: finding github.com/go-ini/ini v1.34.0
+go: finding github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964
+go: finding github.com/MakeNowJust/heredoc v0.0.0-20171113091838-e9091a26100e
+go: finding github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239
+go: finding github.com/spf13/cobra v0.0.2
+go: finding github.com/aliyun/aliyun-oss-go-sdk v0.0.0-20171213061034-52de7239022c
+go: finding gopkg.in/src-d/go-billy.v4 v4.3.2
+go: finding golang.org/x/image v0.0.0-20180628062038-cc896f830ced
+go: finding golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
+go: finding github.com/hashicorp/go-multierror v1.0.0
+go: finding github.com/google/uuid v0.0.0-20171113160352-8c31c18f31ed
+go: finding github.com/denormal/go-gitignore v0.0.0-20180713143441-75ce8f3e513c
+go: finding gocloud.dev v0.9.0
+go: finding github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6
+go: finding github.com/mattn/go-colorable v0.1.2
+go: finding k8s.io/client-go v0.0.0-20190528110200-4f3abb12cae2
+go: finding github.com/onsi/gomega v1.2.0
+go: finding github.com/onsi/gomega v1.4.3
+go: finding github.com/operator-framework/operator-sdk v0.6.0
+go: finding github.com/davecgh/go-spew v1.1.1
+go: finding github.com/slok/kubewebhook v0.2.0
+go: finding golang.org/x/sys v0.0.0-20190412213103-97732733099d
+go: finding github.com/spf13/cast v1.2.0
+go: finding github.com/pborman/uuid v1.2.0
+go: finding go.etcd.io/bbolt v1.3.2
+go: finding github.com/gosimple/slug v1.1.1
+go: finding golang.org/x/net v0.0.0-20170809000501-1c05540f6879
+go: finding github.com/prometheus/client_golang v0.9.0
+go: finding github.com/google/uuid v1.1.0
+go: finding go.uber.org/atomic v1.3.2
+go: finding golang.org/x/net v0.0.0-20181017193950-04a2e542c03f
+go: finding github.com/google/go-cmp v0.3.1
+go: finding github.com/knative/build v0.7.0
+go: finding gopkg.in/h2non/gock.v0 v0.1.6
+go: finding github.com/xeipuuv/gojsonschema v0.0.0-20181112162635-ac52e6811b56
+go: finding github.com/huandu/xstrings v1.0.0
+go: finding github.com/disintegration/imaging v1.4.2
+go: finding github.com/knq/sysutil v0.0.0-20180306023629-0218e141a794
+go: finding github.com/aws/aws-sdk-go v1.15.57
+go: finding golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e
+go: finding github.com/hashicorp/go-version v1.1.0
+go: finding github.com/uber/jaeger-lib v1.5.0
+go: finding k8s.io/helm v2.7.2+incompatible
+go: finding github.com/json-iterator/go v1.1.5
+go: finding golang.org/x/net v0.0.0-20181102091132-c10e9556a7bc
+go: finding github.com/google/martian v2.1.0+incompatible
+go: finding github.com/gorilla/websocket v1.4.0
+go: finding github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+go: finding github.com/opentracing/opentracing-go v1.0.2
+go: finding github.com/sanathkr/yaml v0.0.0-20170819201035-0056894fa522
+go: finding github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910
+go: finding github.com/src-d/gcfg v1.4.0
+go: finding github.com/onsi/ginkgo v1.6.0
+go: finding golang.org/x/oauth2 v0.0.0-20181017192945-9dcd33a902f4
+go: finding k8s.io/code-generator v0.0.0-20190416052311-01a054e913a9
+go: finding golang.org/x/sys v0.0.0-20170814044513-c84c1ab9fd18
+go: finding golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7
+go: finding google.golang.org/appengine v1.2.0
+go: finding github.com/cpuguy83/go-md2man v1.0.10
+go: finding github.com/stoewer/go-strcase v1.0.1
+go: finding github.com/grpc-ecosystem/grpc-gateway v1.5.1
+go: finding github.com/googleapis/gax-go v2.0.0+incompatible
+go: finding github.com/alecthomas/jsonschema v0.0.0-20190504002508-159cbd5dba26
+go: finding github.com/beevik/etree v1.0.1
+go: finding k8s.io/test-infra v0.0.0-20190131093439-a22cef183a8f
+go: finding github.com/go-ini/ini v1.39.0
+go: finding github.com/xanzy/go-gitlab v0.22.1
+go: finding github.com/go-sql-driver/mysql v1.4.1
+go: finding github.com/coreos/go-semver v0.2.0
+go: finding github.com/google/uuid v1.1.1
+go: finding github.com/google/uuid v1.0.0
+go: finding google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
+go: finding github.com/mitchellh/go-wordwrap v1.0.0
+go: finding github.com/hinshun/vt10x v0.0.0-20180616224451-1954e6464174
+go: finding github.com/google/wire v0.2.0
+go: finding github.com/hashicorp/go-cleanhttp v0.5.1
+go: finding github.com/imdario/mergo v0.3.6
+go: finding github.com/hashicorp/go-retryablehttp v0.5.3
+go: finding github.com/chromedp/cdproto v0.0.0-20180720050708-57cf4773008d
+go: finding github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
+go: finding golang.org/x/tools v0.0.0-20190729092621-ff9f1409240a
+go: finding golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be
+go: finding github.com/streadway/amqp v0.0.0-20181107104731-27835f1a64e9
+go: finding github.com/davecgh/go-spew v1.1.0
+go: finding github.com/rodaine/hclencoder v0.0.0-20180926060551-0680c4321930
+go: finding github.com/hashicorp/go-rootcerts v1.0.0
+go: finding github.com/markbates/inflect v1.0.4
+go: finding github.com/appscode/jsonpatch v0.0.0-20190108182946-7c0e3b262f30
+go: finding github.com/hashicorp/vault v1.1.2
+go: finding github.com/aws/aws-sdk-go v1.15.31
+go: finding github.com/coreos/prometheus-operator v0.29.0
+go: finding github.com/soheilhy/cmux v0.1.4
+go: finding github.com/spf13/pflag v1.0.2
+go: finding google.golang.org/api v0.0.0-20181017004218-3f6e8463aa1d
+go: finding github.com/stretchr/testify v1.2.1
+go: finding gopkg.in/src-d/go-billy.v4 v4.3.1
+go: finding github.com/coreos/etcd v3.3.10+incompatible
+go: finding github.com/emicklei/go-restful v2.9.3+incompatible
+go: finding github.com/lib/pq v1.0.0
+go: finding github.com/ryanuber/go-glob v0.0.0-20160226084822-572520ed46db
+go: finding github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
+go: finding golang.org/x/net v0.0.0-20180921000356-2f5d2388922f
+go: finding github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae
+go: finding github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
+go: finding github.com/imdario/mergo v0.3.8
+go: finding github.com/Azure/azure-storage-blob-go v0.0.0-20181023070848-cf01652132cc
+go: finding github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
+go: finding github.com/rollout/sse v0.0.0-20181105093643-e422b54b3b28
+go: finding gopkg.in/inf.v0 v0.9.1
+go: finding github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f
+go: finding github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
+go: finding honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099
+go: finding github.com/konsorten/go-windows-terminal-sequences v1.0.1
+go: finding golang.org/x/crypto v0.0.0-20190123085648-057139ce5d2b
+go: finding github.com/matttproud/golang_protobuf_extensions v1.0.1
+go: finding golang.org/x/text v0.3.0
+go: finding golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
+go: finding github.com/google/go-querystring v1.0.0
+go: finding golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4
+go: finding github.com/spf13/pflag v1.0.3
+go: finding k8s.io/kube-openapi v0.0.0-20190228160746-b3a7cee44a30
+go: finding go.opencensus.io v0.18.0
+go: finding github.com/imdario/mergo v0.3.4
+go: finding golang.org/x/tools v0.0.0-20190328211700-ab21143f2384
+go: finding github.com/mailru/easyjson v0.0.0-20180606163543-3fdea8d05856
+go: finding github.com/kr/pty v1.1.1
+go: finding gopkg.in/ini.v1 v1.42.0
+go: finding github.com/inconshreveable/mousetrap v1.0.0
+go: finding github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32
+go: finding github.com/andygrunwald/go-jira v1.5.0
+go: finding golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a
+go: finding github.com/coreos/bbolt v1.3.2
+go: finding github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f
+go: finding github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2
+go: finding github.com/spf13/pflag v1.0.1
+go: finding github.com/cockroachdb/cmux v0.0.0-20170110192607-30d10be49292
+go: finding google.golang.org/grpc v1.20.1
+go: finding github.com/go-sql-driver/mysql v1.4.0
+go: finding github.com/hashicorp/go-multierror v0.0.0-20171204182908-b7773ae21874
+go: finding github.com/imdario/mergo v0.0.0-20180119215619-163f41321a19
+go: finding github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
+go: finding github.com/prometheus/procfs v0.0.0-20180725123919-05ee40e3a273
+go: finding golang.org/x/sys v0.0.0-20180903190138-2b024373dcd9
+go: finding golang.org/x/sys v0.0.0-20181004145325-8469e314837c
+go: finding github.com/djherbis/atime v1.0.0
+go: finding github.com/jinzhu/inflection v0.0.0-20151009084129-3272df6c21d0
+go: finding github.com/knative/build v0.2.0
+go: finding github.com/docker/go-connections v0.3.0
+go: finding golang.org/x/text v0.0.0-20170814122439-e56139fd9c5b
+go: finding github.com/aokoli/goutils v1.0.1
+go: finding github.com/go-ini/ini v1.25.4
+go: finding github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd
+go: finding github.com/pkg/errors v0.8.0
+go: finding github.com/deckarep/golang-set v0.0.0-20171013212420-1d4478f51bed
+go: finding golang.org/x/net v0.0.0-20181108082009-03003ca0c849
+go: finding github.com/pkg/errors v0.8.1
+go: finding github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+go: finding github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d
+go: finding github.com/kr/pretty v0.1.0
+go: finding google.golang.org/api v0.0.0-20181021000519-a2651947f503
+go: finding github.com/go-openapi/loads v0.19.4
+go: finding contrib.go.opencensus.io/integrations/ocsql v0.1.2
+go: finding gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405
+go: finding golang.org/x/tools v0.0.0-20180828015842-6cd1fcedba52
+go: finding gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
+go: finding github.com/c2h5oh/datasize v0.0.0-20171227191756-4eba002a5eae
+go: finding golang.org/x/sync v0.0.0-20190423024810-112230192c58
+go: finding github.com/spf13/cobra v0.0.3
+go: finding github.com/coreos/bbolt v1.3.1-coreos.6
+go: finding github.com/nwaples/rardecode v1.0.0
+go: finding k8s.io/gengo v0.0.0-20190116091435-f8a0810f38af
+go: finding github.com/mattn/go-isatty v0.0.3
+go: finding google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8
+go: finding golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+go: finding github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
+go: finding github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+go: finding github.com/go-openapi/spec v0.0.0-20171219195406-fa03337d7da5
+go: finding github.com/ryanuber/columnize v2.1.0+incompatible
+go: finding github.com/evanphx/json-patch v4.0.0+incompatible
+go: finding github.com/influxdata/influxdb v0.0.0-20161215172503-049f9b42e9a5
+go: finding github.com/mattn/go-zglob v0.0.0-20180607075734-49693fbb3fe3
+go: finding github.com/gorilla/context v1.1.1
+go: finding golang.org/x/net v0.0.0-20190724013045-ca1201d0de80
+go: finding github.com/antham/strumt/v2 v2.0.1
+go: finding github.com/stretchr/testify v1.3.0
+go: finding github.com/heptio/sonobuoy v0.16.0
+go: finding golang.org/x/sys v0.0.0-20180606202747-9527bec2660b
+go: finding go.opencensus.io v0.21.0
+go: finding github.com/google/go-github v0.0.0-20170604030111-7a51fb928f52
+go: finding google.golang.org/genproto v0.0.0-20180831171423-11092d34479b
+go: finding github.com/jonboulle/clockwork v0.1.0
+go: finding golang.org/x/lint v0.0.0-20190227174305-5b3e6a55c961
+go: finding github.com/golang/lint v0.0.0-20180702182130-06c8688daad7
+go: finding github.com/gorilla/sessions v1.1.3
+go: finding github.com/gorilla/securecookie v1.1.1
+go: finding golang.org/x/tools v0.0.0-20190226205152-f727befe758c
+go: finding github.com/evanphx/json-patch v4.5.0+incompatible
+go: finding github.com/spf13/viper v1.3.2
+go: finding github.com/census-instrumentation/opencensus-proto v0.1.0
+go: finding github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
+go: finding github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a
+go: finding github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
+go: finding github.com/aws/aws-k8s-tester v0.0.0-20190114231546-b411acf57dfe
+go: finding github.com/magiconair/properties v1.8.0
+go: finding github.com/go-openapi/jsonreference v0.0.0-20161105162150-36d33bfe519e
+go: finding github.com/microcosm-cc/bluemonday v0.0.0-20180327211928-995366fdf961
+go: finding github.com/hpcloud/tail v1.0.0
+go: finding golang.org/x/sys v0.0.0-20181205085412-a5c9d58dba9a
+go: finding github.com/grpc-ecosystem/grpc-gateway v1.5.0
+go: finding github.com/spf13/viper v1.2.1
+go: finding github.com/sergi/go-diff v1.0.0
+go: finding google.golang.org/appengine v1.3.0
+go: finding golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6
+go: finding github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+go: finding github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47
+go: finding github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7
+go: finding github.com/Azure/azure-pipeline-go v0.1.8
+go: finding github.com/Azure/azure-sdk-for-go v21.1.0+incompatible
+go: finding github.com/docker/distribution v0.0.0-20170726174610-edc3ab29cdff
+go: finding github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff
+go: finding github.com/coreos/go-systemd v0.0.0-20181012123002-c6f51f82210d
+go: finding github.com/golang/groupcache v0.0.0-20180513044358-24b0969c4cb7
+go: finding google.golang.org/grpc v1.15.0
+go: finding github.com/pierrec/lz4 v2.0.5+incompatible
+go: finding github.com/kylelemons/godebug v1.1.0
+go: finding contrib.go.opencensus.io/exporter/ocagent v0.2.0
+go: finding github.com/spf13/jwalterweatherman v1.0.0
+go: finding github.com/xiang90/probing v0.0.0-20160813154853-07dd2e8dfe18
+go: finding github.com/hashicorp/errwrap v1.0.0
+go: finding github.com/denisenkom/go-mssqldb v0.0.0-20190204142019-df6d76eb9289
+go: finding github.com/Comcast/kuberhealthy v1.0.2
+go: finding gopkg.in/yaml.v2 v2.2.2
+go: finding github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff
+go: finding golang.org/x/sys v0.0.0-20180830151530-49385e6e1522
+go: finding github.com/docker/go-units v0.3.2
+go: finding gopkg.in/yaml.v2 v2.2.1
+go: finding github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6
+go: finding github.com/mattn/go-sqlite3 v1.10.0
+go: finding github.com/knative/build v0.1.2
+go: finding github.com/gliderlabs/ssh v0.2.2
+go: finding github.com/gregjones/httpcache v0.0.0-20160524185540-16db777d8ebe
+go: finding github.com/gogo/protobuf v0.0.0-20171007142547-342cbe0a0415
+go: finding gopkg.in/ini.v1 v1.39.0
+go: finding github.com/gregjones/httpcache v0.0.0-20190212212710-3befbb6ad0cc
+go: finding google.golang.org/api v0.0.0-20180910000450-7ca32eb868bf
+go: finding github.com/pmezard/go-difflib v1.0.0
+go: finding github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6
+go: finding github.com/googleapis/gnostic v0.1.0
+go: finding github.com/client9/misspell v0.3.4
+go: finding github.com/googleapis/gnostic v0.2.0
+go: finding github.com/Azure/azure-pipeline-go v0.0.0-20180507050906-098e490af5dc
+go: finding gonum.org/v1/netlib v0.0.0-20190331212654-76723241ea4e
+go: finding github.com/stretchr/ob** v0.1.0
+go: finding github.com/go-ole/go-ole v1.2.1
+go: finding golang.org/x/exp v0.0.0-20190121172915-509febef88a4
+go: finding github.com/golang/mock v1.1.1
+go: finding github.com/kr/text v0.1.0
+go: finding k8s.io/utils v0.0.0-20181019225348-5e321f9a457c
+go: finding k8s.io/klog v0.0.0-20190306015804-8e90cee79f82
+go: finding github.com/dnaeon/go-vcr v1.0.1
+go: finding github.com/gogo/protobuf v1.1.1
+go: finding github.com/qor/qor v0.0.0-20180518090926-f171bc73933e
+go: finding github.com/google/go-cmp v0.3.0
+go: finding github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5
+go: finding github.com/prometheus/common v0.0.0-20181020173914-7e9e6cabbd39
+go: finding go.etcd.io/etcd v0.0.0-20181031231232-83304cfc808c
+go: finding github.com/golang/snappy v0.0.0-20170215233205-553a64147049
+go: finding github.com/prometheus/client_golang v0.8.0
+go: finding golang.org/x/sys v0.0.0-20190221075227-b4e8571b14e0
+go: finding github.com/go-openapi/swag v0.0.0-20171111214437-cf0bdb963811
+go: finding gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
+go: finding golang.org/x/net v0.0.0-20180724234803-3673e40ba225
+go: finding github.com/tektoncd/pipeline v0.8.0
+go: finding github.com/satori/go.uuid v0.0.0-20160713180306-0aa62d5ddceb
+go: finding golang.org/x/net v0.0.0-20190213061140-3a22650c66bd
+go: finding golang.org/x/sys v0.0.0-20190710143415-6ec70d6a5542
+go: finding github.com/mailru/easyjson v0.0.0-20171120080333-32fa128f234d
+go: finding github.com/nlopes/slack v0.0.0-20180721202243-347a74b1ea30
+go: finding modernc.org/golex v1.0.0
+go: finding github.com/ugorji/go v1.1.1
+go: finding k8s.io/metrics v0.0.0-20181128195641-3954d62a524d
+go: finding github.com/gobuffalo/envy v1.6.5
+go: finding cloud.google.com/go v0.30.0
+go: finding github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568
+go: finding golang.org/x/net v0.0.0-20180826012351-8a410e7b638d
+go: finding google.golang.org/appengine v1.1.0
+go: finding gopkg.in/airbrake/gobrake.v2 v2.0.9
+go: finding github.com/qor/inflection v0.0.0-20180308033659-04140366298a
+go: finding github.com/ugorji/go/codec v0.0.0-20181012064053-8333dd449516
+go: finding github.com/xlab/handysort v0.0.0-20150421192137-fb3537ed64a1
+go: finding github.com/gorilla/mux v1.6.2
+go: finding github.com/jessevdk/go-flags v1.4.0
+go: finding github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20190308093441-53f19b3c6bee
+go: finding golang.org/x/crypto v0.0.0-20190219172222-a4c6cb3142f2
+go: finding github.com/go-logr/logr v0.1.0
+go: finding github.com/PuerkitoBio/purell v1.1.0
+go: finding gopkg.in/fsnotify.v1 v1.4.7
+go: finding github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314
+go: finding github.com/evanphx/json-patch v4.1.0+incompatible
+go: finding github.com/Masterminds/goutils v1.1.0
+go: finding github.com/prometheus/client_golang v0.9.2
+go: finding github.com/emirpasic/gods v1.12.0
+go: finding github.com/cenkalti/backoff v2.1.1+incompatible
+go: finding github.com/integrii/flaggy v0.0.0-20190220052119-eb3cf98db853
+go: finding github.com/grpc-ecosystem/grpc-gateway v1.4.1
+go: finding github.com/go-openapi/analysis v0.19.5
+go: finding gopkg.in/cheggaaa/pb.v1 v1.0.25
+go: finding github.com/census-instrumentation/opencensus-proto v0.0.2-0.20180913191712-f303ae3f8d6a
+go: finding github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5
+go: finding github.com/google/go-querystring v0.0.0-20150414214848-547ef5ac9797
+go: finding github.com/prometheus/client_model v0.0.0-20170216185247-6f3806018612
+go: finding github.com/go-openapi/jsonpointer v0.0.0-20170102174223-779f45308c19
+go: finding github.com/gobwas/glob v0.2.3
+go: finding google.golang.org/genproto v0.0.0-20181016170114-94acd270e44e
+go: finding github.com/coreos/etcd-operator v0.9.3
+go: finding github.com/hashicorp/go-version v1.0.0
+go: finding github.com/golang/groupcache v0.0.0-20160516000752-02826c3e7903
+go: finding github.com/coreos/go-systemd v0.0.0-20180511133405-39ca1b05acc7
+go: finding github.com/mitchellh/cli v1.0.0
+go: finding github.com/blang/semver v3.5.1+incompatible
+go: finding gopkg.in/check.v1 v1.0.0-20161208181325-20d25e280405
+go: finding go.opencensus.io v0.17.0
+go: finding github.com/hashicorp/errwrap v0.0.0-20141028054710-7554cd9344ce
+go: finding github.com/tidwall/gjson v1.3.2
+go: finding github.com/matttproud/golang_protobuf_extensions v1.0.0
+go: finding github.com/prometheus/common v0.0.0-20180518154759-7600349dcfe1
+go: finding github.com/shurcooL/graphql v0.0.0-20180924043259-e4a3a37e6d42
+go: finding gopkg.in/go-playground/validator.v8 v8.18.2
+go: finding github.com/andygrunwald/go-gerrit v0.0.0-20171029143327-95b11af228a1
+go: finding vbom.ml/util v0.0.0-20170409195630-256737ac55c4
+go: finding github.com/mattn/go-isatty v0.0.8
+go: finding gopkg.in/pipe.v2 v2.0.0-20140414041502-3c2ca4d52544
+go: finding github.com/kr/pty v1.1.8
+go: finding github.com/golang/groupcache v0.0.0-20180924190550-6f2cf27854a4
+go: finding github.com/Azure/go-autorest v10.14.0+incompatible
+go: finding github.com/prometheus/procfs v0.0.0-20180920065004-418d78d0b9a7
+go: finding golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
+go: finding github.com/modern-go/reflect2 v1.0.1
+go: finding github.com/coreos/go-systemd v0.0.0-20190212144455-93d5ec2c7f76
+go: finding github.com/vrischmann/envconfig v1.2.0
+go: finding google.golang.org/appengine v1.4.0
+go: finding github.com/jinzhu/gorm v0.0.0-20170316141641-572d0a0ab1eb
+go: finding golang.org/x/sync v0.0.0-20181108010431-42b317875d0f
+go: finding github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f
+go: finding github.com/bgentry/speakeasy v0.1.0
+go: finding gopkg.in/warnings.v0 v0.1.2
+go: finding github.com/remyoudompheng/bigfft v0.0.0-20170806203942-52369c62f446
+go: finding golang.org/x/sys v0.0.0-20181011152604-fa43e7bc11ba
+go: finding modernc.org/cc v1.0.0
+go: finding github.com/prometheus/common v0.0.0-20181015124227-bcb74de08d37
+go: finding github.com/xeipuuv/gojsonreference v0.0.0-20150808065054-e02fc20de94c
+go: finding github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+go: finding go.etcd.io/bbolt v1.3.1-etcd.7
+go: finding github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310
+go: finding golang.org/x/sys v0.0.0-20180906133057-8cf3aee42992
+go: finding github.com/stretchr/testify v1.2.2
+go: finding golang.org/x/net v0.0.0-20190311183353-d8887717615a
+go: finding github.com/mattn/go-runewidth v0.0.2
+go: finding go.uber.org/multierr v1.1.0
+go: finding github.com/dustin/go-humanize v1.0.0
+go: finding github.com/appscode/jsonpatch v0.0.0-20180911074601-5af499cf01c8
+go: finding google.golang.org/genproto v0.0.0-20190307195333-5fe7a883aa19
+go: finding github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e
+go: finding github.com/kr/pty v1.0.0
+go: finding github.com/dustin/go-humanize v0.0.0-20171111073723-bb3d318650d4
+go: finding github.com/sanathkr/go-yaml v0.0.0-20170819195128-ed9d249f429b
+go: finding github.com/uber-go/atomic v1.3.2
+go: finding github.com/golang/protobuf v1.2.0
+go: finding golang.org/x/net v0.0.0-20181201002055-351d144fa1fc
+go: finding github.com/go-openapi/loads v0.19.0
+go: finding github.com/denisenkom/go-mssqldb v0.0.0-20190111225525-2fea367d496d
+go: finding github.com/apache/thrift v0.0.0-20180902110319-2566ecd5d999
+go: finding github.com/go-openapi/jsonpointer v0.19.3
+go: finding github.com/tmc/grpc-websocket-proxy v0.0.0-20171017195756-830351dc03c6
+go: finding sigs.k8s.io/testing_frameworks v0.1.1
+go: finding github.com/go-openapi/spec v0.19.0
+go: finding github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+go: finding github.com/iancoleman/orderedmap v0.0.0-20181121102841-22c6ecc9fe13
+go: finding golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
+go: finding golang.org/x/net v0.0.0-20181005035420-146acd28ed58
+go: finding contrib.go.opencensus.io/exporter/stackdriver v0.9.1
+go: finding golang.org/x/crypto v0.0.0-20180608092829-8ac0e0d97ce4
+go: finding github.com/coreos/pkg v0.0.0-20160727233714-3ac0863d7acf
+go: finding github.com/tidwall/match v1.0.1
+go: finding github.com/mattn/go-sqlite3 v0.0.0-20160514122348-38ee283dabf1
+go: finding github.com/openzipkin/zipkin-go v0.1.1
+go: finding github.com/tidwall/pretty v1.0.0
+go: finding modernc.org/mathutil v1.0.0
+go: finding github.com/go-openapi/spec v0.17.0
+go: finding github.com/go-openapi/jsonreference v0.19.2
+go: finding github.com/alcortesm/tgz v0.0.0-20161220082320-9c5fe88206d7
+go: finding golang.org/x/sys v0.0.0-20180823144017-11551d06cbcc
+go: finding github.com/go-logr/zapr v0.1.0
+go: finding github.com/hashicorp/golang-lru v0.5.0
+go: finding github.com/google/btree v0.0.0-20180124185431-e89373fe6b4a
+go: finding github.com/opencontainers/go-digest v1.0.0-rc1
+go: finding github.com/spf13/cast v1.3.0
+go: finding github.com/jinzhu/gorm v1.9.1
+go: finding honnef.co/go/tools v0.0.0-20180728063816-88497007e858
+go: finding github.com/shurcooL/githubv4 v0.0.0-20180925043049-51d7b505e2e9
+go: finding github.com/go-openapi/jsonreference v0.17.0
+go: finding contrib.go.opencensus.io/exporter/stackdriver v0.6.0
+go: finding github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
+go: finding github.com/bwmarrin/snowflake v0.0.0-20170221160716-02cc386c183a
+go: finding github.com/google/go-cmp v0.2.0
+go: finding github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c
+go: finding github.com/petergtz/pegomock v2.7.0+incompatible
+go: finding github.com/Azure/azure-storage-blob-go v0.0.0-20180507052152-66ba96e49ebb
+go: finding github.com/mitchellh/mapstructure v1.0.0
+go: finding github.com/mattn/go-isatty v0.0.4
+go: finding github.com/go-openapi/swag v0.17.0
+go: finding github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77
+go: finding github.com/opencontainers/image-spec v1.0.1
+go: finding modernc.org/xc v1.0.0
+go: finding github.com/pierrec/lz4 v0.0.0-20181005164709-635575b42742
+go: finding golang.org/x/net v0.0.0-20190108225652-1e06a53dbb7e
+go: finding k8s.io/test-infra v0.0.0-20181019233642-2e10a0bbe9b3
+go: finding github.com/go-openapi/spec v0.19.3
+go: finding github.com/BurntSushi/toml v0.3.1
+go: finding github.com/go-openapi/strfmt v0.19.3
+go: finding github.com/fsouza/fake-gcs-server v0.0.0-20180612165233-e85be23bdaa8
+go: finding go.opencensus.io v0.15.0
+go: finding github.com/go-openapi/swag v0.19.5
+go: finding modernc.org/strutil v1.0.0
+go: finding google.golang.org/genproto v0.0.0-20180608181217-32ee49c4dd80
+go: finding k8s.io/kube-openapi v0.0.0-20180711000925-0cf8f7e6ed1d
+go: finding github.com/jtolds/gls v4.2.1+incompatible
+go: finding gopkg.in/src-d/go-git-fixtures.v3 v3.5.0
+go: finding github.com/fatih/structs v1.1.0
+go: finding google.golang.org/genproto v0.0.0-20180601223552-81158efcc9f2
+go: finding github.com/GoogleCloudPlatform/cloudsql-proxy v0.0.0-20181009230506-ac834ce67862
+go: finding github.com/Azure/draft v0.15.0
+go: finding github.com/bazelbuild/buildtools v0.0.0-20180226164855-80c7f0d45d7e
+go: finding golang.org/x/tools v0.0.0-20190614205625-5aca471b1d59
+go: finding golang.org/x/lint v0.0.0-20180702182130-06c8688daad7
+go: finding github.com/go-openapi/strfmt v0.17.0
+go: finding github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a
+go: finding github.com/gogo/protobuf v1.0.0
+go: finding golang.org/x/net v0.0.0-20180530234432-1e491301e022
+go: finding golang.org/x/net v0.0.0-20190620200207-3b0461eec859
+go: finding github.com/pkg/profile v1.2.1
+go: finding google.golang.org/appengine v1.0.0
+go: finding github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c
+go: finding github.com/BurntSushi/toml v0.3.0
+go: finding github.com/globalsign/mgo v0.0.0-20180905125535-1ca0a4f7cbcb
+go: finding github.com/creack/pty v1.1.7
+go: finding go.mongodb.org/mongo-driver v1.1.1
+go: finding github.com/uber/jaeger-client-go v2.14.0+incompatible
+go: finding github.com/google/btree v1.0.0
+go: finding golang.org/x/text v0.3.2
+go: finding golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
+go: finding github.com/tmc/grpc-websocket-proxy v0.0.0-20170815181823-89b8d40f7ca8
+go: finding github.com/go-openapi/analysis v0.0.0-20180825180245-b006789cd277
+go: finding golang.org/x/sys v0.0.0-20190222072716-a9d3bda3a223
+go: finding github.com/google/subcommands v0.0.0-20181012225330-46f0354f6315
+go: finding github.com/google/go-containerregistry v0.0.0-20190317040536-ebbba8469d06
+go: finding gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127
+go: finding go.mongodb.org/mongo-driver v1.0.3
+go: finding github.com/pelletier/go-toml v1.2.0
+go: finding golang.org/x/tools v0.0.0-20190311212946-11955173bddd
+go: finding github.com/go-openapi/errors v0.19.2
+go: finding github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d
+go: finding gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2
+go: finding github.com/prometheus/client_golang v0.9.0-pre1.0.20180924113449-f69c853d21c1
+go: finding github.com/NYTimes/gziphandler v0.0.0-20160419202541-63027b26b87e
+go: finding github.com/mailru/easyjson v0.0.0-20180823135443-60711f1a8329
+go: finding github.com/peterbourgon/diskv v0.0.0-20171120014656-2973218375c3
+go: finding contrib.go.opencensus.io/exporter/aws v0.0.0-20180906190126-dd54a7ef511e
+go: finding golang.org/x/oauth2 v0.0.0-20181106182150-f42d05182288
+go: finding google.golang.org/grpc v1.12.0
+go: finding golang.org/x/sys v0.0.0-20190616124812-15dcb6c0061f
+go: finding golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e
+go: finding github.com/PuerkitoBio/purell v1.1.1
+go: finding github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf
+go: finding github.com/coreos/go-etcd v2.0.0+incompatible
+go: finding github.com/onsi/gomega v1.4.2
+go: finding github.com/prometheus/procfs v0.0.0-20180612222113-7d6f385de8be
+go: finding github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+go: finding k8s.io/kubernetes v1.11.3
+go: finding github.com/go-stack/stack v1.8.0
+go: finding github.com/peterbourgon/diskv v2.0.1+incompatible
+go: finding golang.org/x/oauth2 v0.0.0-20190220154721-9b3c75971fc9
+go: finding golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
+go: finding github.com/spf13/afero v1.1.2
+go: finding github.com/gogo/protobuf v1.2.1
+go: finding github.com/posener/complete v1.1.1
+go: finding gonum.org/v1/gonum v0.0.0-20190331200053-3d26580ed485
+go: finding golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3
+go: finding golang.org/x/tools v0.0.0-20181017214349-06f26fdaaa28
+go: finding golang.org/x/exp v0.0.0-20190312203227-4b39c73a6495
+go: finding github.com/briandowns/spinner v1.7.0
+go: finding github.com/go-sql-driver/mysql v0.0.0-20160411075031-7ebe0a500653
+go: finding github.com/go-openapi/errors v0.17.0
+go: finding github.com/urfave/cli v1.18.0
+go: finding github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
+go: finding github.com/hashicorp/go-cleanhttp v0.5.0
+go: finding golang.org/x/crypto v0.0.0-20190611184440-5c40567a22f8
+go: finding golang.org/x/time v0.0.0-20181108054448-85acf8d2951c
+go: finding golang.org/x/mobile v0.0.0-20190312151609-d3739f865fa6
+go: finding github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
+go: finding github.com/go-yaml/yaml v2.1.0+incompatible
+go: finding github.com/prometheus/common v0.0.0-20180801064454-c7de2306084e
+go: finding github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802
+go: finding github.com/kr/pty v1.1.5
+go: finding golang.org/x/sys v0.0.0-20190502145724-3ef323f4f1fd
+go: finding google.golang.org/api v0.0.0-20180603000442-8e296ef26005
+go: finding golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
+go: finding github.com/golang/protobuf v1.1.0
+go: finding cloud.google.com/go v0.23.0
+go: finding golang.org/x/tools v0.0.0-20190312151545-0bb0c0a6e846
+go: finding golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
+go: finding golang.org/x/oauth2 v0.0.0-20180603041954-1e0a3fa8ba9a
+go: finding github.com/jtolds/gls v4.20.0+incompatible
+go: finding github.com/mitchellh/go-homedir v1.0.0
+go: finding google.golang.org/grpc v1.14.0
+go: finding github.com/aws/aws-sdk-go v1.16.18
+go: finding github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8
+go: finding github.com/prometheus/common v0.0.0-20181126121408-4724e9255275
+go: finding golang.org/x/sys v0.0.0-20190312061237-fead79001313
+go: finding github.com/gophercloud/gophercloud v0.0.0-20181215224939-bdd8b1ecd793
+go: finding github.com/go-openapi/jsonpointer v0.19.2
+go: finding google.golang.org/grpc v1.19.0
+go: finding github.com/kisielk/errcheck v1.1.0
+go: finding golang.org/x/exp v0.0.0-20190125153040-c74c464bbbf2
+go: finding github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e
+go: finding github.com/golang/protobuf v1.3.1
+go: finding github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1
+go: finding github.com/knative/pkg v0.0.0-20181205230426-0e41760cea1d
+go: finding github.com/mailru/easyjson v0.0.0-20190614124828-94de47d64c63
+go: finding github.com/joho/godotenv v1.3.0
+go: finding github.com/Masterminds/sprig v2.15.0+incompatible
+go: finding github.com/gorilla/websocket v1.2.0
+go: finding github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3
+go: finding github.com/go-openapi/swag v0.19.2
+go: finding github.com/kevinburke/ssh_config v0.0.0-20190725054713-01f96b0aa0cd
+go: finding github.com/kisielk/gotool v1.0.0
+go: finding gonum.org/v1/netlib v0.0.0-20190313105609-8cb42192e0e0
+go: finding github.com/aws/aws-sdk-go v1.15.27
+go: finding golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3
+go: finding golang.org/x/tools v0.0.0-20190114222345-bf090417da8b
+go: finding github.com/jmespath/go-jmespath v0.0.0-20160202185014-0b12d6b521d8
+go: finding github.com/Microsoft/go-winio v0.4.6
+go: finding golang.org/x/tools v0.0.0-20180221164845-07fd8470d635
+go: finding golang.org/x/tools v0.0.0-20190206041539-40960b6deb8e
+go: finding github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
+go: finding github.com/go-openapi/jsonpointer v0.17.0
+go: finding github.com/satori/go.uuid v1.2.0
+go: downloading k8s.io/client-go v0.0.0-20190528110200-4f3abb12cae2
+go: downloading github.com/tektoncd/pipeline v0.8.0
+go: downloading github.com/imdario/mergo v0.3.8
+go: downloading gopkg.in/AlecAivazis/survey.v1 v1.8.3
+go: downloading github.com/jetstack/cert-manager v0.5.2
+go: downloading github.com/rodaine/hclencoder v0.0.0-20180926060551-0680c4321930
+go: downloading k8s.io/apimachinery v0.0.0-20190221084156-01f179d85dbc
+go: extracting github.com/imdario/mergo v0.3.8
+go: extracting github.com/rodaine/hclencoder v0.0.0-20180926060551-0680c4321930
+go: downloading k8s.io/apiextensions-apiserver v0.0.0-20190528110544-fa58353d80f3
+go: extracting gopkg.in/AlecAivazis/survey.v1 v1.8.3
+go: downloading github.com/pkg/errors v0.8.1
+go: extracting github.com/pkg/errors v0.8.1
+go: downloading github.com/chromedp/chromedp v0.1.1
+go: extracting k8s.io/apimachinery v0.0.0-20190221084156-01f179d85dbc
+go: extracting github.com/chromedp/chromedp v0.1.1
+go: downloading github.com/knative/pkg v0.0.0-20190624141606-d82505e6c5b4
+go: downloading k8s.io/api v0.0.0-20190528110122-9ad12a4af326
+go: downloading github.com/hashicorp/go-version v1.1.0
+go: downloading github.com/cenkalti/backoff v2.1.1+incompatible
+go: extracting github.com/hashicorp/go-version v1.1.0
+go: extracting github.com/cenkalti/backoff v2.1.1+incompatible
+go: downloading github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037
+go: extracting github.com/rickar/props v0.0.0-20170718221555-0b06aeb2f037
+go: downloading github.com/rollout/rox-go v0.0.0-20181220111955-29ddae74a8c4
+go: extracting github.com/rollout/rox-go v0.0.0-20181220111955-29ddae74a8c4
+go: downloading github.com/heptio/sonobuoy v0.16.0
+go: extracting k8s.io/client-go v0.0.0-20190528110200-4f3abb12cae2
+go: downloading github.com/chromedp/cdproto v0.0.0-20180720050708-57cf4773008d
+go: downloading k8s.io/test-infra v0.0.0-20190131093439-a22cef183a8f
+go: extracting github.com/chromedp/cdproto v0.0.0-20180720050708-57cf4773008d
+go: extracting k8s.io/api v0.0.0-20190528110122-9ad12a4af326
+go: downloading github.com/TV4/logrus-stackdriver-formatter v0.1.0
+go: downloading github.com/aws/aws-sdk-go v1.24.0
+go: downloading github.com/pkg/browser v0.0.0-20170505125900-c90ca0c84f15
+go: downloading github.com/sethvargo/go-password v0.1.2
+go: extracting github.com/TV4/logrus-stackdriver-formatter v0.1.0
+go: extracting github.com/pkg/browser v0.0.0-20170505125900-c90ca0c84f15
+go: downloading github.com/google/uuid v1.1.1
+go: downloading github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
+go: extracting github.com/sethvargo/go-password v0.1.2
+go: downloading knative.dev/pkg v0.0.0-20191217184203-cf220a867b3d
+go: extracting github.com/google/uuid v1.1.1
+go: downloading gopkg.in/src-d/go-git.v4 v4.13.1
+go: extracting github.com/IBM-Cloud/bluemix-go v0.0.0-20181008063305-d718d474c7c2
+go: downloading github.com/gogo/protobuf v1.2.1
+go: extracting gopkg.in/src-d/go-git.v4 v4.13.1
+go: downloading github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
+go: extracting github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
+go: downloading github.com/spf13/viper v1.3.2
+go: extracting github.com/spf13/viper v1.3.2
+go: downloading github.com/spf13/cast v1.3.0
+go: extracting github.com/spf13/cast v1.3.0
+go: downloading github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
+go: extracting github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
+go: downloading github.com/antham/chyle v1.6.0
+go: extracting github.com/antham/chyle v1.6.0
+go: extracting k8s.io/apiextensions-apiserver v0.0.0-20190528110544-fa58353d80f3
+go: downloading k8s.io/helm v2.7.2+incompatible
+go: extracting github.com/tektoncd/pipeline v0.8.0
+go: downloading github.com/alecthomas/jsonschema v0.0.0-20190504002508-159cbd5dba26
+go: downloading github.com/pelletier/go-toml v1.2.0
+go: extracting github.com/alecthomas/jsonschema v0.0.0-20190504002508-159cbd5dba26
+go: downloading github.com/shirou/gopsutil v0.0.0-20180901134234-eb1f1ab16f2e
+go: extracting github.com/pelletier/go-toml v1.2.0
+go: downloading github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+go: extracting github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+go: downloading github.com/fatih/color v1.7.0
+go: extracting github.com/knative/pkg v0.0.0-20190624141606-d82505e6c5b4
+go: extracting github.com/shirou/gopsutil v0.0.0-20180901134234-eb1f1ab16f2e
+go: downloading github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
+go: downloading github.com/xeipuuv/gojsonschema v1.1.0
+go: extracting github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
+go: downloading k8s.io/kubernetes v1.11.3
+go: extracting github.com/xeipuuv/gojsonschema v1.1.0
+go: extracting github.com/jetstack/cert-manager v0.5.2
+go: downloading github.com/fatih/structs v1.1.0
+go: extracting github.com/fatih/structs v1.1.0
+go: downloading github.com/magiconair/properties v1.8.0
+go: extracting github.com/fatih/color v1.7.0
+go: downloading github.com/Jeffail/gabs v1.1.1
+go: extracting k8s.io/helm v2.7.2+incompatible
+go: extracting github.com/magiconair/properties v1.8.0
+go: extracting github.com/Jeffail/gabs v1.1.1
+go: downloading k8s.io/metrics v0.0.0-20181128195641-3954d62a524d
+go: downloading golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+go: extracting k8s.io/metrics v0.0.0-20181128195641-3954d62a524d
+go: downloading github.com/iancoleman/orderedmap v0.0.0-20181121102841-22c6ecc9fe13
+go: extracting github.com/iancoleman/orderedmap v0.0.0-20181121102841-22c6ecc9fe13
+go: downloading github.com/spf13/cobra v0.0.5
+go: extracting github.com/spf13/cobra v0.0.5
+go: downloading github.com/fsnotify/fsnotify v1.4.7
+go: extracting github.com/fsnotify/fsnotify v1.4.7
+go: downloading golang.org/x/sync v0.0.0-20190423024810-112230192c58
+go: extracting golang.org/x/sync v0.0.0-20190423024810-112230192c58
+go: downloading github.com/go-openapi/jsonreference v0.19.2
+go: extracting github.com/go-openapi/jsonreference v0.19.2
+go: downloading github.com/evanphx/json-patch v4.5.0+incompatible
+go: extracting github.com/evanphx/json-patch v4.5.0+incompatible
+go: downloading k8s.io/kube-openapi v0.0.0-20190228160746-b3a7cee44a30
+go: extracting github.com/gogo/protobuf v1.2.1
+go: extracting golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+go: downloading github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+go: downloading github.com/hashicorp/hcl v1.0.0
+go: extracting github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+go: extracting github.com/hashicorp/hcl v1.0.0
+go: downloading gopkg.in/yaml.v2 v2.2.4
+go: downloading github.com/Masterminds/sprig v2.21.0+incompatible
+go: extracting gopkg.in/yaml.v2 v2.2.4
+go: extracting github.com/Masterminds/sprig v2.21.0+incompatible
+go: downloading github.com/golang/protobuf v1.3.2
+go: extracting github.com/golang/protobuf v1.3.2
+go: downloading github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314
+go: extracting github.com/jenkins-x/golang-jenkins v0.0.0-20180919102630-65b83ad42314
+go: extracting k8s.io/kube-openapi v0.0.0-20190228160746-b3a7cee44a30
+go: downloading github.com/mattn/go-isatty v0.0.8
+go: extracting github.com/mattn/go-isatty v0.0.8
+go: extracting github.com/heptio/sonobuoy v0.16.0
+go: downloading golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e
+go: downloading github.com/huandu/xstrings v1.2.0
+go: extracting github.com/huandu/xstrings v1.2.0
+go: downloading github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
+go: extracting k8s.io/test-infra v0.0.0-20190131093439-a22cef183a8f
+go: downloading github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
+go: extracting knative.dev/pkg v0.0.0-20191217184203-cf220a867b3d
+go: downloading github.com/c2h5oh/datasize v0.0.0-20171227191756-4eba002a5eae
+go: downloading github.com/blang/semver v3.5.1+incompatible
+go: extracting github.com/c2h5oh/datasize v0.0.0-20171227191756-4eba002a5eae
+go: extracting github.com/subchen/go-xmldom v1.1.2-0.20171223153236-c38add8757d0
+go: downloading github.com/spf13/jwalterweatherman v1.0.0
+go: downloading gocloud.dev v0.9.0
+go: extracting github.com/spf13/jwalterweatherman v1.0.0
+go: extracting github.com/blang/semver v3.5.1+incompatible
+go: downloading github.com/knative/build v0.7.0
+go: downloading github.com/andygrunwald/go-jira v1.5.0
+go: downloading github.com/gorilla/websocket v1.4.0
+go: extracting github.com/gorilla/websocket v1.4.0
+go: downloading github.com/PuerkitoBio/purell v1.1.1
+go: extracting github.com/PuerkitoBio/purell v1.1.1
+go: downloading github.com/mattn/go-colorable v0.1.2
+go: extracting github.com/mattn/go-colorable v0.1.2
+go: downloading sigs.k8s.io/yaml v1.1.0
+go: extracting github.com/andygrunwald/go-jira v1.5.0
+go: extracting sigs.k8s.io/yaml v1.1.0
+go: downloading github.com/vrischmann/envconfig v1.2.0
+go: extracting github.com/vrischmann/envconfig v1.2.0
+go: downloading github.com/spf13/pflag v1.0.3
+go: extracting github.com/spf13/pflag v1.0.3
+go: downloading github.com/google/go-cmp v0.3.1
+go: extracting github.com/google/go-cmp v0.3.1
+go: extracting golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e
+go: downloading github.com/davecgh/go-spew v1.1.1
+go: extracting gocloud.dev v0.9.0
+go: extracting github.com/davecgh/go-spew v1.1.1
+go: downloading github.com/gobwas/glob v0.2.3
+go: downloading github.com/google/go-github v17.0.0+incompatible
+go: downloading golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
+go: extracting github.com/gobwas/glob v0.2.3
+go: downloading github.com/go-openapi/spec v0.19.3
+go: extracting github.com/google/go-github v17.0.0+incompatible
+go: downloading github.com/stoewer/go-strcase v1.0.1
+go: extracting github.com/stoewer/go-strcase v1.0.1
+go: downloading github.com/spf13/afero v1.1.2
+go: extracting github.com/go-openapi/spec v0.19.3
+go: extracting github.com/spf13/afero v1.1.2
+go: downloading github.com/Masterminds/semver v1.4.2
+go: extracting github.com/Masterminds/semver v1.4.2
+go: downloading github.com/ghodss/yaml v1.0.0
+go: extracting github.com/ghodss/yaml v1.0.0
+go: extracting golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
+go: downloading golang.org/x/text v0.3.2
+go: extracting github.com/banzaicloud/bank-vaults v0.0.0-20190508130850-5673d28c46bd
+go: extracting github.com/knative/build v0.7.0
+go: downloading github.com/emicklei/go-restful v2.9.3+incompatible
+go: extracting github.com/emicklei/go-restful v2.9.3+incompatible
+go: downloading github.com/google/go-querystring v1.0.0
+go: extracting github.com/google/go-querystring v1.0.0
+go: extracting github.com/aws/aws-sdk-go v1.24.0
+go: downloading github.com/go-openapi/swag v0.19.5
+go: downloading github.com/BurntSushi/toml v0.3.1
+go: downloading github.com/beevik/etree v1.0.1
+go: downloading github.com/Azure/draft v0.15.0
+go: downloading github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+go: downloading github.com/MakeNowJust/heredoc v0.0.0-20171113091838-e9091a26100e
+go: extracting github.com/BurntSushi/toml v0.3.1
+go: extracting github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+go: downloading gopkg.in/src-d/go-billy.v4 v4.3.2
+go: extracting github.com/go-openapi/swag v0.19.5
+go: downloading github.com/Masterminds/goutils v1.1.0
+go: extracting github.com/MakeNowJust/heredoc v0.0.0-20171113091838-e9091a26100e
+go: downloading github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
+go: extracting github.com/beevik/etree v1.0.1
+go: downloading golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+go: extracting github.com/alexflint/go-filemutex v0.0.0-20171028004239-d358565f3c3f
+go: extracting github.com/Masterminds/goutils v1.1.0
+go: downloading gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
+go: extracting gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
+go: downloading github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
+go: downloading github.com/Comcast/kuberhealthy v1.0.2
+go: extracting gopkg.in/src-d/go-billy.v4 v4.3.2
+go: downloading github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
+go: extracting github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a
+go: downloading github.com/gregjones/httpcache v0.0.0-20190212212710-3befbb6ad0cc
+go: extracting github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
+go: downloading golang.org/x/time v0.0.0-20181108054448-85acf8d2951c
+go: extracting github.com/Comcast/kuberhealthy v1.0.2
+go: extracting github.com/gregjones/httpcache v0.0.0-20190212212710-3befbb6ad0cc
+go: downloading github.com/hashicorp/vault v1.1.2
+go: extracting golang.org/x/time v0.0.0-20181108054448-85acf8d2951c
+go: downloading github.com/russross/blackfriday v1.5.2
+go: extracting golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+go: downloading github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+go: downloading github.com/xanzy/ssh-agent v0.2.1
+go: extracting github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+go: downloading github.com/knative/serving v0.7.0
+go: extracting github.com/xanzy/ssh-agent v0.2.1
+go: downloading github.com/shurcooL/githubv4 v0.0.0-20180925043049-51d7b505e2e9
+go: extracting github.com/shurcooL/githubv4 v0.0.0-20180925043049-51d7b505e2e9
+go: downloading github.com/cpuguy83/go-md2man v1.0.10
+go: extracting github.com/cpuguy83/go-md2man v1.0.10
+go: downloading github.com/wbrefvem/go-bitbucket v0.0.0-20190128183802-fc08fd046abb
+go: extracting github.com/russross/blackfriday v1.5.2
+go: downloading github.com/hashicorp/golang-lru v0.5.0
+go: extracting github.com/hashicorp/golang-lru v0.5.0
+go: downloading github.com/mholt/archiver v3.1.1+incompatible
+go: extracting github.com/mholt/archiver v3.1.1+incompatible
+go: downloading golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7
+go: extracting golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7
+go: downloading github.com/Pallinder/go-randomdata v1.1.0
+go: extracting github.com/Pallinder/go-randomdata v1.1.0
+go: extracting golang.org/x/text v0.3.2
+go: extracting github.com/wbrefvem/go-bitbucket v0.0.0-20190128183802-fc08fd046abb
+go: extracting github.com/Azure/draft v0.15.0
+go: downloading github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
+go: downloading github.com/go-openapi/jsonpointer v0.19.3
+go: extracting github.com/go-openapi/jsonpointer v0.19.3
+go: downloading github.com/kevinburke/ssh_config v0.0.0-20190725054713-01f96b0aa0cd
+go: extracting github.com/kevinburke/ssh_config v0.0.0-20190725054713-01f96b0aa0cd
+go: downloading github.com/briandowns/spinner v1.7.0
+go: downloading github.com/shurcooL/graphql v0.0.0-20180924043259-e4a3a37e6d42
+go: downloading github.com/antchfx/xpath v1.1.5
+go: downloading github.com/jtnord/logrus v1.4.2-0.20190423161236-606ffcaf8f5d
+go: downloading github.com/Azure/go-autorest v10.14.0+incompatible
+go: downloading github.com/nlopes/slack v0.0.0-20180721202243-347a74b1ea30
+go: extracting github.com/shurcooL/graphql v0.0.0-20180924043259-e4a3a37e6d42
+go: extracting github.com/jtnord/logrus v1.4.2-0.20190423161236-606ffcaf8f5d
+go: extracting github.com/antchfx/xpath v1.1.5
+go: downloading github.com/go-stack/stack v1.8.0
+go: downloading github.com/pierrec/lz4 v2.0.5+incompatible
+go: extracting github.com/go-stack/stack v1.8.0
+go: downloading github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
+go: extracting github.com/nlopes/slack v0.0.0-20180721202243-347a74b1ea30
+go: extracting github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
+go: downloading github.com/gfleury/go-bitbucket-v1 v0.0.0-20200320173742-022f4bab9090
+go: downloading github.com/googleapis/gnostic v0.2.0
+go: extracting github.com/Azure/go-autorest v10.14.0+incompatible
+go: downloading github.com/ulikunitz/xz v0.5.6
+go: extracting github.com/gfleury/go-bitbucket-v1 v0.0.0-20200320173742-022f4bab9090
+go: downloading github.com/gophercloud/gophercloud v0.0.0-20181215224939-bdd8b1ecd793
+go: extracting github.com/briandowns/spinner v1.7.0
+go: downloading github.com/jenkins-x/draft-repo v0.0.0-20180417100212-2f66cc518135
+go: extracting github.com/googleapis/gnostic v0.2.0
+go: extracting github.com/ulikunitz/xz v0.5.6
+go: downloading github.com/golang/snappy v0.0.0-20170215233205-553a64147049
+go: extracting github.com/golang/snappy v0.0.0-20170215233205-553a64147049
+go: downloading gopkg.in/inf.v0 v0.9.1
+go: extracting gopkg.in/inf.v0 v0.9.1
+go: downloading github.com/peterbourgon/diskv v2.0.1+incompatible
+go: extracting github.com/peterbourgon/diskv v2.0.1+incompatible
+go: downloading github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
+go: extracting github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
+go: downloading github.com/rollout/sse v0.0.0-20181105093643-e422b54b3b28
+go: extracting github.com/pierrec/lz4 v2.0.5+incompatible
+go: extracting github.com/rollout/sse v0.0.0-20181105093643-e422b54b3b28
+go: downloading github.com/nwaples/rardecode v1.0.0
+go: extracting github.com/gophercloud/gophercloud v0.0.0-20181215224939-bdd8b1ecd793
+go: extracting github.com/nwaples/rardecode v1.0.0
+go: downloading github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
+go: extracting github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
+go: downloading cloud.google.com/go v0.34.0
+go: downloading github.com/google/btree v1.0.0
+go: extracting github.com/google/btree v1.0.0
+go: downloading github.com/disintegration/imaging v1.4.2
+go: downloading github.com/knq/sysutil v0.0.0-20180306023629-0218e141a794
+go: extracting github.com/knq/sysutil v0.0.0-20180306023629-0218e141a794
+go: downloading github.com/denormal/go-gitignore v0.0.0-20180713143441-75ce8f3e513c
+go: extracting github.com/denormal/go-gitignore v0.0.0-20180713143441-75ce8f3e513c
+go: downloading google.golang.org/api v0.0.0-20181021000519-a2651947f503
+go: extracting github.com/awslabs/goformation v0.0.0-20190320125420-ac0a17860cf1
+go: extracting github.com/disintegration/imaging v1.4.2
+go: downloading golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
+go: downloading github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e
+go: extracting github.com/jenkins-x/draft-repo v0.0.0-20180417100212-2f66cc518135
+go: downloading code.gitea.io/sdk v0.0.0-20180702024448-79a281c4e34a
+go: extracting github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e
+go: downloading github.com/src-d/gcfg v1.4.0
+go: extracting code.gitea.io/sdk v0.0.0-20180702024448-79a281c4e34a
+go: downloading github.com/xanzy/go-gitlab v0.22.1
+go: extracting github.com/src-d/gcfg v1.4.0
+go: downloading github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
+go: extracting github.com/andygrunwald/go-gerrit v0.0.0-20181026193842-43cfd7a94eb4
+go: downloading github.com/jbrukh/bayesian v0.0.0-20161210175230-bf3f261f9a9c
+go: extracting github.com/jbrukh/bayesian v0.0.0-20161210175230-bf3f261f9a9c
+go: downloading gopkg.in/cenkalti/backoff.v1 v1.1.0
+go: extracting gopkg.in/cenkalti/backoff.v1 v1.1.0
+go: downloading github.com/pborman/uuid v1.2.0
+go: extracting github.com/xanzy/go-gitlab v0.22.1
+go: extracting github.com/pborman/uuid v1.2.0
+go: downloading github.com/sanathkr/yaml v0.0.0-20170819201035-0056894fa522
+go: extracting github.com/sanathkr/yaml v0.0.0-20170819201035-0056894fa522
+go: downloading gopkg.in/warnings.v0 v0.1.2
+go: extracting gopkg.in/warnings.v0 v0.1.2
+go: downloading github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
+go: extracting github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
+go: downloading github.com/trivago/tgo v1.0.1
+go: extracting github.com/trivago/tgo v1.0.1
+go: downloading github.com/gorilla/sessions v1.1.3
+go: extracting github.com/gorilla/sessions v1.1.3
+go: downloading github.com/dgrijalva/jwt-go v3.2.0+incompatible
+go: extracting github.com/dgrijalva/jwt-go v3.2.0+incompatible
+go: downloading github.com/gorilla/mux v1.6.2
+go: extracting github.com/gorilla/mux v1.6.2
+go: extracting github.com/knative/serving v0.7.0
+go: extracting cloud.google.com/go v0.34.0
+go: downloading github.com/mitchellh/mapstructure v1.1.2
+go: downloading github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964
+go: extracting github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964
+go: downloading github.com/sergi/go-diff v1.0.0
+go: extracting github.com/mitchellh/mapstructure v1.1.2
+go: downloading github.com/dsnet/compress v0.0.0-20171208185109-cc9eb1d7ad76
+go: extracting github.com/sergi/go-diff v1.0.0
+go: downloading github.com/emirpasic/gods v1.12.0
+go: downloading github.com/google/wire v0.2.0
+go: downloading github.com/gorilla/context v1.1.1
+go: extracting github.com/gorilla/context v1.1.1
+go: downloading google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
+go: extracting github.com/emirpasic/gods v1.12.0
+go: extracting github.com/google/wire v0.2.0
+go: downloading google.golang.org/grpc v1.20.1
+go: extracting google.golang.org/grpc v1.20.1
+go: downloading github.com/sanathkr/go-yaml v0.0.0-20170819195128-ed9d249f429b
+go: extracting github.com/sanathkr/go-yaml v0.0.0-20170819195128-ed9d249f429b
+go: downloading github.com/prometheus/client_golang v0.9.2
+go: extracting github.com/prometheus/client_golang v0.9.2
+go: extracting golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
+go: downloading github.com/go-errors/errors v1.0.1
+go: downloading github.com/gorilla/securecookie v1.1.1
+go: extracting github.com/go-errors/errors v1.0.1
+go: downloading github.com/prometheus/common v0.0.0-20181126121408-4724e9255275
+go: extracting github.com/gorilla/securecookie v1.1.1
+go: downloading github.com/mitchellh/go-homedir v1.1.0
+go: extracting github.com/mitchellh/go-homedir v1.1.0
+go: extracting github.com/prometheus/common v0.0.0-20181126121408-4724e9255275
+go: downloading github.com/json-iterator/go v1.1.5
+go: extracting github.com/json-iterator/go v1.1.5
+go: extracting k8s.io/kubernetes v1.11.3
+go: extracting github.com/dsnet/compress v0.0.0-20171208185109-cc9eb1d7ad76
+go: downloading github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910
+go: extracting github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910
+go: downloading github.com/Azure/azure-storage-blob-go v0.0.0-20181023070848-cf01652132cc
+go: extracting github.com/Azure/azure-storage-blob-go v0.0.0-20181023070848-cf01652132cc
+go: downloading github.com/Azure/azure-pipeline-go v0.1.8
+go: extracting github.com/Azure/azure-pipeline-go v0.1.8
+go: extracting google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb
+go: extracting github.com/hashicorp/vault v1.1.2
+go: downloading github.com/modern-go/reflect2 v1.0.1
+go: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+go: extracting github.com/modern-go/reflect2 v1.0.1
+go: downloading github.com/googleapis/gax-go v2.0.0+incompatible
+go: downloading github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+go: downloading github.com/google/go-containerregistry v0.0.0-20190317040536-ebbba8469d06
+go: extracting github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+go: downloading go.opencensus.io v0.22.2
+go: extracting github.com/googleapis/gax-go v2.0.0+incompatible
+go: downloading github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c
+go: extracting github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+go: downloading github.com/matttproud/golang_protobuf_extensions v1.0.1
+go: extracting github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c
+go: downloading github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a
+go: extracting github.com/matttproud/golang_protobuf_extensions v1.0.1
+go: extracting github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a
+go: extracting go.opencensus.io v0.22.2
+go: downloading github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6
+go: extracting github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6
+go: downloading github.com/hashicorp/go-retryablehttp v0.5.3
+go: downloading github.com/hashicorp/go-sockaddr v1.0.2
+go: downloading github.com/hashicorp/errwrap v1.0.0
+go: downloading github.com/hashicorp/go-rootcerts v1.0.0
+go: extracting github.com/hashicorp/errwrap v1.0.0
+go: downloading github.com/hashicorp/go-multierror v1.0.0
+go: extracting github.com/hashicorp/go-retryablehttp v0.5.3
+go: downloading github.com/hashicorp/go-cleanhttp v0.5.1
+go: extracting github.com/hashicorp/go-rootcerts v1.0.0
+go: downloading github.com/ryanuber/go-glob v0.0.0-20160226084822-572520ed46db
+go: extracting github.com/hashicorp/go-multierror v1.0.0
+go: extracting github.com/hashicorp/go-cleanhttp v0.5.1
+go: extracting github.com/ryanuber/go-glob v0.0.0-20160226084822-572520ed46db
+go: extracting github.com/hashicorp/go-sockaddr v1.0.2
+go: extracting google.golang.org/api v0.0.0-20181021000519-a2651947f503
+go: extracting github.com/google/go-containerregistry v0.0.0-20190317040536-ebbba8469d06
+mkdir -p build/reports
+go: downloading github.com/petergtz/pegomock v2.7.0+incompatible
+go: downloading github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c
+go: downloading github.com/stretchr/testify v1.4.0
+go: downloading github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+go: extracting github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+go: extracting github.com/petergtz/pegomock v2.7.0+incompatible
+go: extracting github.com/stretchr/testify v1.4.0
+go: downloading github.com/pmezard/go-difflib v1.0.0
+go: extracting github.com/pmezard/go-difflib v1.0.0
+go: downloading github.com/Netflix/go-expect v0.0.0-20180814212900-124a37274874
+go: extracting github.com/Netflix/go-expect v0.0.0-20180814212900-124a37274874
+go: extracting github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c
+go: downloading github.com/onsi/ginkgo v1.7.0
+go: extracting github.com/onsi/ginkgo v1.7.0
+go: downloading github.com/onsi/gomega v1.4.3
+go: downloading github.com/hpcloud/tail v1.0.0
+go: extracting github.com/onsi/gomega v1.4.3
+go: downloading github.com/kr/pty v1.1.8
+go: extracting github.com/kr/pty v1.1.8
+go: extracting github.com/hpcloud/tail v1.0.0
+go: downloading github.com/creack/pty v1.1.7
+go: extracting github.com/creack/pty v1.1.7
+go: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
+go: downloading go.uber.org/zap v1.9.1
+go: downloading github.com/Azure/azure-sdk-for-go v21.1.0+incompatible
+go: downloading github.com/docker/docker v0.0.0-20171206114025-5e5fadb3c020
+go: downloading gopkg.in/fsnotify.v1 v1.4.7
+go: extracting go.uber.org/zap v1.9.1
+go: downloading go.uber.org/multierr v1.1.0
+go: downloading go.uber.org/atomic v1.3.2
+go: extracting go.uber.org/multierr v1.1.0
+go: extracting gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
+go: extracting gopkg.in/fsnotify.v1 v1.4.7
+go: extracting go.uber.org/atomic v1.3.2
+go: extracting github.com/docker/docker v0.0.0-20171206114025-5e5fadb3c020
+go: downloading github.com/docker/go-units v0.3.2
+go: downloading github.com/docker/go-connections v0.3.0
+go: downloading github.com/opencontainers/image-spec v1.0.1
+go: extracting github.com/docker/go-units v0.3.2
+go: extracting github.com/docker/go-connections v0.3.0
+go: extracting github.com/opencontainers/image-spec v1.0.1
+go: downloading github.com/opencontainers/go-digest v1.0.0-rc1
+go: extracting github.com/opencontainers/go-digest v1.0.0-rc1
+go: extracting github.com/Azure/azure-sdk-for-go v21.1.0+incompatible
+?   	github.com/jenkins-x/**/cmd/codegen	[no test files]
+?   	github.com/jenkins-x/**/cmd/codegen/app	[no test files]
+?   	github.com/jenkins-x/**/cmd/codegen/generator	[no test files]
+?   	github.com/jenkins-x/**/cmd/codegen/util	[no test files]
+?   	github.com/jenkins-x/**/cmd/ip	[no test files]
+?   	github.com/jenkins-x/**/cmd/**	[no test files]
+?   	github.com/jenkins-x/**/cmd/**/app	[no test files]
+?   	github.com/jenkins-x/**/pkg/addon	[no test files]
+?   	github.com/jenkins-x/**/pkg/apis/jenkins.io	[no test files]
+?   	github.com/jenkins-x/**/pkg/apis/jenkins.io/v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/applications	[no test files]
+?   	github.com/jenkins-x/**/pkg/apps	[no test files]
+?   	github.com/jenkins-x/**/pkg/auth	[no test files]
+?   	github.com/jenkins-x/**/pkg/auth/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/boot	[no test files]
+?   	github.com/jenkins-x/**/pkg/brew	[no test files]
+?   	github.com/jenkins-x/**/pkg/buildnum	[no test files]
+?   	github.com/jenkins-x/**/pkg/buildnum/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/buildnum/mocks/matchers	[no test files]
+?   	github.com/jenkins-x/**/pkg/buildpacks	[no test files]
+?   	github.com/jenkins-x/**/pkg/builds	[no test files]
+?   	github.com/jenkins-x/**/pkg/chats	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/clientset/versioned	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/clientset/versioned/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/clientset/versioned/scheme	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/clientset/versioned/typed/jenkins.io/v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/clientset/versioned/typed/jenkins.io/v1/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/informers/externalversions	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/informers/externalversions/internalinterfaces	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/informers/externalversions/jenkins.io	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/informers/externalversions/jenkins.io/v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/listers/jenkins.io/v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/all	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/core	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_api_batch_v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_api_core_v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_api_rbac_v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_apimachinery_intstr_unversioned	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_apimachinery_meta_v1	[no test files]
+?   	github.com/jenkins-x/**/pkg/client/openapi/k8s_io_apimachinery_resource_unversioned	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/aks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/awscli	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/awscli/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/ec2	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/ec2/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/eks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/eks/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/eksctl	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/eksctl/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/session	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/storage	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/testutils	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/amazon/vault	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/buckets	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/buckets/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/factory	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/gke	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/gke/externaldns	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/gke/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/gke/storage	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/gke/vault	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/iks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cloud/openshift	[no test files]
+?   	github.com/jenkins-x/**/pkg/cluster	[no test files]
+?   	github.com/jenkins-x/**/pkg/cluster/eks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cluster/factory	[no test files]
+?   	github.com/jenkins-x/**/pkg/cluster/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/cluster/gke	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/add	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/alpha	[no test files]
+coverage: 0.7% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/boot	14.209s	coverage: 0.7% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/cmd/clients	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/clients/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/clients/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/compliance	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/config	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/controller	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/controller/pipeline	[no test files]
+coverage: 3.6% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/create	21.123s	coverage: 3.6% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/cmd/create/options	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/create/vault	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/deletecmd	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/deprecation	[no test files]
+coverage: 0.9% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/edit	0.354s	coverage: 0.9% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/cmd/edit/requirements	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/experimental	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/gc	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/get	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/helper	[no test files]
+FAIL
+coverage: 2.3% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/cmd/importcmd	74.550s
+?   	github.com/jenkins-x/**/pkg/cmd/initcmd	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/namespace	[no test files]
+FAIL
+coverage: 1.1% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/cmd/step	1.477s
+coverage: 1.4% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/step/buildpack	4.613s	coverage: 1.4% of statements in ./...
+FAIL
+coverage: 1.3% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/cmd/opts	29.007s
+?   	github.com/jenkins-x/**/pkg/cmd/opts/step	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/opts/upgrade	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/preview	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/profile	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/promote	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/rsh	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/start	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/bdd	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/boot	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/cluster	[no test files]
+coverage: 0.8% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/step/create/helmfile	0.537s	coverage: 0.8% of statements in ./...
+coverage: 2.0% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/step/post	5.998s	coverage: 2.0% of statements in ./...
+coverage: 2.9% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/step/create	38.322s	coverage: 2.9% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/cmd/step/create/pr	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/e2e	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/env	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/expose	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/get	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/git	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/git/credentials	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/helm	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/nexus	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/pr	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/report	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/restore	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/scheduler	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/syntax	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/update	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/step/update/release	[no test files]
+coverage: 1.8% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/cmd/step/verify	39.691s	coverage: 1.8% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/cmd/stop	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/sync	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/templates	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/testhelpers	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/ui	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/uninstall	[no test files]
+?   	github.com/jenkins-x/**/pkg/cmd/update	[no test files]
+coverage: 0.3% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/envctx	0.225s	coverage: 0.3% of statements in ./...
+FAIL
+coverage: 0.6% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/cmd/upgrade	34.867s
+?   	github.com/jenkins-x/**/pkg/collector	[no test files]
+?   	github.com/jenkins-x/**/pkg/config	[no test files]
+?   	github.com/jenkins-x/**/pkg/cve	[no test files]
+?   	github.com/jenkins-x/**/pkg/dependencymatrix	[no test files]
+?   	github.com/jenkins-x/**/pkg/docker	[no test files]
+?   	github.com/jenkins-x/**/pkg/draft	[no test files]
+?   	github.com/jenkins-x/**/pkg/environments	[no test files]
+?   	github.com/jenkins-x/**/pkg/expose	[no test files]
+?   	github.com/jenkins-x/**/pkg/extensions	[no test files]
+?   	github.com/jenkins-x/**/pkg/features	[no test files]
+?   	github.com/jenkins-x/**/pkg/flagger	[no test files]
+?   	github.com/jenkins-x/**/pkg/github	[no test files]
+coverage: 0.3% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/gits	0.583s	coverage: 0.3% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/gits/credentialhelper	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/features	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/mocks/matchers	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/operations	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/releases	[no test files]
+?   	github.com/jenkins-x/**/pkg/gits/testhelpers	[no test files]
+?   	github.com/jenkins-x/**/pkg/health	[no test files]
+?   	github.com/jenkins-x/**/pkg/helm	[no test files]
+?   	github.com/jenkins-x/**/pkg/helm/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/helmfile	[no test files]
+?   	github.com/jenkins-x/**/pkg/io	[no test files]
+?   	github.com/jenkins-x/**/pkg/io/secrets	[no test files]
+?   	github.com/jenkins-x/**/pkg/issues	[no test files]
+?   	github.com/jenkins-x/**/pkg/jenkins	[no test files]
+?   	github.com/jenkins-x/**/pkg/jenkins/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/jenkinsfile	[no test files]
+coverage: 0.1% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/**factory/connector/provider	0.188s	coverage: 0.1% of statements in ./...
+coverage: 0.4% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/kube	0.298s	coverage: 0.4% of statements in ./...
+coverage: 0.4% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/jenkinsfile/gitresolver	25.292s	coverage: 0.4% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/**factory	[no test files]
+?   	github.com/jenkins-x/**/pkg/**factory/connector	[no test files]
+?   	github.com/jenkins-x/**/pkg/**factory/connector/gcp	[no test files]
+?   	github.com/jenkins-x/**/pkg/**factory/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/kserving	[no test files]
+?   	github.com/jenkins-x/**/pkg/ksync	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/cluster	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/mocks/matchers	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/naming	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/pki	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/resources	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/resources/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/serviceaccount	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/services	[no test files]
+coverage: 0.4% of statements in ./...
+ok  	github.com/jenkins-x/**/pkg/kube/test_integration	2.789s	coverage: 0.4% of statements in ./...
+?   	github.com/jenkins-x/**/pkg/kube/vault	[no test files]
+?   	github.com/jenkins-x/**/pkg/kube/velero	[no test files]
+?   	github.com/jenkins-x/**/pkg/kustomize	[no test files]
+?   	github.com/jenkins-x/**/pkg/log	[no test files]
+?   	github.com/jenkins-x/**/pkg/logs	[no test files]
+?   	github.com/jenkins-x/**/pkg/maven	[no test files]
+?   	github.com/jenkins-x/**/pkg/nodes	[no test files]
+?   	github.com/jenkins-x/**/pkg/packages	[no test files]
+?   	github.com/jenkins-x/**/pkg/pipeline_events	[no test files]
+?   	github.com/jenkins-x/**/pkg/pipelinescheduler	[no test files]
+?   	github.com/jenkins-x/**/pkg/pipelinescheduler/testhelpers	[no test files]
+?   	github.com/jenkins-x/**/pkg/platform	[no test files]
+?   	github.com/jenkins-x/**/pkg/prow	[no test files]
+?   	github.com/jenkins-x/**/pkg/prow/config	[no test files]
+?   	github.com/jenkins-x/**/pkg/quickstarts	[no test files]
+?   	github.com/jenkins-x/**/pkg/reportingtools	[no test files]
+?   	github.com/jenkins-x/**/pkg/reportingtools/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/reports	[no test files]
+?   	github.com/jenkins-x/**/pkg/secreturl	[no test files]
+?   	github.com/jenkins-x/**/pkg/secreturl/fakevault	[no test files]
+?   	github.com/jenkins-x/**/pkg/secreturl/localvault	[no test files]
+?   	github.com/jenkins-x/**/pkg/secreturl/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/semrel	[no test files]
+?   	github.com/jenkins-x/**/pkg/spring	[no test files]
+?   	github.com/jenkins-x/**/pkg/surveyutils	[no test files]
+?   	github.com/jenkins-x/**/pkg/table	[no test files]
+?   	github.com/jenkins-x/**/pkg/tekton	[no test files]
+?   	github.com/jenkins-x/**/pkg/tekton/metapipeline	[no test files]
+?   	github.com/jenkins-x/**/pkg/tekton/syntax	[no test files]
+?   	github.com/jenkins-x/**/pkg/tekton/syntax/syntax_helpers_test	[no test files]
+?   	github.com/jenkins-x/**/pkg/tekton/tekton_helpers_test	[no test files]
+?   	github.com/jenkins-x/**/pkg/terraform	[no test files]
+?   	github.com/jenkins-x/**/pkg/testkube	[no test files]
+?   	github.com/jenkins-x/**/pkg/tests	[no test files]
+?   	github.com/jenkins-x/**/pkg/users	[no test files]
+?   	github.com/jenkins-x/**/pkg/util	[no test files]
+?   	github.com/jenkins-x/**/pkg/util/json	[no test files]
+?   	github.com/jenkins-x/**/pkg/util/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/util/secrets	[no test files]
+?   	github.com/jenkins-x/**/pkg/util/system	[no test files]
+?   	github.com/jenkins-x/**/pkg/util/trace	[no test files]
+?   	github.com/jenkins-x/**/pkg/vault	[no test files]
+FAIL
+coverage: 0.5% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo	20.819s
+FAIL
+coverage: 0.5% of statements in ./...
+FAIL	github.com/jenkins-x/**/pkg/vault/create	4.038s
+?   	github.com/jenkins-x/**/pkg/vault/fake	[no test files]
+?   	github.com/jenkins-x/**/pkg/vault/mocks	[no test files]
+?   	github.com/jenkins-x/**/pkg/vault/mocks/matchers	[no test files]
+?   	github.com/jenkins-x/**/pkg/version	[no test files]
+?   	github.com/jenkins-x/**/pkg/versionstream	[no test files]
+?   	github.com/jenkins-x/**/pkg/virtualmachines/kvm	[no test files]
+?   	github.com/jenkins-x/**/pkg/virtualmachines/kvm2	[no test files]
+?   	github.com/jenkins-x/**/pkg/virtualmachines/virtualbox	[no test files]
+?   	github.com/jenkins-x/**/pkg/workflow	[no test files]
+
+=== Skipped
+=== SKIP: pkg/cmd/create TestCreateMLQuickstartProjects (0.00s)
+
+=== SKIP: pkg/cmd/create TestCreateQuickstartProjects (0.00s)
+
+=== SKIP: pkg/cmd/step/verify TestStepVerifyPreInstallNoKanikoNoLazyCreate (0.00s)
+
+=== SKIP: pkg/**factory/connector/provider TestGCPConnector (0.00s)
+
+
+=== Failed
+=== FAIL: pkg/cmd/importcmd TestImportProjects (16.90s)
+
+Git repository created
+performing pack detection in folder /tmp/test-import-projects082537353-DefaultJenkinsfile/custom_jenkins
+--> Draft detected Perl (100.000000%)
+--> Could not find a pack for Perl. Trying to find the next likely language match...
+selected pack: /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/custom-jenkins
+replacing placeholders in directory /tmp/test-import-projects082537353-DefaultJenkinsfile/custom_jenkins
+app name: custom-jenkins, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-projects082537353-DefaultJenkinsfile/custom_jenkins/.git"
+Draft pack custom-jenkins added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-projects082537353-RenamedJenkinsfile/custom_jenkins
+--> Draft detected Perl (100.000000%)
+--> Could not find a pack for Perl. Trying to find the next likely language match...
+selected pack: /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/custom-jenkins
+replacing placeholders in directory /tmp/test-import-projects082537353-RenamedJenkinsfile/custom_jenkins
+app name: custom-jenkins, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-projects082537353-RenamedJenkinsfile/custom_jenkins/.git"
+Draft pack custom-jenkins added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-projects082537353-DefaultJenkinsfile/docker
+--> Draft detected PLpgSQL (100.000000%)
+--> Could not find a pack for PLpgSQL. Trying to find the next likely language match...
+selected pack: /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker
+replacing placeholders in directory /tmp/test-import-projects082537353-DefaultJenkinsfile/docker
+app name: docker, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-projects082537353-DefaultJenkinsfile/docker/.git"
+Draft pack docker added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-projects082537353-RenamedJenkinsfile/docker
+--> Draft detected PLpgSQL (100.000000%)
+--> Could not find a pack for PLpgSQL. Trying to find the next likely language match...
+selected pack: /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker
+replacing placeholders in directory /tmp/test-import-projects082537353-RenamedJenkinsfile/docker
+app name: docker, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-projects082537353-RenamedJenkinsfile/docker/.git"
+Draft pack docker added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-projects082537353-DefaultJenkinsfile/docker-helm
+--> Draft detected YAML (91.200000%)
+--> Could not find a pack for YAML. Trying to find the next likely language match...
+--> Draft detected PLpgSQL (8.800000%)
+--> Could not find a pack for PLpgSQL. Trying to find the next likely language match...
+selected pack: /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker-helm
+    import_integration_test.go:212: 
+        	Error Trace:	import_integration_test.go:212
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:72
+        	Error:      	Received unexpected error:
+        	            	error converting YAML to JSON: yaml: line 13: did not find expected '-' indicator
+        	            	Failed to unmarshal file /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker-helm/pipeline.yaml
+        	            	github.com/jenkins-x/**/pkg/jenkinsfile.LoadPipelineConfigAndMaybeValidate
+        	            		/workspace/source/pkg/jenkinsfile/pipeline.go:505
+        	            	github.com/jenkins-x/**/pkg/jenkinsfile.LoadPipelineConfig
+        	            		/workspace/source/pkg/jenkinsfile/pipeline.go:480
+        	            	github.com/jenkins-x/**/pkg/jenkinsfile.(*CreateJenkinsfileArguments).GenerateJenkinsfile
+        	            		/workspace/source/pkg/jenkinsfile/pipeline.go:760
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).InvokeDraftPack
+        	            		/workspace/source/pkg/cmd/opts/buildpacks.go:326
+        	            	github.com/jenkins-x/**/pkg/cmd/importcmd.(*ImportOptions).DraftCreate
+        	            		/workspace/source/pkg/cmd/importcmd/import.go:529
+        	            	github.com/jenkins-x/**/pkg/cmd/importcmd.(*ImportOptions).Run
+        	            		/workspace/source/pkg/cmd/importcmd/import.go:385
+        	            	github.com/jenkins-x/**/pkg/cmd/importcmd_test.assertImport
+        	            		/workspace/source/pkg/cmd/importcmd/import_integration_test.go:211
+        	            	github.com/jenkins-x/**/pkg/cmd/importcmd_test.testImportProject
+        	            		/workspace/source/pkg/cmd/importcmd/import_integration_test.go:131
+        	            	github.com/jenkins-x/**/pkg/cmd/importcmd_test.TestImportProjects
+        	            		/workspace/source/pkg/cmd/importcmd/import_integration_test.go:72
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestImportProjects
+        	Messages:   	Failed docker-helm with Failed to unmarshal file /tmp/.**297547858/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker-helm/pipeline.yaml: error converting YAML to JSON: yaml: line 13: did not find expected '-' indicator
+
+=== FAIL: pkg/cmd/importcmd TestImportProjectNextGenPipeline (26.31s)
+
+Git repository created
+performing pack detection in folder /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/custom_jenkins
+--> Draft detected Perl (100.000000%)
+--> Could not find a pack for Perl. Trying to find the next likely language match...
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/custom-jenkins
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/custom_jenkins
+app name: custom-jenkins, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/custom_jenkins/.git"
+Draft pack custom-jenkins added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker
+--> Draft detected PLpgSQL (100.000000%)
+--> Could not find a pack for PLpgSQL. Trying to find the next likely language match...
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker
+app name: docker, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker/.git"
+Draft pack docker added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker-helm
+--> Draft detected YAML (91.200000%)
+--> Could not find a pack for YAML. Trying to find the next likely language match...
+--> Draft detected PLpgSQL (8.800000%)
+--> Could not find a pack for PLpgSQL. Trying to find the next likely language match...
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/docker-helm
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker-helm
+app name: docker-helm, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/docker-helm/.git"
+Draft pack docker-helm added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/gradle
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/gradle_no_files due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/gradle_no_files/charts/gradle/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/gradle_no_files
+app name: gradle-no-files, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/gradle_no_files/.git"
+Draft pack gradle added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/helm
+--> Draft detected YAML (100.000000%)
+--> Could not find a pack for YAML. Trying to find the next likely language match...
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/helm
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/helm
+app name: helm, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/helm/.git"
+Draft pack helm added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+trying to use draft pack: maven
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/maven
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_custom_build_pack due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_custom_build_pack/charts/maven/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_custom_build_pack
+app name: maven-custom-build-pack, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_custom_build_pack/.git"
+Draft pack maven added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/maven
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_no_files due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_no_files/charts/maven/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_no_files
+app name: maven-no-files, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_no_files/.git"
+Draft pack maven added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/maven
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile/charts/maven/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile
+app name: maven-old-jenkinsfile, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile/.git"
+Draft pack maven added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/maven
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile_with_git due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile_with_git/charts/maven/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile_with_git
+app name: maven-old-jenkinsfile-with-git, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile_with_git/.git"
+Draft pack maven added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/maven
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_springboot due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_springboot/charts/maven/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_springboot
+app name: maven-springboot, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_springboot/.git"
+Draft pack maven added
+dry-run so skipping import to Jenkins X
+
+Git repository created
+performing pack detection in folder /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs
+--> Draft detected JavaScript (100.000000%)
+selected pack: /tmp/.**756543316/draft/packs/github.com/jenkins-x/**r-packs-kubernetes/packs/javascript
+WARNING: Failed to apply the build pack in /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs due to open /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs/charts/javascript/resources/README.md: no such file or directory
+replacing placeholders in directory /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs
+app name: nodejs, git server: github.com, org: jstrachan, Docker registry org: jstrachan
+skipping directory "/tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs/.git"
+Draft pack javascript added
+dry-run so skipping import to Jenkins X
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/gradle_no_files/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_custom_build_pack/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_no_files/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_old_jenkinsfile_with_git/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/maven_springboot/Dockerfile should exist
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				import_integration_test.go:239
+        	            				import_integration_test.go:131
+        	            				import_integration_test.go:109
+        	Error:      	Should be true
+        	Test:       	TestImportProjectNextGenPipeline
+        	Messages:   	File /tmp/test-import-ng-projects239815843-DefaultJenkinsfile/nodejs/Dockerfile should exist
+
+=== FAIL: pkg/cmd/opts TestDomain (0.00s)
+=== PAUSE TestDomain
+=== CONT  TestDomain
+Waiting to find the external host name of the ingress controller Service in namespace nginx with name nginx-ingress-controller
+If you are installing Jenkins X on premise you can specify 'ingress.externalIP' on the '**-requirements.yml' file to configure the external ingress host for NodePort based ingress. See: https://jenkins-x.io/docs/labs/boot/getting-started/config/#ingress
+No domain flag provided so using default 35.189.202.25:30123 to generate Ingress rules
+Waiting to find the external host name of the ingress controller Service in namespace nginx with name nginx-ingress-controller
+If you are installing Jenkins X on premise you can specify 'ingress.externalIP' on the '**-requirements.yml' file to configure the external ingress host for NodePort based ingress. See: https://jenkins-x.io/docs/labs/boot/getting-started/config/#ingress
+No domain flag provided so using default 35.189.202.25:30123 to generate Ingress rules
+No domain flag provided so using default 1.2.3.4 to generate Ingress rules
+Waiting to find the external host name of the ingress controller Service in namespace nginx with name nginx-ingress-controller
+No domain flag provided so using default 35.205.151.95.nip.io to generate Ingress rules
+    domain_test.go:199: test on-premise-nodePort generated domain 35.189.202.25:30123
+    domain_test.go:199: test on-premise-nodePort2 generated domain 35.189.202.25:30123
+    domain_test.go:198: 
+        	Error Trace:	domain_test.go:198
+        	Error:      	Not equal: 
+        	            	expected: "1.2.3.4:30123"
+        	            	actual  : "1.2.3.4"
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-1.2.3.4:30123
+        	            	+1.2.3.4
+        	Test:       	TestDomain
+        	Messages:   	GetDomain for on-premise-nodePort-externalIP
+    domain_test.go:199: test on-premise-nodePort-externalIP generated domain 1.2.3.4
+    domain_test.go:199: test gke-loadBalancer generated domain 35.205.151.95.nip.io
+
+=== FAIL: pkg/cmd/step TestStepStash (0.90s)
+    step_stash_integration_test.go:57: 
+        	Error Trace:	step_stash_integration_test.go:57
+        	Error:      	Received unexpected error:
+        	            	InvalidBucketName: The specified bucket is not valid.
+        	            		status code: 400, request id: FB9FCFCA0DF4033C, host id: PhU00acE0jhN6yUu4sS/4Ff5mF4nAhD6bR05fspDyu+G71KKDdNmdbq6OrJSMbkZEpq786vjZ00=
+        	            	failed processing file 'test_data/step_collect/junit.xml'
+        	            	github.com/jenkins-x/**/pkg/util.GlobAllFiles
+        	            		/workspace/source/pkg/util/files.go:558
+        	            	github.com/jenkins-x/**/pkg/collector.(*BucketCollector).CollectFiles
+        	            		/workspace/source/pkg/collector/bucket_collector.go:61
+        	            	github.com/jenkins-x/**/pkg/cmd/step.(*StepStashOptions).Run
+        	            		/workspace/source/pkg/cmd/step/step_stash.go:206
+        	            	github.com/jenkins-x/**/pkg/cmd/step_test.TestStepStash
+        	            		/workspace/source/pkg/cmd/step/step_stash_integration_test.go:56
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	failed to collect patterns test_data/step_collect/junit.xml to path output
+        	            	github.com/jenkins-x/**/pkg/cmd/step.(*StepStashOptions).Run
+        	            		/workspace/source/pkg/cmd/step/step_stash.go:208
+        	            	github.com/jenkins-x/**/pkg/cmd/step_test.TestStepStash
+        	            		/workspace/source/pkg/cmd/step/step_stash_integration_test.go:56
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestStepStash
+    step_stash_integration_test.go:60: 
+        	Error Trace:	step_stash_integration_test.go:60
+        	Error:      	unable to find file "/tmp/test-step-collect946421852/output/test_data/step_collect/junit.xml"
+        	Test:       	TestStepStash
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				files.go:130
+        	            				files.go:148
+        	            				step_stash_integration_test.go:62
+        	Error:      	Should be true
+        	Test:       	TestStepStash
+        	Messages:   	File /tmp/test-step-collect946421852/output/test_data/step_collect/junit.xml should exist
+    files.go:149: 
+        	Error Trace:	files.go:149
+        	            				step_stash_integration_test.go:62
+        	Error:      	Received unexpected error:
+        	            	File /tmp/test-step-collect946421852/output/test_data/step_collect/junit.xml does not exist
+        	Test:       	TestStepStash
+
+=== FAIL: pkg/cmd/step TestStepStashBranchNameFromEnv (0.23s)
+    step_stash_integration_test.go:128: 
+        	Error Trace:	step_stash_integration_test.go:128
+        	Error:      	Received unexpected error:
+        	            	InvalidBucketName: The specified bucket is not valid.
+        	            		status code: 400, request id: 597B17764AD0C4DD, host id: Q5bVyUHev+OnKyJX+uu8+4Pn**hhHe98Pq4c2SRqFyGB/8mHfne/oONF4oIE8y58kYA3QmMeg7k=
+        	            	failed processing file 'test_data/step_collect/junit.xml'
+        	            	github.com/jenkins-x/**/pkg/util.GlobAllFiles
+        	            		/workspace/source/pkg/util/files.go:558
+        	            	github.com/jenkins-x/**/pkg/collector.(*BucketCollector).CollectFiles
+        	            		/workspace/source/pkg/collector/bucket_collector.go:61
+        	            	github.com/jenkins-x/**/pkg/cmd/step.(*StepStashOptions).Run
+        	            		/workspace/source/pkg/cmd/step/step_stash.go:206
+        	            	github.com/jenkins-x/**/pkg/cmd/step_test.TestStepStashBranchNameFromEnv
+        	            		/workspace/source/pkg/cmd/step/step_stash_integration_test.go:127
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	failed to collect patterns test_data/step_collect/junit.xml to path jenkins-x/tests/jenkins-x/*****-repo/master/4
+        	            	github.com/jenkins-x/**/pkg/cmd/step.(*StepStashOptions).Run
+        	            		/workspace/source/pkg/cmd/step/step_stash.go:208
+        	            	github.com/jenkins-x/**/pkg/cmd/step_test.TestStepStashBranchNameFromEnv
+        	            		/workspace/source/pkg/cmd/step/step_stash_integration_test.go:127
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestStepStashBranchNameFromEnv
+    step_stash_integration_test.go:132: 
+        	Error Trace:	step_stash_integration_test.go:132
+        	Error:      	unable to find file "/tmp/test-step-collect654553582/jenkins-x/tests/jenkins-x/*****-repo/master/4/test_data/step_collect/junit.xml"
+        	Test:       	TestStepStashBranchNameFromEnv
+    files.go:59: 
+        	Error Trace:	files.go:59
+        	            				files.go:130
+        	            				files.go:148
+        	            				step_stash_integration_test.go:134
+        	Error:      	Should be true
+        	Test:       	TestStepStashBranchNameFromEnv
+        	Messages:   	File /tmp/test-step-collect654553582/jenkins-x/tests/jenkins-x/*****-repo/master/4/test_data/step_collect/junit.xml should exist
+    files.go:149: 
+        	Error Trace:	files.go:149
+        	            				step_stash_integration_test.go:134
+        	Error:      	Received unexpected error:
+        	            	File /tmp/test-step-collect654553582/jenkins-x/tests/jenkins-x/*****-repo/master/4/test_data/step_collect/junit.xml does not exist
+        	Test:       	TestStepStashBranchNameFromEnv
+
+=== FAIL: pkg/cmd/upgrade TestUpdateBootConfig (12.36s)
+    upgrade_boot_integration_test.go:108: 
+        	Error Trace:	upgrade_boot_integration_test.go:108
+        	Error:      	Received unexpected error:
+        	            	failed to run 'git fetch origin v1.0.161' command in directory '/tmp/**-test-TestUpdateBootConfig306292590/jenkins-x-versions', output: 'fatal: couldn't find remote ref v1.0.161'
+        	            	failed to git fetch origin v1.0.161 for repo: https://github.com/jenkins-x/**r-versions.git in dir /tmp/**-test-TestUpdateBootConfig306292590/jenkins-x-versions
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.clone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:186
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.deleteAndReClone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:156
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:139
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CloneJXVersionsRepo
+        	            		/workspace/source/pkg/cmd/opts/version.go:238
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CreateVersionResolver
+        	            		/workspace/source/pkg/cmd/opts/version.go:101
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).bootConfigRef
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:399
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).updateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:294
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.TestUpdateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot_integration_test.go:107
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:141
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CloneJXVersionsRepo
+        	            		/workspace/source/pkg/cmd/opts/version.go:238
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CreateVersionResolver
+        	            		/workspace/source/pkg/cmd/opts/version.go:101
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).bootConfigRef
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:399
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).updateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:294
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.TestUpdateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot_integration_test.go:107
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:34
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CloneJXVersionsRepo
+        	            		/workspace/source/pkg/cmd/opts/version.go:238
+        	            	github.com/jenkins-x/**/pkg/cmd/opts.(*CommonOptions).CreateVersionResolver
+        	            		/workspace/source/pkg/cmd/opts/version.go:101
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).bootConfigRef
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:399
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).updateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:294
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.TestUpdateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot_integration_test.go:107
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	failed to create version resolver https://github.com/jenkins-x/jenkins-x-boot-config.git
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).bootConfigRef
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:401
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).updateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:294
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.TestUpdateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot_integration_test.go:107
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	failed to get boot config ref for version stream: v1.0.161
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.(*UpgradeBootOptions).updateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot.go:296
+        	            	github.com/jenkins-x/**/pkg/cmd/upgrade.TestUpdateBootConfig
+        	            		/workspace/source/pkg/cmd/upgrade/upgrade_boot_integration_test.go:107
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestUpdateBootConfig
+
+=== FAIL: pkg/vault/create TestVaultCreation (3.82s)
+Running Suite: Create Vault Test Suite
+======================================
+Random Seed: [1m1595761407[0m
+Will run [1m5[0m of [1m5[0m specs
+
+[32m•[0m[32m•[0m[32m•[0m[1mSTEP[0m: Deleting a test namespace
+
+[90m------------------------------[0m
+[91m[1m• Failure in Spec Setup (BeforeEach) [2.393 seconds][0m
+Vault create/update
+[90m/workspace/source/pkg/vault/create/create_integration_test.go:106[0m
+  #CreateOrUpdateVault
+  [90m/workspace/source/pkg/vault/create/create_integration_test.go:158[0m
+    [91m[1mfails to install vault with insufficient parameters [BeforeEach][0m
+    [90m/workspace/source/pkg/vault/create/create_integration_test.go:193[0m
+
+    [91mExpected
+        <string>: 
+    not to be empty[0m
+
+    /workspace/source/pkg/vault/create/create_integration_test.go:177
+[90m------------------------------[0m
+[1mSTEP[0m: Deleting a test namespace
+[91m[1m• Failure in Spec Setup (BeforeEach) [1.382 seconds][0m
+Vault create/update
+[90m/workspace/source/pkg/vault/create/create_integration_test.go:106[0m
+  #CreateOrUpdateVault
+  [90m/workspace/source/pkg/vault/create/create_integration_test.go:158[0m
+    [91m[1msuccessfully installs vault [BeforeEach][0m
+    [90m/workspace/source/pkg/vault/create/create_integration_test.go:213[0m
+
+    [91mExpected
+        <string>: 
+    not to be empty[0m
+
+    /workspace/source/pkg/vault/create/create_integration_test.go:177
+[90m------------------------------[0m
+
+
+[91m[1mSummarizing 2 Failures:[0m
+
+[91m[1m[Fail] [0m[90mVault create/update [0m[0m#CreateOrUpdateVault [0m[91m[1m[BeforeEach] fails to install vault with insufficient parameters [0m
+[37m/workspace/source/pkg/vault/create/create_integration_test.go:177[0m
+
+[91m[1m[Fail] [0m[90mVault create/update [0m[0m#CreateOrUpdateVault [0m[91m[1m[BeforeEach] successfully installs vault [0m
+[37m/workspace/source/pkg/vault/create/create_integration_test.go:177[0m
+
+[1m[91mRan 5 of 5 Specs in 3.822 seconds[0m
+[1m[91mFAIL![0m -- [32m[1m3 Passed[0m | [91m[1m2 Failed[0m | [33m[1m0 Pending[0m | [36m[1m0 Skipped[0m
+
+=== FAIL: pkg/versionstream/versionstreamrepo TestCloneJXVersionsRepoWithDefaultURL (4.74s)
+    gitrepo_integration_test.go:389: 
+        	Error Trace:	gitrepo_integration_test.go:389
+        	            				gitrepo_integration_test.go:44
+        	Error:      	Received unexpected error:
+        	            	failed to run 'git fetch origin v1.0.114' command in directory '/tmp/**-test-TestCloneJXVersionsRepoWithDefaultURL194733074/jenkins-x-versions', output: 'fatal: couldn't find remote ref v1.0.114'
+        	            	failed to git fetch origin v1.0.114 for repo: https://github.com/jenkins-x/**r-versions.git in dir /tmp/**-test-TestCloneJXVersionsRepoWithDefaultURL194733074/jenkins-x-versions
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.clone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:186
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.deleteAndReClone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:156
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:139
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoWithDefaultURL
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:44
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:141
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoWithDefaultURL
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:44
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:34
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoWithDefaultURL
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:44
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestCloneJXVersionsRepoWithDefaultURL
+    gitrepo_integration_test.go:392: 
+        	Error Trace:	gitrepo_integration_test.go:392
+        	            				gitrepo_integration_test.go:44
+        	Error:      	Not equal: 
+        	            	expected: "v1.0.114"
+        	            	actual  : ""
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-v1.0.114
+        	            	+
+        	Test:       	TestCloneJXVersionsRepoWithDefaultURL
+
+=== FAIL: pkg/versionstream/versionstreamrepo TestCloneJXVersionsRepoReplacingCurrent (13.93s)
+    gitrepo_integration_test.go:389: 
+        	Error Trace:	gitrepo_integration_test.go:389
+        	            				gitrepo_integration_test.go:170
+        	Error:      	Received unexpected error:
+        	            	failed to run 'git fetch origin v1.0.114' command in directory '/tmp/**-test-TestCloneJXVersionsRepoReplacingCurrent900731750/jenkins-x-versions', output: 'fatal: couldn't find remote ref v1.0.114'
+        	            	failed to git fetch origin v1.0.114 for repo: https://github.com/jenkins-x/**r-versions.git in dir /tmp/**-test-TestCloneJXVersionsRepoReplacingCurrent900731750/jenkins-x-versions
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.clone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:186
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.deleteAndReClone
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:156
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:139
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:170
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.cloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:141
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:32
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:170
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:34
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:170
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:392: 
+        	Error Trace:	gitrepo_integration_test.go:392
+        	            				gitrepo_integration_test.go:170
+        	Error:      	Not equal: 
+        	            	expected: "v1.0.114"
+        	            	actual  : ""
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-v1.0.114
+        	            	+
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:389: 
+        	Error Trace:	gitrepo_integration_test.go:389
+        	            				gitrepo_integration_test.go:368
+        	            				gitrepo_integration_test.go:187
+        	Error:      	Received unexpected error:
+        	            	failed to run 'git fetch --tags' command in directory '/tmp/**-test-TestCloneJXVersionsRepoReplacingCurrent900731750/jenkins-x-versions', output: 'From https://github.com/jenkins-x/**r-versions
+        	            	 * [new branch]      changes            -> origin/changes
+        	            	 * [new branch]      gh-pages           -> origin/gh-pages
+        	            	 * [new branch]      jstrachan-patch-1  -> origin/jstrachan-patch-1
+        	            	 * [new branch]      jstrachan-patch-10 -> origin/jstrachan-patch-10
+        	            	 * [new branch]      jstrachan-patch-11 -> origin/jstrachan-patch-11
+        	            	 * [new branch]      jstrachan-patch-12 -> origin/jstrachan-patch-12
+        	            	 * [new branch]      jstrachan-patch-13 -> origin/jstrachan-patch-13
+        	            	 * [new branch]      jstrachan-patch-14 -> origin/jstrachan-patch-14
+        	            	 * [new branch]      jstrachan-patch-15 -> origin/jstrachan-patch-15
+        	            	 * [new branch]      jstrachan-patch-16 -> origin/jstrachan-patch-16
+        	            	 * [new branch]      jstrachan-patch-17 -> origin/jstrachan-patch-17
+        	            	 * [new branch]      jstrachan-patch-18 -> origin/jstrachan-patch-18
+        	            	 * [new branch]      jstrachan-patch-19 -> origin/jstrachan-patch-19
+        	            	 * [new branch]      jstrachan-patch-2  -> origin/jstrachan-patch-2
+        	            	 * [new branch]      jstrachan-patch-20 -> origin/jstrachan-patch-20
+        	            	 * [new branch]      jstrachan-patch-21 -> origin/jstrachan-patch-21
+        	            	 * [new branch]      jstrachan-patch-22 -> origin/jstrachan-patch-22
+        	            	 * [new branch]      jstrachan-patch-3  -> origin/jstrachan-patch-3
+        	            	 * [new branch]      jstrachan-patch-4  -> origin/jstrachan-patch-4
+        	            	 * [new branch]      jstrachan-patch-5  -> origin/jstrachan-patch-5
+        	            	 * [new branch]      jstrachan-patch-6  -> origin/jstrachan-patch-6
+        	            	 * [new branch]      jstrachan-patch-7  -> origin/jstrachan-patch-7
+        	            	 * [new branch]      jstrachan-patch-8  -> origin/jstrachan-patch-8
+        	            	 * [new branch]      jstrachan-patch-9  -> origin/jstrachan-patch-9
+        	            	 * [new branch]      **v3v4             -> origin/**v3v4
+        	            	 ! [rejected]        v0.0.1             -> v0.0.1  (would clobber existing tag)
+        	            	 * [new tag]         v0.0.10            -> v0.0.10
+        	            	 * [new tag]         v0.0.100           -> v0.0.100
+        	            	 * [new tag]         v0.0.101           -> v0.0.101
+        	            	 * [new tag]         v0.0.102           -> v0.0.102
+        	            	 * [new tag]         v0.0.103           -> v0.0.103
+        	            	 * [new tag]         v0.0.104           -> v0.0.104
+        	            	 * [new tag]         v0.0.105           -> v0.0.105
+        	            	 * [new tag]         v0.0.106           -> v0.0.106
+        	            	 * [new tag]         v0.0.107           -> v0.0.107
+        	            	 * [new tag]         v0.0.108           -> v0.0.108
+        	            	 * [new tag]         v0.0.109           -> v0.0.109
+        	            	 * [new tag]         v0.0.11            -> v0.0.11
+        	            	 * [new tag]         v0.0.110           -> v0.0.110
+        	            	 * [new tag]         v0.0.111           -> v0.0.111
+        	            	 * [new tag]         v0.0.112           -> v0.0.112
+        	            	 * [new tag]         v0.0.113           -> v0.0.113
+        	            	 * [new tag]         v0.0.114           -> v0.0.114
+        	            	 * [new tag]         v0.0.115           -> v0.0.115
+        	            	 * [new tag]         v0.0.116           -> v0.0.116
+        	            	 * [new tag]         v0.0.117           -> v0.0.117
+        	            	 * [new tag]         v0.0.118           -> v0.0.118
+        	            	 * [new tag]         v0.0.119           -> v0.0.119
+        	            	 * [new tag]         v0.0.12            -> v0.0.12
+        	            	 * [new tag]         v0.0.120           -> v0.0.120
+        	            	 * [new tag]         v0.0.121           -> v0.0.121
+        	            	 * [new tag]         v0.0.122           -> v0.0.122
+        	            	 * [new tag]         v0.0.123           -> v0.0.123
+        	            	 * [new tag]         v0.0.124           -> v0.0.124
+        	            	 * [new tag]         v0.0.125           -> v0.0.125
+        	            	 * [new tag]         v0.0.126           -> v0.0.126
+        	            	 * [new tag]         v0.0.127           -> v0.0.127
+        	            	 * [new tag]         v0.0.128           -> v0.0.128
+        	            	 * [new tag]         v0.0.129           -> v0.0.129
+        	            	 * [new tag]         v0.0.13            -> v0.0.13
+        	            	 * [new tag]         v0.0.130           -> v0.0.130
+        	            	 * [new tag]         v0.0.131           -> v0.0.131
+        	            	 * [new tag]         v0.0.132           -> v0.0.132
+        	            	 * [new tag]         v0.0.133           -> v0.0.133
+        	            	 * [new tag]         v0.0.134           -> v0.0.134
+        	            	 * [new tag]         v0.0.135           -> v0.0.135
+        	            	 * [new tag]         v0.0.136           -> v0.0.136
+        	            	 * [new tag]         v0.0.137           -> v0.0.137
+        	            	 * [new tag]         v0.0.138           -> v0.0.138
+        	            	 * [new tag]         v0.0.139           -> v0.0.139
+        	            	 * [new tag]         v0.0.14            -> v0.0.14
+        	            	 * [new tag]         v0.0.140           -> v0.0.140
+        	            	 * [new tag]         v0.0.141           -> v0.0.141
+        	            	 * [new tag]         v0.0.142           -> v0.0.142
+        	            	 * [new tag]         v0.0.143           -> v0.0.143
+        	            	 * [new tag]         v0.0.144           -> v0.0.144
+        	            	 * [new tag]         v0.0.145           -> v0.0.145
+        	            	 * [new tag]         v0.0.146           -> v0.0.146
+        	            	 * [new tag]         v0.0.147           -> v0.0.147
+        	            	 * [new tag]         v0.0.148           -> v0.0.148
+        	            	 * [new tag]         v0.0.149           -> v0.0.149
+        	            	 * [new tag]         v0.0.15            -> v0.0.15
+        	            	 * [new tag]         v0.0.150           -> v0.0.150
+        	            	 * [new tag]         v0.0.151           -> v0.0.151
+        	            	 * [new tag]         v0.0.152           -> v0.0.152
+        	            	 * [new tag]         v0.0.153           -> v0.0.153
+        	            	 * [new tag]         v0.0.154           -> v0.0.154
+        	            	 * [new tag]         v0.0.155           -> v0.0.155
+        	            	 * [new tag]         v0.0.156           -> v0.0.156
+        	            	 * [new tag]         v0.0.157           -> v0.0.157
+        	            	 * [new tag]         v0.0.158           -> v0.0.158
+        	            	 * [new tag]         v0.0.159           -> v0.0.159
+        	            	 * [new tag]         v0.0.16            -> v0.0.16
+        	            	 * [new tag]         v0.0.160           -> v0.0.160
+        	            	 * [new tag]         v0.0.161           -> v0.0.161
+        	            	 * [new tag]         v0.0.162           -> v0.0.162
+        	            	 * [new tag]         v0.0.163           -> v0.0.163
+        	            	 * [new tag]         v0.0.164           -> v0.0.164
+        	            	 * [new tag]         v0.0.165           -> v0.0.165
+        	            	 * [new tag]         v0.0.166           -> v0.0.166
+        	            	 * [new tag]         v0.0.167           -> v0.0.167
+        	            	 * [new tag]         v0.0.168           -> v0.0.168
+        	            	 * [new tag]         v0.0.169           -> v0.0.169
+        	            	 * [new tag]         v0.0.17            -> v0.0.17
+        	            	 * [new tag]         v0.0.170           -> v0.0.170
+        	            	 * [new tag]         v0.0.171           -> v0.0.171
+        	            	 * [new tag]         v0.0.172           -> v0.0.172
+        	            	 * [new tag]         v0.0.173           -> v0.0.173
+        	            	 * [new tag]         v0.0.174           -> v0.0.174
+        	            	 * [new tag]         v0.0.175           -> v0.0.175
+        	            	 * [new tag]         v0.0.176           -> v0.0.176
+        	            	 * [new tag]         v0.0.177           -> v0.0.177
+        	            	 * [new tag]         v0.0.178           -> v0.0.178
+        	            	 * [new tag]         v0.0.179           -> v0.0.179
+        	            	 * [new tag]         v0.0.18            -> v0.0.18
+        	            	 * [new tag]         v0.0.180           -> v0.0.180
+        	            	 * [new tag]         v0.0.181           -> v0.0.181
+        	            	 * [new tag]         v0.0.182           -> v0.0.182
+        	            	 * [new tag]         v0.0.183           -> v0.0.183
+        	            	 * [new tag]         v0.0.184           -> v0.0.184
+        	            	 * [new tag]         v0.0.185           -> v0.0.185
+        	            	 * [new tag]         v0.0.186           -> v0.0.186
+        	            	 * [new tag]         v0.0.187           -> v0.0.187
+        	            	 * [new tag]         v0.0.188           -> v0.0.188
+        	            	 * [new tag]         v0.0.189           -> v0.0.189
+        	            	 * [new tag]         v0.0.19            -> v0.0.19
+        	            	 * [new tag]         v0.0.190           -> v0.0.190
+        	            	 * [new tag]         v0.0.191           -> v0.0.191
+        	            	 * [new tag]         v0.0.192           -> v0.0.192
+        	            	 * [new tag]         v0.0.193           -> v0.0.193
+        	            	 * [new tag]         v0.0.194           -> v0.0.194
+        	            	 * [new tag]         v0.0.195           -> v0.0.195
+        	            	 * [new tag]         v0.0.196           -> v0.0.196
+        	            	 * [new tag]         v0.0.197           -> v0.0.197
+        	            	 * [new tag]         v0.0.198           -> v0.0.198
+        	            	 * [new tag]         v0.0.199           -> v0.0.199
+        	            	 ! [rejected]        v0.0.2             -> v0.0.2  (would clobber existing tag)
+        	            	 * [new tag]         v0.0.20            -> v0.0.20
+        	            	 * [new tag]         v0.0.200           -> v0.0.200
+        	            	 * [new tag]         v0.0.201           -> v0.0.201
+        	            	 * [new tag]         v0.0.202           -> v0.0.202
+        	            	 * [new tag]         v0.0.203           -> v0.0.203
+        	            	 * [new tag]         v0.0.204           -> v0.0.204
+        	            	 * [new tag]         v0.0.205           -> v0.0.205
+        	            	 * [new tag]         v0.0.206           -> v0.0.206
+        	            	 * [new tag]         v0.0.207           -> v0.0.207
+        	            	 * [new tag]         v0.0.208           -> v0.0.208
+        	            	 * [new tag]         v0.0.209           -> v0.0.209
+        	            	 * [new tag]         v0.0.21            -> v0.0.21
+        	            	 * [new tag]         v0.0.210           -> v0.0.210
+        	            	 * [new tag]         v0.0.211           -> v0.0.211
+        	            	 * [new tag]         v0.0.212           -> v0.0.212
+        	            	 * [new tag]         v0.0.213           -> v0.0.213
+        	            	 * [new tag]         v0.0.214           -> v0.0.214
+        	            	 * [new tag]         v0.0.215           -> v0.0.215
+        	            	 * [new tag]         v0.0.216           -> v0.0.216
+        	            	 * [new tag]         v0.0.217           -> v0.0.217
+        	            	 * [new tag]         v0.0.218           -> v0.0.218
+        	            	 * [new tag]         v0.0.219           -> v0.0.219
+        	            	 * [new tag]         v0.0.22            -> v0.0.22
+        	            	 * [new tag]         v0.0.220           -> v0.0.220
+        	            	 * [new tag]         v0.0.221           -> v0.0.221
+        	            	 * [new tag]         v0.0.222           -> v0.0.222
+        	            	 * [new tag]         v0.0.223           -> v0.0.223
+        	            	 * [new tag]         v0.0.224           -> v0.0.224
+        	            	 * [new tag]         v0.0.225           -> v0.0.225
+        	            	 * [new tag]         v0.0.226           -> v0.0.226
+        	            	 * [new tag]         v0.0.227           -> v0.0.227
+        	            	 * [new tag]         v0.0.228           -> v0.0.228
+        	            	 * [new tag]         v0.0.229           -> v0.0.229
+        	            	 * [new tag]         v0.0.23            -> v0.0.23
+        	            	 * [new tag]         v0.0.230           -> v0.0.230
+        	            	 * [new tag]         v0.0.231           -> v0.0.231
+        	            	 * [new tag]         v0.0.232           -> v0.0.232
+        	            	 * [new tag]         v0.0.233           -> v0.0.233
+        	            	 * [new tag]         v0.0.234           -> v0.0.234
+        	            	 * [new tag]         v0.0.235           -> v0.0.235
+        	            	 * [new tag]         v0.0.236           -> v0.0.236
+        	            	 * [new tag]         v0.0.237           -> v0.0.237
+        	            	 * [new tag]         v0.0.238           -> v0.0.238
+        	            	 * [new tag]         v0.0.239           -> v0.0.239
+        	            	 * [new tag]         v0.0.24            -> v0.0.24
+        	            	 * [new tag]         v0.0.240           -> v0.0.240
+        	            	 * [new tag]         v0.0.241           -> v0.0.241
+        	            	 * [new tag]         v0.0.242           -> v0.0.242
+        	            	 * [new tag]         v0.0.243           -> v0.0.243
+        	            	 * [new tag]         v0.0.244           -> v0.0.244
+        	            	 * [new tag]         v0.0.245           -> v0.0.245
+        	            	 * [new tag]         v0.0.246           -> v0.0.246
+        	            	 * [new tag]         v0.0.247           -> v0.0.247
+        	            	 * [new tag]         v0.0.248           -> v0.0.248
+        	            	 * [new tag]         v0.0.249           -> v0.0.249
+        	            	 * [new tag]         v0.0.25            -> v0.0.25
+        	            	 * [new tag]         v0.0.250           -> v0.0.250
+        	            	 * [new tag]         v0.0.251           -> v0.0.251
+        	            	 * [new tag]         v0.0.252           -> v0.0.252
+        	            	 * [new tag]         v0.0.253           -> v0.0.253
+        	            	 * [new tag]         v0.0.254           -> v0.0.254
+        	            	 * [new tag]         v0.0.255           -> v0.0.255
+        	            	 * [new tag]         v0.0.256           -> v0.0.256
+        	            	 * [new tag]         v0.0.257           -> v0.0.257
+        	            	 * [new tag]         v0.0.258           -> v0.0.258
+        	            	 * [new tag]         v0.0.259           -> v0.0.259
+        	            	 * [new tag]         v0.0.26            -> v0.0.26
+        	            	 * [new tag]         v0.0.260           -> v0.0.260
+        	            	 * [new tag]         v0.0.261           -> v0.0.261
+        	            	 * [new tag]         v0.0.262           -> v0.0.262
+        	            	 * [new tag]         v0.0.263           -> v0.0.263
+        	            	 * [new tag]         v0.0.264           -> v0.0.264
+        	            	 * [new tag]         v0.0.265           -> v0.0.265
+        	            	 * [new tag]         v0.0.27            -> v0.0.27
+        	            	 * [new tag]         v0.0.28            -> v0.0.28
+        	            	 * [new tag]         v0.0.29            -> v0.0.29
+        	            	 * [new tag]         v0.0.3             -> v0.0.3
+        	            	 * [new tag]         v0.0.30            -> v0.0.30
+        	            	 * [new tag]         v0.0.31            -> v0.0.31
+        	            	 * [new tag]         v0.0.32            -> v0.0.32
+        	            	 * [new tag]         v0.0.33            -> v0.0.33
+        	            	 * [new tag]         v0.0.34            -> v0.0.34
+        	            	 * [new tag]         v0.0.35            -> v0.0.35
+        	            	 * [new tag]         v0.0.36            -> v0.0.36
+        	            	 * [new tag]         v0.0.37            -> v0.0.37
+        	            	 * [new tag]         v0.0.38            -> v0.0.38
+        	            	 * [new tag]         v0.0.39            -> v0.0.39
+        	            	 * [new tag]         v0.0.4             -> v0.0.4
+        	            	 * [new tag]         v0.0.40            -> v0.0.40
+        	            	 * [new tag]         v0.0.41            -> v0.0.41
+        	            	 * [new tag]         v0.0.42            -> v0.0.42
+        	            	 * [new tag]         v0.0.43            -> v0.0.43
+        	            	 * [new tag]         v0.0.44            -> v0.0.44
+        	            	 * [new tag]         v0.0.45            -> v0.0.45
+        	            	 * [new tag]         v0.0.46            -> v0.0.46
+        	            	 * [new tag]         v0.0.47            -> v0.0.47
+        	            	 * [new tag]         v0.0.48            -> v0.0.48
+        	            	 * [new tag]         v0.0.49            -> v0.0.49
+        	            	 * [new tag]         v0.0.5             -> v0.0.5
+        	            	 * [new tag]         v0.0.50            -> v0.0.50
+        	            	 * [new tag]         v0.0.51            -> v0.0.51
+        	            	 * [new tag]         v0.0.52            -> v0.0.52
+        	            	 * [new tag]         v0.0.53            -> v0.0.53
+        	            	 * [new tag]         v0.0.54            -> v0.0.54
+        	            	 * [new tag]         v0.0.55            -> v0.0.55
+        	            	 * [new tag]         v0.0.56            -> v0.0.56
+        	            	 * [new tag]         v0.0.57            -> v0.0.57
+        	            	 * [new tag]         v0.0.58            -> v0.0.58
+        	            	 * [new tag]         v0.0.59            -> v0.0.59
+        	            	 * [new tag]         v0.0.6             -> v0.0.6
+        	            	 * [new tag]         v0.0.60            -> v0.0.60
+        	            	 * [new tag]         v0.0.61            -> v0.0.61
+        	            	 * [new tag]         v0.0.62            -> v0.0.62
+        	            	 * [new tag]         v0.0.63            -> v0.0.63
+        	            	 * [new tag]         v0.0.64            -> v0.0.64
+        	            	 * [new tag]         v0.0.65            -> v0.0.65
+        	            	 * [new tag]         v0.0.66            -> v0.0.66
+        	            	 * [new tag]         v0.0.67            -> v0.0.67
+        	            	 * [new tag]         v0.0.68            -> v0.0.68
+        	            	 * [new tag]         v0.0.69            -> v0.0.69
+        	            	 * [new tag]         v0.0.7             -> v0.0.7
+        	            	 * [new tag]         v0.0.70            -> v0.0.70
+        	            	 * [new tag]         v0.0.71            -> v0.0.71
+        	            	 * [new tag]         v0.0.72            -> v0.0.72
+        	            	 * [new tag]         v0.0.73            -> v0.0.73
+        	            	 * [new tag]         v0.0.74            -> v0.0.74
+        	            	 * [new tag]         v0.0.75            -> v0.0.75
+        	            	 * [new tag]         v0.0.76            -> v0.0.76
+        	            	 * [new tag]         v0.0.77            -> v0.0.77
+        	            	 * [new tag]         v0.0.78            -> v0.0.78
+        	            	 * [new tag]         v0.0.79            -> v0.0.79
+        	            	 * [new tag]         v0.0.8             -> v0.0.8
+        	            	 * [new tag]         v0.0.80            -> v0.0.80
+        	            	 * [new tag]         v0.0.81            -> v0.0.81
+        	            	 * [new tag]         v0.0.82            -> v0.0.82
+        	            	 * [new tag]         v0.0.83            -> v0.0.83
+        	            	 * [new tag]         v0.0.84            -> v0.0.84
+        	            	 * [new tag]         v0.0.85            -> v0.0.85
+        	            	 * [new tag]         v0.0.86            -> v0.0.86
+        	            	 * [new tag]         v0.0.87            -> v0.0.87
+        	            	 * [new tag]         v0.0.88            -> v0.0.88
+        	            	 * [new tag]         v0.0.89            -> v0.0.89
+        	            	 * [new tag]         v0.0.9             -> v0.0.9
+        	            	 * [new tag]         v0.0.90            -> v0.0.90
+        	            	 * [new tag]         v0.0.91            -> v0.0.91
+        	            	 * [new tag]         v0.0.92            -> v0.0.92
+        	            	 * [new tag]         v0.0.93            -> v0.0.93
+        	            	 * [new tag]         v0.0.94            -> v0.0.94
+        	            	 * [new tag]         v0.0.95            -> v0.0.95
+        	            	 * [new tag]         v0.0.96            -> v0.0.96
+        	            	 * [new tag]         v0.0.97            -> v0.0.97
+        	            	 * [new tag]         v0.0.98            -> v0.0.98
+        	            	 * [new tag]         v0.0.99            -> v0.0.99'
+        	            	git output: From https://github.com/jenkins-x/**r-versions
+        	            	 * [new branch]      changes            -> origin/changes
+        	            	 * [new branch]      gh-pages           -> origin/gh-pages
+        	            	 * [new branch]      jstrachan-patch-1  -> origin/jstrachan-patch-1
+        	            	 * [new branch]      jstrachan-patch-10 -> origin/jstrachan-patch-10
+        	            	 * [new branch]      jstrachan-patch-11 -> origin/jstrachan-patch-11
+        	            	 * [new branch]      jstrachan-patch-12 -> origin/jstrachan-patch-12
+        	            	 * [new branch]      jstrachan-patch-13 -> origin/jstrachan-patch-13
+        	            	 * [new branch]      jstrachan-patch-14 -> origin/jstrachan-patch-14
+        	            	 * [new branch]      jstrachan-patch-15 -> origin/jstrachan-patch-15
+        	            	 * [new branch]      jstrachan-patch-16 -> origin/jstrachan-patch-16
+        	            	 * [new branch]      jstrachan-patch-17 -> origin/jstrachan-patch-17
+        	            	 * [new branch]      jstrachan-patch-18 -> origin/jstrachan-patch-18
+        	            	 * [new branch]      jstrachan-patch-19 -> origin/jstrachan-patch-19
+        	            	 * [new branch]      jstrachan-patch-2  -> origin/jstrachan-patch-2
+        	            	 * [new branch]      jstrachan-patch-20 -> origin/jstrachan-patch-20
+        	            	 * [new branch]      jstrachan-patch-21 -> origin/jstrachan-patch-21
+        	            	 * [new branch]      jstrachan-patch-22 -> origin/jstrachan-patch-22
+        	            	 * [new branch]      jstrachan-patch-3  -> origin/jstrachan-patch-3
+        	            	 * [new branch]      jstrachan-patch-4  -> origin/jstrachan-patch-4
+        	            	 * [new branch]      jstrachan-patch-5  -> origin/jstrachan-patch-5
+        	            	 * [new branch]      jstrachan-patch-6  -> origin/jstrachan-patch-6
+        	            	 * [new branch]      jstrachan-patch-7  -> origin/jstrachan-patch-7
+        	            	 * [new branch]      jstrachan-patch-8  -> origin/jstrachan-patch-8
+        	            	 * [new branch]      jstrachan-patch-9  -> origin/jstrachan-patch-9
+        	            	 * [new branch]      **v3v4             -> origin/**v3v4
+        	            	 ! [rejected]        v0.0.1             -> v0.0.1  (would clobber existing tag)
+        	            	 * [new tag]         v0.0.10            -> v0.0.10
+        	            	 * [new tag]         v0.0.100           -> v0.0.100
+        	            	 * [new tag]         v0.0.101           -> v0.0.101
+        	            	 * [new tag]         v0.0.102           -> v0.0.102
+        	            	 * [new tag]         v0.0.103           -> v0.0.103
+        	            	 * [new tag]         v0.0.104           -> v0.0.104
+        	            	 * [new tag]         v0.0.105           -> v0.0.105
+        	            	 * [new tag]         v0.0.106           -> v0.0.106
+        	            	 * [new tag]         v0.0.107           -> v0.0.107
+        	            	 * [new tag]         v0.0.108           -> v0.0.108
+        	            	 * [new tag]         v0.0.109           -> v0.0.109
+        	            	 * [new tag]         v0.0.11            -> v0.0.11
+        	            	 * [new tag]         v0.0.110           -> v0.0.110
+        	            	 * [new tag]         v0.0.111           -> v0.0.111
+        	            	 * [new tag]         v0.0.112           -> v0.0.112
+        	            	 * [new tag]         v0.0.113           -> v0.0.113
+        	            	 * [new tag]         v0.0.114           -> v0.0.114
+        	            	 * [new tag]         v0.0.115           -> v0.0.115
+        	            	 * [new tag]         v0.0.116           -> v0.0.116
+        	            	 * [new tag]         v0.0.117           -> v0.0.117
+        	            	 * [new tag]         v0.0.118           -> v0.0.118
+        	            	 * [new tag]         v0.0.119           -> v0.0.119
+        	            	 * [new tag]         v0.0.12            -> v0.0.12
+        	            	 * [new tag]         v0.0.120           -> v0.0.120
+        	            	 * [new tag]         v0.0.121           -> v0.0.121
+        	            	 * [new tag]         v0.0.122           -> v0.0.122
+        	            	 * [new tag]         v0.0.123           -> v0.0.123
+        	            	 * [new tag]         v0.0.124           -> v0.0.124
+        	            	 * [new tag]         v0.0.125           -> v0.0.125
+        	            	 * [new tag]         v0.0.126           -> v0.0.126
+        	            	 * [new tag]         v0.0.127           -> v0.0.127
+        	            	 * [new tag]         v0.0.128           -> v0.0.128
+        	            	 * [new tag]         v0.0.129           -> v0.0.129
+        	            	 * [new tag]         v0.0.13            -> v0.0.13
+        	            	 * [new tag]         v0.0.130           -> v0.0.130
+        	            	 * [new tag]         v0.0.131           -> v0.0.131
+        	            	 * [new tag]         v0.0.132           -> v0.0.132
+        	            	 * [new tag]         v0.0.133           -> v0.0.133
+        	            	 * [new tag]         v0.0.134           -> v0.0.134
+        	            	 * [new tag]         v0.0.135           -> v0.0.135
+        	            	 * [new tag]         v0.0.136           -> v0.0.136
+        	            	 * [new tag]         v0.0.137           -> v0.0.137
+        	            	 * [new tag]         v0.0.138           -> v0.0.138
+        	            	 * [new tag]         v0.0.139           -> v0.0.139
+        	            	 * [new tag]         v0.0.14            -> v0.0.14
+        	            	 * [new tag]         v0.0.140           -> v0.0.140
+        	            	 * [new tag]         v0.0.141           -> v0.0.141
+        	            	 * [new tag]         v0.0.142           -> v0.0.142
+        	            	 * [new tag]         v0.0.143           -> v0.0.143
+        	            	 * [new tag]         v0.0.144           -> v0.0.144
+        	            	 * [new tag]         v0.0.145           -> v0.0.145
+        	            	 * [new tag]         v0.0.146           -> v0.0.146
+        	            	 * [new tag]         v0.0.147           -> v0.0.147
+        	            	 * [new tag]         v0.0.148           -> v0.0.148
+        	            	 * [new tag]         v0.0.149           -> v0.0.149
+        	            	 * [new tag]         v0.0.15            -> v0.0.15
+        	            	 * [new tag]         v0.0.150           -> v0.0.150
+        	            	 * [new tag]         v0.0.151           -> v0.0.151
+        	            	 * [new tag]         v0.0.152           -> v0.0.152
+        	            	 * [new tag]         v0.0.153           -> v0.0.153
+        	            	 * [new tag]         v0.0.154           -> v0.0.154
+        	            	 * [new tag]         v0.0.155           -> v0.0.155
+        	            	 * [new tag]         v0.0.156           -> v0.0.156
+        	            	 * [new tag]         v0.0.157           -> v0.0.157
+        	            	 * [new tag]         v0.0.158           -> v0.0.158
+        	            	 * [new tag]         v0.0.159           -> v0.0.159
+        	            	 * [new tag]         v0.0.16            -> v0.0.16
+        	            	 * [new tag]         v0.0.160           -> v0.0.160
+        	            	 * [new tag]         v0.0.161           -> v0.0.161
+        	            	 * [new tag]         v0.0.162           -> v0.0.162
+        	            	 * [new tag]         v0.0.163           -> v0.0.163
+        	            	 * [new tag]         v0.0.164           -> v0.0.164
+        	            	 * [new tag]         v0.0.165           -> v0.0.165
+        	            	 * [new tag]         v0.0.166           -> v0.0.166
+        	            	 * [new tag]         v0.0.167           -> v0.0.167
+        	            	 * [new tag]         v0.0.168           -> v0.0.168
+        	            	 * [new tag]         v0.0.169           -> v0.0.169
+        	            	 * [new tag]         v0.0.17            -> v0.0.17
+        	            	 * [new tag]         v0.0.170           -> v0.0.170
+        	            	 * [new tag]         v0.0.171           -> v0.0.171
+        	            	 * [new tag]         v0.0.172           -> v0.0.172
+        	            	 * [new tag]         v0.0.173           -> v0.0.173
+        	            	 * [new tag]         v0.0.174           -> v0.0.174
+        	            	 * [new tag]         v0.0.175           -> v0.0.175
+        	            	 * [new tag]         v0.0.176           -> v0.0.176
+        	            	 * [new tag]         v0.0.177           -> v0.0.177
+        	            	 * [new tag]         v0.0.178           -> v0.0.178
+        	            	 * [new tag]         v0.0.179           -> v0.0.179
+        	            	 * [new tag]         v0.0.18            -> v0.0.18
+        	            	 * [new tag]         v0.0.180           -> v0.0.180
+        	            	 * [new tag]         v0.0.181           -> v0.0.181
+        	            	 * [new tag]         v0.0.182           -> v0.0.182
+        	            	 * [new tag]         v0.0.183           -> v0.0.183
+        	            	 * [new tag]         v0.0.184           -> v0.0.184
+        	            	 * [new tag]         v0.0.185           -> v0.0.185
+        	            	 * [new tag]         v0.0.186           -> v0.0.186
+        	            	 * [new tag]         v0.0.187           -> v0.0.187
+        	            	 * [new tag]         v0.0.188           -> v0.0.188
+        	            	 * [new tag]         v0.0.189           -> v0.0.189
+        	            	 * [new tag]         v0.0.19            -> v0.0.19
+        	            	 * [new tag]         v0.0.190           -> v0.0.190
+        	            	 * [new tag]         v0.0.191           -> v0.0.191
+        	            	 * [new tag]         v0.0.192           -> v0.0.192
+        	            	 * [new tag]         v0.0.193           -> v0.0.193
+        	            	 * [new tag]         v0.0.194           -> v0.0.194
+        	            	 * [new tag]         v0.0.195           -> v0.0.195
+        	            	 * [new tag]         v0.0.196           -> v0.0.196
+        	            	 * [new tag]         v0.0.197           -> v0.0.197
+        	            	 * [new tag]         v0.0.198           -> v0.0.198
+        	            	 * [new tag]         v0.0.199           -> v0.0.199
+        	            	 ! [rejected]        v0.0.2             -> v0.0.2  (would clobber existing tag)
+        	            	 * [new tag]         v0.0.20            -> v0.0.20
+        	            	 * [new tag]         v0.0.200           -> v0.0.200
+        	            	 * [new tag]         v0.0.201           -> v0.0.201
+        	            	 * [new tag]         v0.0.202           -> v0.0.202
+        	            	 * [new tag]         v0.0.203           -> v0.0.203
+        	            	 * [new tag]         v0.0.204           -> v0.0.204
+        	            	 * [new tag]         v0.0.205           -> v0.0.205
+        	            	 * [new tag]         v0.0.206           -> v0.0.206
+        	            	 * [new tag]         v0.0.207           -> v0.0.207
+        	            	 * [new tag]         v0.0.208           -> v0.0.208
+        	            	 * [new tag]         v0.0.209           -> v0.0.209
+        	            	 * [new tag]         v0.0.21            -> v0.0.21
+        	            	 * [new tag]         v0.0.210           -> v0.0.210
+        	            	 * [new tag]         v0.0.211           -> v0.0.211
+        	            	 * [new tag]         v0.0.212           -> v0.0.212
+        	            	 * [new tag]         v0.0.213           -> v0.0.213
+        	            	 * [new tag]         v0.0.214           -> v0.0.214
+        	            	 * [new tag]         v0.0.215           -> v0.0.215
+        	            	 * [new tag]         v0.0.216           -> v0.0.216
+        	            	 * [new tag]         v0.0.217           -> v0.0.217
+        	            	 * [new tag]         v0.0.218           -> v0.0.218
+        	            	 * [new tag]         v0.0.219           -> v0.0.219
+        	            	 * [new tag]         v0.0.22            -> v0.0.22
+        	            	 * [new tag]         v0.0.220           -> v0.0.220
+        	            	 * [new tag]         v0.0.221           -> v0.0.221
+        	            	 * [new tag]         v0.0.222           -> v0.0.222
+        	            	 * [new tag]         v0.0.223           -> v0.0.223
+        	            	 * [new tag]         v0.0.224           -> v0.0.224
+        	            	 * [new tag]         v0.0.225           -> v0.0.225
+        	            	 * [new tag]         v0.0.226           -> v0.0.226
+        	            	 * [new tag]         v0.0.227           -> v0.0.227
+        	            	 * [new tag]         v0.0.228           -> v0.0.228
+        	            	 * [new tag]         v0.0.229           -> v0.0.229
+        	            	 * [new tag]         v0.0.23            -> v0.0.23
+        	            	 * [new tag]         v0.0.230           -> v0.0.230
+        	            	 * [new tag]         v0.0.231           -> v0.0.231
+        	            	 * [new tag]         v0.0.232           -> v0.0.232
+        	            	 * [new tag]         v0.0.233           -> v0.0.233
+        	            	 * [new tag]         v0.0.234           -> v0.0.234
+        	            	 * [new tag]         v0.0.235           -> v0.0.235
+        	            	 * [new tag]         v0.0.236           -> v0.0.236
+        	            	 * [new tag]         v0.0.237           -> v0.0.237
+        	            	 * [new tag]         v0.0.238           -> v0.0.238
+        	            	 * [new tag]         v0.0.239           -> v0.0.239
+        	            	 * [new tag]         v0.0.24            -> v0.0.24
+        	            	 * [new tag]         v0.0.240           -> v0.0.240
+        	            	 * [new tag]         v0.0.241           -> v0.0.241
+        	            	 * [new tag]         v0.0.242           -> v0.0.242
+        	            	 * [new tag]         v0.0.243           -> v0.0.243
+        	            	 * [new tag]         v0.0.244           -> v0.0.244
+        	            	 * [new tag]         v0.0.245           -> v0.0.245
+        	            	 * [new tag]         v0.0.246           -> v0.0.246
+        	            	 * [new tag]         v0.0.247           -> v0.0.247
+        	            	 * [new tag]         v0.0.248           -> v0.0.248
+        	            	 * [new tag]         v0.0.249           -> v0.0.249
+        	            	 * [new tag]         v0.0.25            -> v0.0.25
+        	            	 * [new tag]         v0.0.250           -> v0.0.250
+        	            	 * [new tag]         v0.0.251           -> v0.0.251
+        	            	 * [new tag]         v0.0.252           -> v0.0.252
+        	            	 * [new tag]         v0.0.253           -> v0.0.253
+        	            	 * [new tag]         v0.0.254           -> v0.0.254
+        	            	 * [new tag]         v0.0.255           -> v0.0.255
+        	            	 * [new tag]         v0.0.256           -> v0.0.256
+        	            	 * [new tag]         v0.0.257           -> v0.0.257
+        	            	 * [new tag]         v0.0.258           -> v0.0.258
+        	            	 * [new tag]         v0.0.259           -> v0.0.259
+        	            	 * [new tag]         v0.0.26            -> v0.0.26
+        	            	 * [new tag]         v0.0.260           -> v0.0.260
+        	            	 * [new tag]         v0.0.261           -> v0.0.261
+        	            	 * [new tag]         v0.0.262           -> v0.0.262
+        	            	 * [new tag]         v0.0.263           -> v0.0.263
+        	            	 * [new tag]         v0.0.264           -> v0.0.264
+        	            	 * [new tag]         v0.0.265           -> v0.0.265
+        	            	 * [new tag]         v0.0.27            -> v0.0.27
+        	            	 * [new tag]         v0.0.28            -> v0.0.28
+        	            	 * [new tag]         v0.0.29            -> v0.0.29
+        	            	 * [new tag]         v0.0.3             -> v0.0.3
+        	            	 * [new tag]         v0.0.30            -> v0.0.30
+        	            	 * [new tag]         v0.0.31            -> v0.0.31
+        	            	 * [new tag]         v0.0.32            -> v0.0.32
+        	            	 * [new tag]         v0.0.33            -> v0.0.33
+        	            	 * [new tag]         v0.0.34            -> v0.0.34
+        	            	 * [new tag]         v0.0.35            -> v0.0.35
+        	            	 * [new tag]         v0.0.36            -> v0.0.36
+        	            	 * [new tag]         v0.0.37            -> v0.0.37
+        	            	 * [new tag]         v0.0.38            -> v0.0.38
+        	            	 * [new tag]         v0.0.39            -> v0.0.39
+        	            	 * [new tag]         v0.0.4             -> v0.0.4
+        	            	 * [new tag]         v0.0.40            -> v0.0.40
+        	            	 * [new tag]         v0.0.41            -> v0.0.41
+        	            	 * [new tag]         v0.0.42            -> v0.0.42
+        	            	 * [new tag]         v0.0.43            -> v0.0.43
+        	            	 * [new tag]         v0.0.44            -> v0.0.44
+        	            	 * [new tag]         v0.0.45            -> v0.0.45
+        	            	 * [new tag]         v0.0.46            -> v0.0.46
+        	            	 * [new tag]         v0.0.47            -> v0.0.47
+        	            	 * [new tag]         v0.0.48            -> v0.0.48
+        	            	 * [new tag]         v0.0.49            -> v0.0.49
+        	            	 * [new tag]         v0.0.5             -> v0.0.5
+        	            	 * [new tag]         v0.0.50            -> v0.0.50
+        	            	 * [new tag]         v0.0.51            -> v0.0.51
+        	            	 * [new tag]         v0.0.52            -> v0.0.52
+        	            	 * [new tag]         v0.0.53            -> v0.0.53
+        	            	 * [new tag]         v0.0.54            -> v0.0.54
+        	            	 * [new tag]         v0.0.55            -> v0.0.55
+        	            	 * [new tag]         v0.0.56            -> v0.0.56
+        	            	 * [new tag]         v0.0.57            -> v0.0.57
+        	            	 * [new tag]         v0.0.58            -> v0.0.58
+        	            	 * [new tag]         v0.0.59            -> v0.0.59
+        	            	 * [new tag]         v0.0.6             -> v0.0.6
+        	            	 * [new tag]         v0.0.60            -> v0.0.60
+        	            	 * [new tag]         v0.0.61            -> v0.0.61
+        	            	 * [new tag]         v0.0.62            -> v0.0.62
+        	            	 * [new tag]         v0.0.63            -> v0.0.63
+        	            	 * [new tag]         v0.0.64            -> v0.0.64
+        	            	 * [new tag]         v0.0.65            -> v0.0.65
+        	            	 * [new tag]         v0.0.66            -> v0.0.66
+        	            	 * [new tag]         v0.0.67            -> v0.0.67
+        	            	 * [new tag]         v0.0.68            -> v0.0.68
+        	            	 * [new tag]         v0.0.69            -> v0.0.69
+        	            	 * [new tag]         v0.0.7             -> v0.0.7
+        	            	 * [new tag]         v0.0.70            -> v0.0.70
+        	            	 * [new tag]         v0.0.71            -> v0.0.71
+        	            	 * [new tag]         v0.0.72            -> v0.0.72
+        	            	 * [new tag]         v0.0.73            -> v0.0.73
+        	            	 * [new tag]         v0.0.74            -> v0.0.74
+        	            	 * [new tag]         v0.0.75            -> v0.0.75
+        	            	 * [new tag]         v0.0.76            -> v0.0.76
+        	            	 * [new tag]         v0.0.77            -> v0.0.77
+        	            	 * [new tag]         v0.0.78            -> v0.0.78
+        	            	 * [new tag]         v0.0.79            -> v0.0.79
+        	            	 * [new tag]         v0.0.8             -> v0.0.8
+        	            	 * [new tag]         v0.0.80            -> v0.0.80
+        	            	 * [new tag]         v0.0.81            -> v0.0.81
+        	            	 * [new tag]         v0.0.82            -> v0.0.82
+        	            	 * [new tag]         v0.0.83            -> v0.0.83
+        	            	 * [new tag]         v0.0.84            -> v0.0.84
+        	            	 * [new tag]         v0.0.85            -> v0.0.85
+        	            	 * [new tag]         v0.0.86            -> v0.0.86
+        	            	 * [new tag]         v0.0.87            -> v0.0.87
+        	            	 * [new tag]         v0.0.88            -> v0.0.88
+        	            	 * [new tag]         v0.0.89            -> v0.0.89
+        	            	 * [new tag]         v0.0.9             -> v0.0.9
+        	            	 * [new tag]         v0.0.90            -> v0.0.90
+        	            	 * [new tag]         v0.0.91            -> v0.0.91
+        	            	 * [new tag]         v0.0.92            -> v0.0.92
+        	            	 * [new tag]         v0.0.93            -> v0.0.93
+        	            	 * [new tag]         v0.0.94            -> v0.0.94
+        	            	 * [new tag]         v0.0.95            -> v0.0.95
+        	            	 * [new tag]         v0.0.96            -> v0.0.96
+        	            	 * [new tag]         v0.0.97            -> v0.0.97
+        	            	 * [new tag]         v0.0.98            -> v0.0.98
+        	            	 * [new tag]         v0.0.99            -> v0.0.99
+        	            	github.com/jenkins-x/**/pkg/gits.(*GitCLI).gitCmd
+        	            		/workspace/source/pkg/gits/git_cli.go:570
+        	            	github.com/jenkins-x/**/pkg/gits.(*GitCLI).FetchTags
+        	            		/workspace/source/pkg/gits/git_cli.go:935
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.resolveRefToTag
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:248
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:37
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectlyWithCorrectFileContents
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:368
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:187
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	fetching tags
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.resolveRefToTag
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:250
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:37
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectlyWithCorrectFileContents
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:368
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:187
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepoToDir
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:39
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo.CloneJXVersionsRepo
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo.go:27
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectly
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectlyWithCorrectFileContents
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:368
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:187
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:392: 
+        	Error Trace:	gitrepo_integration_test.go:392
+        	            				gitrepo_integration_test.go:368
+        	            				gitrepo_integration_test.go:187
+        	Error:      	Not equal: 
+        	            	expected: "v0.0.1"
+        	            	actual  : ""
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-v0.0.1
+        	            	+
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:370: 
+        	Error Trace:	gitrepo_integration_test.go:370
+        	            				gitrepo_integration_test.go:187
+        	Error:      	Received unexpected error:
+        	            	failed to run 'git checkout ' command in directory '', output: 'fatal: empty string is not a valid pathspec. please use . instead if you meant to match all paths'
+        	            	git output: fatal: empty string is not a valid pathspec. please use . instead if you meant to match all paths
+        	            	github.com/jenkins-x/**/pkg/gits.(*GitCLI).gitCmd
+        	            		/workspace/source/pkg/gits/git_cli.go:570
+        	            	github.com/jenkins-x/**/pkg/gits.(*GitCLI).Checkout
+        	            		/workspace/source/pkg/gits/git_cli.go:380
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.assertClonesCorrectlyWithCorrectFileContents
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:369
+        	            	github.com/jenkins-x/**/pkg/versionstream/versionstreamrepo_test.TestCloneJXVersionsRepoReplacingCurrent
+        	            		/workspace/source/pkg/versionstream/versionstreamrepo/gitrepo_integration_test.go:187
+        	            	testing.tRunner
+        	            		/usr/local/go/src/testing/testing.go:865
+        	            	runtime.goexit
+        	            		/usr/local/go/src/runtime/asm_amd64.s:1337
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:373: 
+        	Error Trace:	gitrepo_integration_test.go:373
+        	            				gitrepo_integration_test.go:187
+        	Error:      	Received unexpected error:
+        	            	open versionstreams-test-742053256: no such file or directory
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+    gitrepo_integration_test.go:374: 
+        	Error Trace:	gitrepo_integration_test.go:374
+        	            				gitrepo_integration_test.go:187
+        	Error:      	Not equal: 
+        	            	expected: "foo"
+        	            	actual  : ""
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-foo
+        	            	+
+        	Test:       	TestCloneJXVersionsRepoReplacingCurrent
+
+
+DONE 66 tests, 4 skipped, 9 failures in 587.302s
+make: *** [test-slow-integration] Error 1
+[31m
+Pipeline failed on stage 'release' : container 'step-release'. The execution of the pipeline has stopped.[0m
