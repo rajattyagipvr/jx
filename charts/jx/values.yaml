@@ -1,6 +1,6 @@
 image:
   repository: 702769831180.dkr.ecr.ap-south-1.amazonaws.com/702769831180/jx
-  tag: 2.1.105
+  tag: 2.1.106
   pullPolicy: IfNotPresent
 
 replicaCount: 1
