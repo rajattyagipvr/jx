@@ -8,6 +8,42 @@ pipelineConfig:
   pipelines:
     release:
       pipeline:
+        options:
+          containerOptions:
+            env:
+            - name: DOCKER_REGISTRY
+              valueFrom:
+                configMapKeyRef:
+                  key: docker.registry
+                  name: jenkins-x-docker-registry
+            - name: GIT_AUTHOR_EMAIL
+              value: jenkins-x@googlegroups.com
+            - name: GIT_AUTHOR_NAME
+              value: jenkins-x-bot
+            - name: GIT_COMMITTER_EMAIL
+              value: jenkins-x@googlegroups.com
+            - name: GIT_COMMITTER_NAME
+              value: jenkins-x-bot
+            - name: XDG_CONFIG_HOME
+              value: /home/jenkins
+            name: ""
+            resources:
+              requests:
+                cpu: 1200m
+                memory: 6Gi
+            securityContext:
+              privileged: true
+            volumeMounts:
+            - mountPath: /home/jenkins
+              name: workspace-volume
+            - mountPath: /kaniko/.docker
+              name: jenkins-docker-cfg
+          volumes:
+          - emptyDir: {}
+            name: workspace-volume
+          - name: jenkins-docker-cfg
+            secret:
+              secretName: jenkins-docker-cfg
         agent:
           image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
         stages:
