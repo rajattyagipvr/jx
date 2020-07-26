@@ -170,7 +170,7 @@ func GetApplications(factory clients.Factory) (List, error) {
 
 // GetRequirementsForEnvironment gets the requirements for the given remote environment
 func GetRequirementsForEnvironment(env *v1.Environment) (*config.RequirementsConfig, error) {
-	requirements, err := config.GetRequirementsConfigFromTeamSettings(&env.Spec.TeamSettings)
+	requirements, err := config.GetRequirementsConfigFromTeamSettings(&env.Spec.TeamSettings, config.DefaultFailOnValidationError)
 	if err == nil && requirements != nil {
 		return requirements, nil
 	}

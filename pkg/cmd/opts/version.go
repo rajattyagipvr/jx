@@ -48,7 +48,7 @@ func (o *CommonOptions) EnvironmentContext(dir string, preferRequirementsFile bo
 	}
 	if !preferRequirementsFile || !exists {
 		// lets try the environment CRD if we have no local file
-		req, err := config.GetRequirementsConfigFromTeamSettings(teamSettings)
+		req, err := config.GetRequirementsConfigFromTeamSettings(teamSettings, config.DefaultFailOnValidationError)
 		if err != nil {
 			return tc, err
 		}

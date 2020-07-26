@@ -79,7 +79,7 @@ func (o *CommonOptions) ResolveChartMuseumURL() (string, error) {
 			err = nil
 		}
 		if env != nil {
-			requirements, err := config.GetRequirementsConfigFromTeamSettings(&env.Spec.TeamSettings)
+			requirements, err := config.GetRequirementsConfigFromTeamSettings(&env.Spec.TeamSettings,config.DefaultFailOnValidationError)
 			if err != nil {
 				return answer, errors.Wrapf(err, "getting requirements from dev Environment")
 			}
