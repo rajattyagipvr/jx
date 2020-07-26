@@ -254,7 +254,7 @@ func GetRequirementsFromGit(gitURL string) (*config.RequirementsConfig, error) {
 		return nil, errors.Wrapf(err, "failed to git clone %s to dir %s", gitURL, tempDir)
 	}
 
-	requirements, _, err := config.LoadRequirementsConfig(tempDir)
+	requirements, _, err := config.LoadRequirementsConfig(tempDir, config.DefaultFailOnValidationError)
 	if err != nil {
 		return requirements, errors.Wrapf(err, "failed to requirements YAML file from %s", tempDir)
 	}

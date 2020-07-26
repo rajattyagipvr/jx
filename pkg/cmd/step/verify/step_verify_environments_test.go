@@ -299,7 +299,7 @@ func TestModifyEnvironmentRequirements(t *testing.T) {
 	expectedFile := path.Join("test_data", "verify_environments", "remote_requirements", "jx-requirements.yml")
 	assert.FileExists(t, expectedFile)
 
-	expected, err := config.LoadRequirementsConfigFile(expectedFile)
+	expected, err := config.LoadRequirementsConfigFile(expectedFile, config.DefaultFailOnValidationError)
 	require.NoError(t, err, "failed to load expected requirements %s", expectedFile)
 	expected.Repository = config.RepositoryTypeUnknown
 	diff := cmp.Diff(stagingReq, expected)
@@ -332,7 +332,7 @@ func TestModifyEnvironmentRequirementsForNodePort(t *testing.T) {
 	expectedFile := path.Join("test_data", "verify_environments", "remote_requirements_nodeport", "jx-requirements.yml")
 	assert.FileExists(t, expectedFile)
 
-	expected, err := config.LoadRequirementsConfigFile(expectedFile)
+	expected, err := config.LoadRequirementsConfigFile(expectedFile, config.DefaultFailOnValidationError)
 	require.NoError(t, err, "failed to load expected requirements %s", expectedFile)
 	expected.Repository = config.RepositoryTypeUnknown
 	diff := cmp.Diff(stagingReq, expected)
