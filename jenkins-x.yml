@@ -132,22 +132,22 @@ pipelineConfig:
               #   - -f
               #   - /workspace/source/charts/jx/Makefile
 
-              # - name: update-builders
-              #   image: gcr.io/jenkinsxio/builder-go
-              #   command: jx
-              #   args:
-              #   - step
-              #   - create
-              #   - pr
-              #   - docker
-              #   - --name
-              #   - JX_VERSION
-              #   - --version
-              #   - $VERSION
-              #   - --repo
-              #   - https://github.com/jenkins-x/jenkins-x-builders.git
-              #   - --repo
-              #   - https://github.com/jenkins-x/jenkins-x-builders-ml.git
+              - name: update-builders
+                image: gcr.io/jenkinsxio/builder-go
+                command: jx
+                args:
+                - step
+                - create
+                - pr
+                - docker
+                - --name
+                - JX_VERSION
+                - --version
+                - $VERSION
+                - --repo
+                - https://github.com/rajattyagipvr/jenkins-x-builders.git
+                - --repo
+                - https://github.com/rajattyagipvr/jenkins-x-builders-ml.git
 
               # - name: update-lighthouse
               #   image: gcr.io/jenkinsxio/builder-go
@@ -166,9 +166,9 @@ pipelineConfig:
               #   - --repo
               #   - https://github.com/jenkins-x/lighthouse.git
               #   # Disable GOPROXY for go module updates to deal with go 1.13 semver resolution issue
-                # env:
-                # - name: GOPROXY
-                #   value: ""
+              #   env:
+              #   - name: GOPROXY
+              #     value: ""
 
               # - name: update-jxui-backend
               #   image: gcr.io/jenkinsxio/builder-go
